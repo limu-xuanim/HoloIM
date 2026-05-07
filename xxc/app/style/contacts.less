@@ -1,0 +1,143 @@
+.app-contacts {
+    background: #fff;
+    .app-page-header > .title {
+        width: 260px;
+        flex: none;
+    }
+}
+.app-contacts-side {
+    top: 76px;
+    width: 220px;
+    > .nav {
+        left: 20px;
+    }
+
+    .app-depts-tree {
+        top: 28px;
+        padding: @space-sm 0 @space-sm @space;
+
+        a::after {display: none;}
+
+        .heading {
+            margin-top: 4px;
+            > .icon {
+                margin-left: 0;
+                margin-right: 2px;
+                line-height: 18px;
+                &:after {
+                    border-radius: 50px;
+                }
+            }
+            &:hover {
+                background: rgba(0,0,0,.05)!important;
+            }
+        }
+        > .app-list-item.active,
+        .heading.active {
+            background: @color-gray-pale;
+        }
+
+        > .app-list-item > .title,
+        .heading > .title {
+            line-height: 30px;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        > .app-list-item {
+            padding-left: 28px;
+            &:hover {
+                background: rgba(0,0,0,.05);
+            }
+        }
+
+        &.group-list-root > .heading,
+        &.group-list-root > .group-list > .heading {
+            padding-left: 20px;
+        }
+        &.group-list-root > .group-list > .group-list > .heading {
+            padding-left: 38px;
+        }
+        &.group-list-root > .group-list > .group-list > .group-list > .heading {
+            padding-left: 56px;
+        }
+        &.group-list-root > .group-list > .group-list > .group-list > .group-list > .heading {
+            padding-left: 74px;
+        }
+        &.group-list-root > .group-list > .group-list > .group-list > .group-list > .group-list > .heading {
+            padding-left: 92px;
+        }
+    }
+    .app-groups-menu {
+        top: 28px;
+        padding: @space 0 @space-sm @space;
+        > .item {
+            padding-left: 30px;
+            color: @color-gray-dark;
+
+            + .item {
+                margin-top: 4px;
+            }
+
+            &.active {
+                background: @color-gray-pale;
+                &:after {display: none;}
+            }
+        }
+    }
+}
+.app-contacts-main {
+    top: 74px;
+    left: 230px;
+}
+
+.app-groups-view,
+.app-contacts-view {
+    > .heading {
+        > .title {
+            font-size: 18px;
+            padding-left: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    > .content {
+        top: 48px;
+        padding: 0 10px 10px 20px;
+
+        .app-member-list,
+        .app-groups-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 10px;
+        }
+    }
+
+    > .content > .list {
+        > .item {
+            padding: 10px;
+            border: 1px solid #dddddd;
+
+            > .content > .subtitle {
+                opacity: 1!important;
+                color: @color-gray;
+            }
+
+            > .app-chat-avatar {
+                flex: none;
+            }
+
+            > .title {
+                max-width: calc(100% - 60px);
+                &:before {
+                    white-space: normal;
+                    top: calc(100% - 4px);
+                }
+            }
+        }
+    }
+    .is-star {
+        top: 5px;
+    }
+}

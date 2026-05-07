@@ -1,0 +1,55 @@
+@import "./mzui/mzui.less";
+@import "./basic.less";
+@import "./settings.less";
+@import "./hint.less";
+@import "./media-preview.less";
+@import (optional) "./custom.less";
+
+body {
+  overflow: hidden;
+  @media (prefers-color-scheme: dark) {
+    color: #f1f1f1;
+    background-color: #3d413c;
+    .contextmenu {
+      background-color: #3d413c;
+    }
+  }
+
+  @media (prefers-color-scheme: light) {
+    color: #333;
+    background-color: #ececec;
+  }
+
+  &.os-mac {
+    background-color: transparent!important;
+  }
+}
+
+.page {
+  background: transparent!important;
+  overflow: hidden;
+  color: inherit;
+}
+
+.app-titlebar {
+  .os-linux &,
+  .os-win & {height: 0;}
+  .os-mac & {
+    height: 22px;
+    right: 120px;
+  }
+}
+
+.app-titlebar-drag-area {
+  .os-linux &,
+  .os-win & {
+    height: 22px;
+    right: 240px;
+  }
+}
+.maximized {
+  .app-titlebar,
+  .app-titlebar-drag-area{
+    margin-top: 0;
+  }
+}

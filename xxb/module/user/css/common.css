@@ -1,0 +1,339 @@
+.panel-body {
+    padding: 32px;
+}
+.modal-body {
+    padding: 32px;
+}
+.modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Source Han Sans SC";
+}
+.user-control-nav {
+    margin-bottom: 20px;
+}
+
+body {
+    height: 100%;
+    background: #F4F5F7;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.dept-side {
+    width: 160px;
+}
+
+.user-content {
+    flex: 1;
+}
+
+.dept-container {
+    width: 160px;
+}
+
+.dept-heading,
+.dept-body {
+    background-color: #fff;
+}
+
+.dept-heading {
+    height: 32px;
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+.dept-body {
+    padding: 12px;
+}
+
+.dept-actions {
+    text-align: right;
+}
+
+.dept-actions .btn {
+    border: none;
+    background-color: transparent;
+}
+
+.dept-actions .btn:hover {
+    background-color: #dedede;
+    box-shadow: none;
+}
+
+/* 两列表单布局 */
+.form-horizontal-2col .form-row {
+    display: flex;
+    gap: 24px;
+}
+
+.form-horizontal-2col .form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-horizontal-2col .form-group label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-horizontal-2col .form-group > div {
+    position: relative;
+}
+
+.form-horizontal-2col .form-group.form-actions {
+    flex: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.form-horizontal-2col .form-group.form-actions .btn {
+    width: 100px;
+    height: 32px;
+}
+
+.form-horizontal-2col .form-group.form-actions .btn-back {
+    background-color: #fff;
+}
+
+.form-horizontal-2col .form-group.form-group-full {
+    flex: none;
+    width: 100%;
+}
+
+.form-horizontal-2col .form-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-horizontal-2col .form-section-title::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px dashed #d0d0d0;
+}
+
+.text-error.red {
+    color: #f00;
+}
+
+/* 必填标识样式 */
+.form-horizontal-2col .form-group .field-required-mark {
+    color: #f00;
+    font-size: 14px;
+    line-height: 1;
+    margin-right: 4px;
+}
+
+.form-horizontal-2col .form-group .field-required-mark::before {
+    content: '*';
+}
+
+.panel>.panel-heading {
+    background-color: #fff;
+}
+
+/* 用户资料页面样式 */
+.profile-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.avatar-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.profile-avatar {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-avatar .avatar-upload-link {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-upload-avatar:focus {
+    outline: none;
+}
+
+.btn-upload-avatar, .profile-avatar .avatar-xxl {
+    width: 100%;
+    height: 100%;
+}
+
+.profile-avatar .avatar-xxl {
+    position: relative;
+}
+
+.profile-avatar .avatar-xxl .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: opacity 0.3s ease;
+}
+
+.profile-avatar .avatar-upload-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.profile-avatar .avatar-upload-overlay .icon {
+    color: #fff;
+    font-size: 32px;
+}
+
+.profile-avatar .avatar-upload-link:hover .avatar-upload-overlay {
+    opacity: 1;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 编辑表单模式 */
+.profile-content.form-horizontal-2col {
+    gap: 0;
+}
+
+
+.profile-content.form-horizontal-2col .form-section:last-of-type {
+    margin-bottom: 0;
+}
+
+.profile-section {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.profile-section-header {
+    background-color: #f5f5f5;
+    padding: 12px 16px;
+}
+
+.profile-section-header h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.profile-section-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.profile-row {
+    display: flex;
+    gap: 24px;
+}
+
+.profile-item {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-item.profile-item-full {
+    flex: none;
+    width: 100%;
+}
+
+.profile-item label {
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
+    white-space: nowrap;
+    min-width: 70px;
+}
+
+/* 表单模式下的对齐调整 */
+.profile-item .profile-value .form-control,
+.profile-item .profile-value .chosen-container,
+.profile-item .profile-value input[type="radio"] {
+    margin-top: 0;
+}
+
+.profile-item .profile-value {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    min-height: 20px;
+}
+
+.profile-item .profile-value .form-control {
+    width: 100%;
+}
+
+.profile-item .profile-value .form-control[disabled] {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.profile-item .profile-value .chosen-container {
+    width: 100% !important;
+}
+
+.profile-toolbar {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    background-color: #6f7686;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.profile-toolbar .btn {
+    min-width: 96px;
+    height: 40px;
+    color: #fff;
+    line-height: 28px;
+}
+
+.profile-toolbar .btn, 
+.profile-toolbar .btn.active, 
+.profile-toolbar .btn:active, 
+.profile-toolbar .btn:focus, 
+.profile-toolbar .btn:hover {
+    background-color: transparent;
+    border: none;
+}

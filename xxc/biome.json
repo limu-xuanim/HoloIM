@@ -1,0 +1,170 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.2/schema.json",
+	"files": {
+		"ignore": [
+			"app/assets/**/*",
+			"app/main.js",
+			"app/**/*.js.map",
+			"app/bundle.js",
+			"app/dist/**/*",
+			"app/web-dist/**/*",
+			"app/manifest.json",
+			"app/media-build/**/*",
+			"app/bin/**/*",
+			"app/dev-exts/**/*",
+			"app/node_modules/**/*",
+			"node_modules/**/*",
+			"dist/**/*",
+			"release/**/*",
+			"app/build-in/**/*",
+			"web-dist/**/*",
+			"assets/**/*"
+		]
+	},
+	"formatter": { "indentStyle": "space", "indentWidth": 2, "lineWidth": 120 },
+	"organizeImports": { "enabled": true },
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"a11y": {
+				"all": false,
+				"noBlankTarget": "warn",
+				"useAnchorContent": "off",
+				"useKeyWithClickEvents": "off",
+				"useMediaCaption": "off",
+				"useValidAnchor": "off"
+			},
+			"performance": {
+				"noDelete": "off"
+			},
+			"complexity": {
+				"noExtraBooleanCast": "error",
+				"noMultipleSpacesInRegularExpressionLiterals": "error",
+				"noUselessCatch": "error",
+				"noWith": "error",
+                "noForEach": "warn"
+			},
+			"correctness": {
+				"noConstAssign": "error",
+				"noConstantCondition": "error",
+				"noEmptyCharacterClassInRegex": "error",
+				"noEmptyPattern": "error",
+				"noGlobalObjectCalls": "error",
+				"noInnerDeclarations": "error",
+				"noInvalidConstructorSuper": "error",
+				"noInvalidUseBeforeDeclaration": "off",
+				"noNewSymbol": "error",
+				"noNonoctalDecimalEscape": "error",
+				"noPrecisionLoss": "error",
+				"noSelfAssign": "error",
+				"noSetterReturn": "error",
+				"noSwitchDeclarations": "error",
+				"noUndeclaredVariables": "off",
+				"noUnusedVariables": "off",
+				"noUnreachable": "error",
+				"noUnreachableSuper": "error",
+				"noUnsafeFinally": "error",
+				"noUnsafeOptionalChaining": "error",
+				"noUnusedLabels": "error",
+				"useExhaustiveDependencies": "warn",
+				"useHookAtTopLevel": "error",
+				"useIsNan": "error",
+				"useValidForDirection": "error",
+				"useYield": "error"
+			},
+			"style": {
+				"noParameterAssign": "off",
+				"useCollapsedElseIf": "warn",
+				"useConst": "warn",
+				"useFragmentSyntax": "off",
+				"useTemplate": "warn",
+				"noNamespace": "off",
+				"noNonNullAssertion": "off"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "warn",
+				"noAsyncPromiseExecutor": "error",
+				"noCatchAssign": "error",
+				"noClassAssign": "error",
+				"noCompareNegZero": "error",
+				"noControlCharactersInRegex": "error",
+				"noDebugger": "error",
+				"noDuplicateCase": "error",
+				"noDuplicateClassMembers": "error",
+				"noDuplicateObjectKeys": "error",
+				"noDuplicateParameters": "error",
+				"noEmptyBlockStatements": "error",
+				"noExplicitAny": "off",
+				"noFallthroughSwitchClause": "error",
+				"noFunctionAssign": "error",
+				"noGlobalAssign": "error",
+				"noImportAssign": "error",
+				"noMisleadingCharacterClass": "error",
+				"noPrototypeBuiltins": "error",
+				"noRedeclare": "error",
+				"noShadowRestrictedNames": "error",
+				"noUnsafeNegation": "error",
+				"useGetterReturn": "error",
+				"useValidTypeof": "error"
+			}
+		},
+		"ignore": [
+			"**/logs",
+			"**/*.log",
+			"**/pids",
+			"**/*.pid",
+			"**/*.seed",
+			"**/lib-cov",
+			"**/coverage",
+			"**/.grunt",
+			"**/.lock-wscript",
+			"build/Release",
+			"**/.eslintcache",
+			"**/node_modules",
+			"app/node_modules",
+			"**/.DS_Store",
+			"flow-typed/npm/*",
+			"**/release",
+			"app/main.js",
+			"app/main.js.map",
+			"**/web-dist",
+			"**/dist",
+			"**/assets",
+			"**/main.js",
+			"**/main.js.map",
+			"**/.idea",
+			"**/npm-debug.log.*",
+			"**/__snapshots__",
+			"app/assets"
+		]
+	},
+	"javascript": {
+		"formatter": {
+			"bracketSpacing": false,
+			"indentWidth": 4,
+			"quoteStyle": "single",
+			"jsxQuoteStyle": "double",
+			"semicolons": "always"
+		},
+		"globals": [
+			"expect",
+			"PERF_MARK",
+			"DEBUG_E",
+			"DEBUG_I",
+			"PERF",
+			"describe",
+			"test",
+			"DEBUG_W",
+			"DEBUG",
+			"DEBUG_V"
+		]
+	},
+	"json": { "formatter": { "indentWidth": 4 } },
+	"overrides": [
+		{
+			"include": ["*.ts", "*.tsx"],
+			"linter": { "rules": { "suspicious": { "noExplicitAny": "off" } } }
+		}
+	]
+}

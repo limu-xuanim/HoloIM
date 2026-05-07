@@ -1,0 +1,23 @@
+{
+    "name": "xuanxuan",
+    "productName": "xuanxuan",
+    "displayName": "喧喧",
+    "version": "10.3.0",
+    "displayVersion": "10.3",
+    "description": "专注于协同的聊天软件",
+    "main": "./main.js",
+    "author": {
+        "name": "禅道软件（青岛）集团有限公司",
+        "email": "sunhao@cnezsoft.com"
+    },
+    "homepage": "https://xuanim.com",
+    "company": "禅道软件（青岛）集团有限公司",
+    "bugs": "https://www.xuanim.com/forum/",
+    "dependencies": {
+        "jquery": "^3.5.1",
+        "react-chatview": "^0.2.5"
+    },
+    "downloadURL": "https://www.xuanim.com/page/download.html",
+    "contactURL": "https://www.xuanim.com/page/qq.html",
+    "errorsURL": "https://www.xuanim.com/book/xuanxuanserver/238.html"
+}

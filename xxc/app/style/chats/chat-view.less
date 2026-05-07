@@ -1,0 +1,123 @@
+.app-chat {
+  overflow: hidden;
+  > .SplitPane > .Pane {
+    overflow: hidden;
+  }
+}
+.app-chat-header {
+  min-height: 48px;
+  padding-left: 8px;
+  margin: 4px 4px 0 0;
+  z-index: 1035;
+
+  > .heading {
+    width: calc(100% - 120px);
+    flex-wrap: nowrap;
+
+    > .avatar {
+      margin-right: 5px;
+    }
+
+    > .title {
+      padding: 5px;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: unset;
+    }
+
+    > .label {
+      margin-left: 5px;
+    }
+  }
+
+  > .toolbar {
+    position: absolute;
+    right: 8px;
+    top: 24px;
+    margin-left: 10px;
+  }
+
+  .platform-browser &,
+  .os-mac & {
+    padding: 8px;
+    min-height: 30px;
+    > .toolbar {
+      top: 10px
+    }
+  }
+}
+.app-chat-messages {
+  min-height: 0; // https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
+}
+
+.app-chat-pinned-messages {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  word-break: break-all;
+
+  .app-chat-pinned-messages-content {
+    padding: @space-xs @space-sm;
+    > a {
+      max-height: 36px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  .app-chat-pinned-messages-actions {
+    &:before {
+      content: " ";
+      width: 1px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    width: 22px;
+
+    .btn {
+      height: 16px;
+      > .icon {
+        line-height: 16px;
+      }
+    }
+  }
+}
+
+.app-chat-body {
+  min-height: 0; // https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
+
+  &.SplitPane {
+    min-height: auto !important;
+    height: auto !important;
+  }
+}
+
+.app-chat-transfers {
+  background-color: lighten(@color-pale, 3%);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  min-height: 1.5rem;
+  max-height: 10rem;
+  box-shadow: 0 2px 3px -2px rgba(48, 48, 77, 0.1);
+  z-index: 1035;
+  overflow-y: auto;
+  .scrollbar-hover;
+
+  .app-file-list-item {
+    width: 100%;
+    padding: 5px 10px;
+
+    > .content > .title {
+      flex: auto;
+    }
+
+    .app-file-infos {flex: none;}
+  }
+}
+
+.app-message-list-scroll-btn > .badge {
+  opacity: 0.95;
+  right: -10px;
+  top: -10px;
+}

@@ -1,0 +1,55 @@
+//
+// Heading
+// --------------------------------------------------
+
+
+// Basic style
+
+.heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  position: relative;
+
+  > .title {
+    display: block;
+    padding: @padding-base-vertical @padding-base-horizontal;
+    flex: 1;
+  }
+
+  > .nav {align-self: flex-start;}
+
+  > .avatar {margin-left: 5px;}
+
+  > .headline {
+    font-size: @font-size-title;
+    padding: @padding-base-vertical @padding-base-horizontal;
+    width: 100%;
+
+    &.indent {margin-left: 40px}
+  }
+}
+
+
+// Sizes
+
+.heading-lg {
+  > .nav {margin: 4px;}
+
+  > .title {
+    font-size: @font-size-title;
+    padding: (@padding-base-vertical + 3px) @padding-base-horizontal;
+  }
+}
+
+
+// Affix heading
+
+.heading.affix {
+  background-color: @color-back;
+
+  &:extend(.heading-lg all);
+}
+
+.with-heading-top    {padding-top: 48px;}
+.with-heading-bottom {padding-bottom: 48px;}

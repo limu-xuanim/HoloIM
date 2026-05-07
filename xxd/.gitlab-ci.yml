@@ -1,0 +1,13 @@
+package-xxd-linux:
+  stage: package
+  only:
+    - schedules
+  script:
+    - cd xxd
+    - rm -f xxd xxd.tar.gz
+    - GOPROXY=https://goproxy.io,direct GOOS=linux GOARCH=amd64 go build -o xxd .
+    - tar czf xxd.tar.gz xxd
+  artifacts:
+    paths:
+      - xxd/xxd.tar.gz
+    expire_in: 1 week

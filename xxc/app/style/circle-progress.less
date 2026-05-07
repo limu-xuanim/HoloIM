@@ -1,0 +1,47 @@
+.circle-progress-wrapper {
+    position: relative;
+}
+.circle-progress-box {
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    box-shadow: 0 0 0 2px rgba(0,0,0,.3);
+    overflow: hidden;
+}
+
+.circle-progress {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circle-progress span {
+    background: rgba(0, 0, 0, 0.4);
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: -50%;
+}
+
+.right-circle-progress {
+    right: 0;
+}
+
+.right-circle-progress span {
+    transform: rotate(7deg);
+    -webkit-transform: rotate(7deg);
+    transform-origin: 0 50%;
+    right: -100%;
+}
+
+.left-circle-progress {
+    left: 0;
+}
+
+.left-circle-progress span {
+    left: -100%;
+    transform-origin: 100% 50%;
+}

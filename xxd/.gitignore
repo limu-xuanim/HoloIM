@@ -1,0 +1,19 @@
+# exclude built packages
+release
+xxd.*/
+
+# exclude temp files
+cert
+log
+files
+
+# exclude custom scripts
+sign.sh
+
+# test data
+*.test.json
+
+__debug*
+session/
+
+site

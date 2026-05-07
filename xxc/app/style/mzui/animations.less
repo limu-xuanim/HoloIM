@@ -1,0 +1,265 @@
+//
+// Animations
+// --------------------------------------------------
+
+
+// Transitions
+
+.no-animation,
+.no-animation * {
+  transition: none !important;
+}
+
+.fade {
+  .transition-fast();
+  opacity: 0;
+
+  &.in {
+    opacity: 1;
+  }
+}
+
+.scale {
+  .transition-fast();
+  transform: scale(.8);
+
+  &.in {
+    transform: scale(1);
+  }
+}
+
+.zoom {
+  .transition-fast();
+  transform: scale(0);
+
+  &.in {
+    transform: scale(1);
+  }
+}
+
+
+.collapse {
+  display: none;
+
+  &.in {
+    display: block;
+  }
+}
+
+.collapsing {
+  position: relative;
+  overflow: hidden;
+  transition: ease height @animation-speed-fast;
+}
+
+
+// enter-from-* and scale-from-*
+
+[class^="scale-from-"],
+[class*=" scale-from-"],
+[class^="enter-from-"],
+[class*=" enter-from-"] {
+  .transition-fast();
+
+  &.in {
+    opacity: 1;
+    transform: scale(1) translate(0%, 0%);
+  }
+}
+
+.scale-from-top {
+  opacity: 0;
+  transform: scale(.8) translate(0, -30%);
+}
+
+.scale-from-bottom {
+  opacity: 0;
+  transform: scale(.8) translate(0, 30%);
+}
+
+.scale-from-left {
+  opacity: 0;
+  transform: scale(.8) translate(-30%, 0);
+}
+
+.scale-from-right {
+  opacity: 0;
+  transform: scale(.8) translate(30%, 0);
+}
+
+.scale-from-center {
+  opacity: 0;
+  transform: scale(.8);
+}
+
+.enter-from-top {
+  transform: translate(0, -105%);
+}
+
+.enter-from-bottom {
+  transform: translate(0, 105%);
+}
+
+.enter-from-left {
+  transform: translate(-105%, 0);
+}
+
+.enter-from-right {
+  transform: translate(105%, 0);
+}
+
+.enter-from-center {
+  opacity: 0;
+  transform: scale(.8) translate(0, 50%);
+}
+
+
+@keyframes animate-flash {
+  0% {
+    opacity: 0.05;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes animate-flash-light {
+  0% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 0.9;
+  }
+}
+
+.animate-flash,
+.animate-flash-light {
+  animation-name: animate-flash;
+  animation-duration: .6s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out
+}
+
+.animate-flash-light {
+  animation-duration: 1s;
+  animation-name: animate-flash-light;
+}
+
+@keyframes highlight-focus {
+  0% {
+    background: fade(@color-highlight, 10%);
+    box-shadow: inset 0 0 0 2px fade(@color-highlight, 20%);
+  }
+
+  100% {
+    background: @color-highlight;
+    box-shadow: inset 0 0 0 2px fade(@color-highlight, 60%);
+  }
+}
+
+.highlight-focus {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px transparent;
+  animation-name: highlight-focus;
+  animation-duration: .5s;
+  animation-iteration-count: 10;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out
+}
+
+
+// Spin animation
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+.spin {
+  animation: spin 2s infinite linear;
+}
+
+.spin-fast {
+  animation: spin 1s infinite linear;
+}
+
+.ants-border {
+  border: 1px solid transparent;
+  border-image: url("data:image/gif;base64,R0lGODlhCgAKAJECAAAAAP///////wAAACH/C05FVFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEI5RDc5MTFDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEI5RDc5MTBDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEBQoAAgAsAAAAAAoACgAAAhWEERkn7W3ei7KlagMWF/dKgYeyGAUAIfkEBQoAAgAsAAAAAAoACgAAAg+UYwLJ7RnQm7QmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYgLJHdiinNSAVfOEKoUCACH5BAUKAAIALAAAAAAKAAoAAAIRVISAdusPo3RAzYtjaMIaUQAAIfkEBQoAAgAsAAAAAAoACgAAAg+MDiem7Q8bSLFaG5il6xQAIfkEBQoAAgAsAAAAAAoACgAAAg+UYRLJ7QnQm7SmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYBLJDdiinNSEVfOEKoECACH5BAUKAAIALAAAAAAKAAoAAAIRFISBdusPo3RBzYsjaMIaUQAAOw==") 1 repeat repeat;
+}
+
+
+
+// Loading placeholder
+.loading-holder {
+  overflow: hidden !important;
+}
+
+.loading-holder::before,
+.loading-holder::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(150, 150, 150, .2);
+}
+
+.-rounded-full {
+
+  &.loading-holder::before,
+  &.loading-holder::after {
+    border-radius: 50%;
+  }
+}
+
+.loading-holder::after {
+  left: -100%;
+  background-color: transparent;
+  background-image: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, .8) 50%, transparent 100%);
+  animation: loading-holder 1.5s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+}
+
+.loading-holder-line {
+  min-width: 60px;
+  min-height: 12px;
+
+  &::before,
+  &::after {
+    top: 50%;
+    margin-top: -6px;
+    height: 12px;
+  }
+}
+
+@keyframes loading-holder {
+  from {
+    left: -100%;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+
+.animate-flash-box {
+  border-color: transparent;
+  box-shadow: 0 0 5px transparent, inset 0 0 5px transparent, 0 1px 0 transparent;
+  transition: border-color 500ms linear, box-shadow 500ms linear;
+}
+
+.animate-flash-box.active {
+  border-color: #6f6;
+  box-shadow: 0 0 20px rgba(0, 255, 0, .6), inset 0 0 10px rgba(0, 255, 0, .4), 0 1px 0 #6f6;
+}

@@ -1,0 +1,36 @@
+// Floats
+
+.clearfix       {.clearfix();}
+.pull-right     {float: right !important;}
+.pull-left      {float: left !important;}
+
+
+// Display types
+
+.template,
+.hide-empty:empty,
+.hidden       {display: none!important;}
+
+// Flex will be define in layout/layout.flex.less
+// .flex         {display: flex!important}
+
+
+// Toggling content
+
+.invisible {visibility: hidden;}
+
+
+// Fluid
+
+.fluid   {width: 100%!important;}
+.fluid.column,
+.fluid-v {height: 100%!important;}
+.fullscreen {
+  .fluid;
+  .fluid-v;
+}
+.os-mac {
+  .fullscreen {
+    margin-top: 27px;
+  }
+}

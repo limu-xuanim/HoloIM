@@ -1,0 +1,184 @@
+# -----------------------
+# 喧喧消息转发服务器配置文件
+# Xuan Daemon Config File
+# -----------------------
+#
+# 使用以下格式作为每一个配置项的格式：
+#   配置项名称=配置项值
+# 使用以下格式作为配置块的格式：
+#   [配置块名称]
+#
+# Configuration item lines are of the form:
+#   name=value
+# Configuration block header is of the form:
+#   [BlockName]
+
+
+[server]
+#
+# 运行参数
+# Daemon Configurations
+#
+
+ip=0.0.0.0              # 监听本机所有IP使用 0.0.0.0; 监听本机指定网卡的IP使用例如 202.xx.xx.xx; 不要使用127.0.0.1。
+                        # IP address to listen on, use 0.0.0.0 for any IP, do not use 127.0.0.1.
+commonPort=11443        # 登录和附件上传接口(http)，确保防火墙开放此端口。
+                        # Port number of HTTP transports (login and file requests).
+chatPort=11444          # 聊天消息通讯端口(websocket)，确保防火墙开放此端口。
+                        # Port number of WebSocket service.
+apiPort=80              # 后台API端口
+                        # Port number of backend API.
+https=on                # 是否启用Https(on|off)。使用Https可以保证消息全程加密。
+                        # Secure connections to clients with HTTPS. (on | off)
+enableAES=1             # 是否启用与后台通信时的 AES 加密，需要与后台参数保持一致。
+                        # Secure connections to backend server with AES encryption. (0 | 1)
+enableClientAES=1       # 是否启用与客户端通信时的 AES 加密。
+                        # Secure connections to clients with AES encryption. (0 | 1)
+enableCompression=1     # 是否启用 websocket 和 http 通信压缩。
+                        # Compress WebSocket and HTTP transports.
+uploadPath=files/       # 附件保存的目录。默认存放在xxd/files/。
+                        # Path for saving files sent, by default it is xxd/files.
+pollingInterval=15      # 轮询时间，单位为秒，最小值为 5。
+                        # Polling interval in seconds, minimum value is 5.
+stunPort=3478           # 点对点传输时的 NAT 穿越服务端口(udp) ，确保防火墙开放此端口。
+                        # Port number of STUN(udp) service.
+maxOnlineUser=0         # 在线用户上限，0为无限制。
+                        # Maximum online user count allowed, 0 means unlimited.
+logPath=log/            # 程序运行日志的保存路径。
+                        # Log path.
+certPath=cert/          # 证书的保存路径。
+                        # Path of directory of HTTPS cert and key.
+debug=0                 # Debug级别，可设置0|1|2
+                        # Verbose level of debug. (0 | 1 | 2)
+thumbnail=1             # 是否启用图片缩略图
+                        # Image thumbnail
+syncConfig=1            # 与后端服务器同步配置信息，1 为开启 0 为关闭。开启后可能会丢失配置文件的注释。
+                        # Sync config with xxb，0|1. Sync config enable may lost config comment.'
+
+[mysql]
+#
+# MySQL 数据库连接配置
+# MySQL Database Connection Configuration
+#
+
+enable=1               # 是否启用 MySQL 数据库
+                       # Enable MySQL database (0 | 1)
+host=localhost         # MySQL 服务器地址
+                       # MySQL server host
+username=user          # MySQL 用户名
+                       # MySQL username
+password=password      # MySQL 密码
+                       # MySQL password
+dbPort=3306            # MySQL 端口
+                       # MySQL port
+database=xxb           # 数据库名称
+                       # Database name
+charset=utf8mb4        # 字符集
+                       # Character set
+tablePrefix=xxb_       # 表前缀
+                       # Table prefix
+maxIdleConns=10        # 最大空闲连接数
+                       # Maximum number of idle connections
+maxOpenConns=100       # 最大打开连接数
+                       # Maximum number of open connections
+maxLifetime=3600       # 连接最大生命周期（秒）
+                       # Maximum lifetime of connections in seconds
+LogLevel=1             # 数据库日志级别: 1-Silent(不打印日志), 2-Error(只打印错误日志), 3-Warn(打印警告和错误日志), 4-Info(打印所有日志)
+                       # Log level
+printSql=0             # 是否打印 SQL 语句
+                       # Print SQL statements (0 | 1)
+
+# [oidc]
+#
+# OpenID Connect 配置（可选）
+# OpenID Connect Configurations
+#
+# enableOIDC=0                                       # 是否启用 OpenID Connect 登录集成。
+#                                                    # Enable OpenID Connect support. (0 | 1)
+# backend=backend1                                   # 提供 OIDC 用户认证的后台程序名称。
+#                                                    # The backend server to use for OIDC user authentication.
+# sessionName=oidc_sessions                          # OIDC Session 名称
+#                                                    # OIDC Session name
+# sessionSecretKey=88888888888888888888888888888888  # OIDC Session 密钥
+#                                                    # OIDC Session secret key
+# sessionMaxAge=1200                                 # OIDC Session 最大有效时间，单位为秒。
+#                                                    # OIDC Session max age in seconds.
+# accessTokenExp=2                                   # OIDC Access Token 有效时间，单位为小时。
+#                                                    # OIDC Access Token expiration in hours.
+# refreshTokenExp=72                                 # OIDC Refresh Token 有效时间，单位为小时。
+#                                                    # OIDC Refresh Token expiration in hours.
+# defaultDomain=@example.com                         # 用户默认邮箱域名，用于用户登录时自动补全邮箱信息。
+                                                     # Default email domain for user information completion.
+
+# [oidc.app.app1]
+#
+# OpenID Connect 应用配置
+# OpenID Connect Application Configurations
+#
+# 应用的配置信息，此配置块的名称结构为 oidc.app.<应用标识符>。
+# The application client configuration. The name of this configuration block should be `oidc.app.<application identifier>`.
+#
+# id=app1                    # 应用的唯一标识符。
+#                            # The unique identifier of the application.
+# secret=app1_secret_string  # 应用的密钥。
+#                            # The secret of the application.
+# name=App 1                 # 应用的名称。
+#                            # The name of the application.
+# domain=app1.example.com    # 应用的域名。
+#                            # The domain of the application.
+
+# [oidc.app.app1.scope.all]
+#
+# OpenID Connect 应用权限配置
+# OpenID Connect Application Scope Configurations
+#
+# 应用的权限配置，此配置块的名称结构为 oidc.app.<应用标识符>.scope.<权限标识符>。
+# The permission scope configuration of the application. The name of this configuration block should be `oidc.app.<application identifier>.scope.<scope identifier>`.
+#
+# title=All information  # 权限的名称。
+#                        # The name of the permission scope.
+
+# [service]
+#
+# 服务连接信息配置（可选）
+# Optional Services
+#
+# 可以在这里添加额外的服务，目前支持 fileServer (XXF 文件服务)。
+# 在服务可用时，XXD 会利用这些服务。
+#
+# Add optional services to this section and Xuan Daemon will try to utilize them.
+# Supported services: fileServer
+#
+# 以下是服务连接信息配置示例：
+# Example service config lines:
+#
+#   fileServer=https://192.168.0.2:8000,0123456789abcdef0123456789abcdef
+
+[backend]
+#
+# 后台连接信息配置
+# Backend servers
+#
+# xxd可以对接多个后台程序。每一个后台程序由入口文件 + 私钥组成。
+# 客户端登录时如果没有指定后台程序，会默认登录到第一个后台程序。
+#
+# xxd can integrate with multi backends. Every backend has an entry and a key.
+# The client will login to the first backend if the user doesn't specify the backend.
+#
+# 以下是连接信息配置示例：
+# Example backend server config lines:
+#
+#   backend1=http://127.0.0.1/x.php,88888888888888888888888888888888
+#   backend2=http://192.168.1.3/xxb/x.php,88888888888888888888888888888888
+
+[cluster]
+#
+# 集群配置
+# Cluster Configurations
+#
+enable=0               # 是否启用集群功能(0|1)
+                       # Enable cluster feature (0 | 1)
+address=192.168.1.101  # 集群节点监听地址
+                       # Cluster node listen address
+port=11800             # 其他集群节点地址，多个节点用逗号分隔
+                       # Other cluster nodes, separated by comma

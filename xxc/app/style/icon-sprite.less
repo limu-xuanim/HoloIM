@@ -1,0 +1,267 @@
+/*
+-------------------------------------------------------------------
+Created with TexturePacker https://www.codeandweb.com/texturepacker
+-------------------------------------------------------------------
+Inline:     <i class="sprite-yourspritesname"></i>
+Responsive: <div class="sprite-yourspritesname"></div>
+*/
+@prefix: ~"sprite";
+
+*[class^='sprite'], *[class*=' sprite']{
+  &::after {
+    display: inline-block;
+    content: '\00a0';
+    background-image: url(./imgs/icon-sprite.png);
+    padding: 0;
+  }
+}
+
+.icon-sprite.icon-sm {
+  display: inline-block;
+  transform: scale(.8);
+}
+
+.@{prefix} {
+  &-chat-history {max-width:14px;max-height:14px;}
+  &-chat-history::after {width:14px;height:14px;background-position: 86.62420382165605% 50.955414012738856%;background-size: 1221.4285714285713% 1221.4285714285713%;}
+  &-chat-mute {max-width:13px;max-height:14px;}
+  &-chat-mute::after {width:13px;height:14px;background-position: 99.36708860759494% 0.6369426751592356%;background-size: 1315.3846153846155% 1221.4285714285713%;}
+  &-file-action-cancel {max-width:14px;max-height:14px;}
+  &-file-action-cancel::after {width:14px;height:14px;background-position: 94.26751592356688% 39.49044585987261%;background-size: 1221.4285714285713% 1221.4285714285713%;}
+  &-file-action-download {max-width:14px;max-height:14px;}
+  &-file-action-download::after {width:14px;height:14px;background-position: 97.45222929936305% 27.388535031847134%;background-size: 1221.4285714285713% 1221.4285714285713%;}
+  &-file-ai {max-width:20px;max-height:20px;}
+  &-file-ai::after {width:20px;height:20px;background-position: 62.25165562913907% 0.6622516556291391%;background-size: 855% 855%;}
+  &-file-ai-large {max-width:30px;max-height:30px;}
+  &-file-ai-large::after {width:30px;height:30px;background-position: 0.7092198581560284% 0.7092198581560284%;background-size: 570% 570%;}
+  &-file-code {max-width:20px;max-height:20px;}
+  &-file-code::after {width:20px;height:20px;background-position: 62.25165562913907% 14.56953642384106%;background-size: 855% 855%;}
+  &-file-code-large {max-width:30px;max-height:30px;}
+  &-file-code-large::after {width:30px;height:30px;background-position: 0.7092198581560284% 22.69503546099291%;background-size: 570% 570%;}
+  &-file-excel {max-width:20px;max-height:20px;}
+  &-file-excel::after {width:20px;height:20px;background-position: 62.25165562913907% 28.47682119205298%;background-size: 855% 855%;}
+  &-file-excel-large {max-width:30px;max-height:30px;}
+  &-file-excel-large::after {width:30px;height:30px;background-position: 0.7092198581560284% 44.680851063829785%;background-size: 570% 570%;}
+  &-file-folder {max-width:20px;max-height:20px;}
+  &-file-folder::after {width:20px;height:20px;background-position: 62.25165562913907% 42.384105960264904%;background-size: 855% 855%;}
+  &-file-folder-large {max-width:30px;max-height:30px;}
+  &-file-folder-large::after {width:30px;height:30px;background-position: 0.7092198581560284% 66.66666666666667%;background-size: 570% 570%;}
+  &-file-keynote {max-width:20px;max-height:20px;}
+  &-file-keynote::after {width:20px;height:20px;background-position: 62.25165562913907% 56.29139072847682%;background-size: 855% 855%;}
+  &-file-keynote-large {max-width:30px;max-height:30px;}
+  &-file-keynote-large::after {width:30px;height:30px;background-position: 0.7092198581560284% 88.65248226950355%;background-size: 570% 570%;}
+  &-file-media {max-width:20px;max-height:20px;}
+  &-file-media::after {width:20px;height:20px;background-position: 62.25165562913907% 70.19867549668874%;background-size: 855% 855%;}
+  &-file-media-large {max-width:30px;max-height:30px;}
+  &-file-media-large::after {width:30px;height:30px;background-position: 22.69503546099291% 0.7092198581560284%;background-size: 570% 570%;}
+  &-file-numbers {max-width:20px;max-height:20px;}
+  &-file-numbers::after {width:20px;height:20px;background-position: 62.25165562913907% 84.10596026490066%;background-size: 855% 855%;}
+  &-file-numbers-large {max-width:30px;max-height:30px;}
+  &-file-numbers-large::after {width:30px;height:30px;background-position: 22.69503546099291% 22.69503546099291%;background-size: 570% 570%;}
+  &-file-pages {max-width:20px;max-height:20px;}
+  &-file-pages::after {width:20px;height:20px;background-position: 62.25165562913907% 98.01324503311258%;background-size: 855% 855%;}
+  &-file-pages-large {max-width:30px;max-height:30px;}
+  &-file-pages-large::after {width:30px;height:30px;background-position: 22.69503546099291% 44.680851063829785%;background-size: 570% 570%;}
+  &-file-pdf {max-width:20px;max-height:20px;}
+  &-file-pdf::after {width:20px;height:20px;background-position: 76.15894039735099% 0.6622516556291391%;background-size: 855% 855%;}
+  &-file-pdf-large {max-width:30px;max-height:30px;}
+  &-file-pdf-large::after {width:30px;height:30px;background-position: 22.69503546099291% 66.66666666666667%;background-size: 570% 570%;}
+  &-file-powerpoint {max-width:20px;max-height:20px;}
+  &-file-powerpoint::after {width:20px;height:20px;background-position: 76.15894039735099% 14.56953642384106%;background-size: 855% 855%;}
+  &-file-powerpoint-large {max-width:30px;max-height:30px;}
+  &-file-powerpoint-large::after {width:30px;height:30px;background-position: 22.69503546099291% 88.65248226950355%;background-size: 570% 570%;}
+  &-file-ps {max-width:20px;max-height:20px;}
+  &-file-ps::after {width:20px;height:20px;background-position: 76.15894039735099% 28.47682119205298%;background-size: 855% 855%;}
+  &-file-ps-large {max-width:30px;max-height:30px;}
+  &-file-ps-large::after {width:30px;height:30px;background-position: 44.680851063829785% 0.7092198581560284%;background-size: 570% 570%;}
+  &-file-sketch {max-width:20px;max-height:20px;}
+  &-file-sketch::after {width:20px;height:20px;background-position: 76.15894039735099% 42.384105960264904%;background-size: 855% 855%;}
+  &-file-sketch-large {max-width:30px;max-height:30px;}
+  &-file-sketch-large::after {width:30px;height:30px;background-position: 44.680851063829785% 22.69503546099291%;background-size: 570% 570%;}
+  &-file-unknown {max-width:20px;max-height:20px;}
+  &-file-unknown::after {width:20px;height:20px;background-position: 76.15894039735099% 56.29139072847682%;background-size: 855% 855%;}
+  &-file-unknown-large {max-width:30px;max-height:30px;}
+  &-file-unknown-large::after {width:30px;height:30px;background-position: 44.680851063829785% 44.680851063829785%;background-size: 570% 570%;}
+  &-file-word {max-width:20px;max-height:20px;}
+  &-file-word::after {width:20px;height:20px;background-position: 76.15894039735099% 70.19867549668874%;background-size: 855% 855%;}
+  &-file-word-large {max-width:30px;max-height:30px;}
+  &-file-word-large::after {width:30px;height:30px;background-position: 44.680851063829785% 66.66666666666667%;background-size: 570% 570%;}
+  &-file-zip {max-width:20px;max-height:20px;}
+  &-file-zip::after {width:20px;height:20px;background-position: 76.15894039735099% 84.10596026490066%;background-size: 855% 855%;}
+  &-file-zip-large {max-width:30px;max-height:30px;}
+  &-file-zip-large::after {width:30px;height:30px;background-position: 44.680851063829785% 88.65248226950355%;background-size: 570% 570%;}
+  &-gender-f {max-width:9px;max-height:14px;}
+  &-gender-f::after {width:9px;height:14px;background-position: 51.851851851851855% 99.36305732484077%;background-size: 1900% 1221.4285714285713%;}
+  &-gender-m {max-width:13px;max-height:14px;}
+  &-gender-m::after {width:13px;height:14px;background-position: 99.36708860759494% 10.19108280254777%;background-size: 1315.3846153846155% 1221.4285714285713%;}
+  &-input-code {max-width:16px;max-height:12px;}
+  &-input-code::after {width:16px;height:12px;background-position: 0.6451612903225806% 98.11320754716981%;background-size: 1068.75% 1425%;}
+  &-input-emoji {max-width:14px;max-height:14px;}
+  &-input-emoji::after {width:14px;height:14px;background-position: 86.62420382165605% 60.50955414012739%;background-size: 1221.4285714285713% 1221.4285714285713%;}
+  &-input-file {max-width:16px;max-height:12px;}
+  &-input-file::after {width:16px;height:12px;background-position: 11.612903225806452% 98.11320754716981%;background-size: 1068.75% 1425%;}
+  &-input-file-collab {max-width:12px;max-height:14px;}
+  &-input-file-collab::after {width:12px;height:14px;background-position: 94.96855345911949% 58.59872611464968%;background-size: 1425% 1221.4285714285713%;}
+  &-input-help {max-width:14px;max-height:14px;}
+  &-input-help::after {width:14px;height:14px;background-position: 86.62420382165605% 70.06369426751593%;background-size: 1221.4285714285713% 1221.4285714285713%;}
+  &-input-image {max-width:16px;max-height:12px;}
+  &-input-image::after {width:16px;height:12px;background-position: 22.580645161290324% 98.11320754716981%;background-size: 1068.75% 1425%;}
+  &-input-send {max-width:14px;max-height:9px;}
+  &-input-send::after {width:14px;height:9px;background-position: 96.17834394904459% 96.91358024691358%;background-size: 1221.4285714285713% 1900%;}
+  &-member-mute {max-width:11px;max-height:17px;}
+  &-member-mute::after {width:11px;height:17px;background-position: 85% 40.25974025974026%;background-size: 1554.5454545454545% 1005.8823529411765%;}
+  &-more {max-width:13px;max-height:3px;}
+  &-more::after {width:13px;height:3px;background-position: 43.037974683544306% 98.80952380952381%;background-size: 1315.3846153846155% 5700%;}
+  &-nav-app {max-width:20px;max-height:20px;}
+  &-nav-app::after {width:20px;height:20px;background-position: 76.15894039735099% 98.01324503311258%;background-size: 855% 855%;}
+  &-nav-chat {max-width:20px;max-height:20px;}
+  &-nav-chat::after {width:20px;height:20px;background-position: 90.06622516556291% 0.6622516556291391%;background-size: 855% 855%;}
+  &-nav-contact {max-width:20px;max-height:20px;}
+  &-nav-contact::after {width:20px;height:20px;background-position: 90.06622516556291% 14.56953642384106%;background-size: 855% 855%;}
+  &-search {max-width:12px;max-height:12px;}
+  &-search::after {width:12px;height:12px;background-position: 94.96855345911949% 75.47169811320755%;background-size: 1425% 1425%;}
+  &-selection-remove {max-width:14px;max-height:14px;}
+  &-selection-remove::after {width:14px;height:14px;background-position: 86.62420382165605% 79.61783439490446%;background-size: 1221.4285714285713% 1221.4285714285713%;}
+  &-settings {max-width:14px;max-height:14px;}
+  &-settings::after {width:14px;height:14px;background-position: 86.62420382165605% 89.171974522293%;background-size: 1221.4285714285713% 1221.4285714285713%;}
+  &-sidebar {max-width:14px;max-height:14px;}
+  &-sidebar::after {width:14px;height:14px;background-position: 86.62420382165605% 98.72611464968153%;background-size: 1221.4285714285713% 1221.4285714285713%;}
+  &-switch-account {max-width:14px;max-height:14px;}
+  &-switch-account::after {width:14px;height:14px;background-position: 96.17834394904459% 49.044585987261144%;background-size: 1221.4285714285713% 1221.4285714285713%;}
+  &-window-close {max-width:10px;max-height:10px;}
+  &-window-close::after {width:10px;height:10px;background-position: 97.51552795031056% 19.25465838509317%;background-size: 1710% 1710%;}
+  &-window-maximize {max-width:10px;max-height:10px;}
+  &-window-maximize::after {width:10px;height:10px;background-position: 93.7888198757764% 90.6832298136646%;background-size: 1710% 1710%;}
+  &-window-minimize {max-width:10px;max-height:2px;}
+  &-window-minimize::after {width:10px;height:2px;background-position: 32.298136645962735% 98.81656804733728%;background-size: 1710% 8550%;}
+  &-window-restore {max-width:12px;max-height:12px;}
+  &-window-restore::after {width:12px;height:12px;background-position: 94.96855345911949% 83.64779874213836%;background-size: 1425% 1425%;}
+}
+
+div.@{prefix} {
+  &::after {width:100%;height:0;};
+  &-chat-history::after {max-width:14px;padding:0 0 100% 0;}
+  &-chat-mute::after {max-width:13px;padding:0 0 107.6923076923077% 0;}
+  &-file-action-cancel::after {max-width:14px;padding:0 0 100% 0;}
+  &-file-action-download::after {max-width:14px;padding:0 0 100% 0;}
+  &-file-ai::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-ai-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-code::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-code-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-excel::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-excel-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-folder::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-folder-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-keynote::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-keynote-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-media::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-media-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-numbers::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-numbers-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-pages::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-pages-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-pdf::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-pdf-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-powerpoint::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-powerpoint-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-ps::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-ps-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-sketch::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-sketch-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-unknown::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-unknown-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-word::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-word-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-file-zip::after {max-width:20px;padding:0 0 100% 0;}
+  &-file-zip-large::after {max-width:30px;padding:0 0 100% 0;}
+  &-gender-f::after {max-width:9px;padding:0 0 155.55555555555554% 0;}
+  &-gender-m::after {max-width:13px;padding:0 0 107.6923076923077% 0;}
+  &-input-code::after {max-width:16px;padding:0 0 75% 0;}
+  &-input-emoji::after {max-width:14px;padding:0 0 100% 0;}
+  &-input-file::after {max-width:16px;padding:0 0 75% 0;}
+  &-input-file-collab::after {max-width:12px;padding:0 0 116.66666666666667% 0;}
+  &-input-help::after {max-width:14px;padding:0 0 100% 0;}
+  &-input-image::after {max-width:16px;padding:0 0 75% 0;}
+  &-input-send::after {max-width:14px;padding:0 0 64.28571428571429% 0;}
+  &-member-mute::after {max-width:11px;padding:0 0 154.54545454545453% 0;}
+  &-more::after {max-width:13px;padding:0 0 23.076923076923077% 0;}
+  &-nav-app::after {max-width:20px;padding:0 0 100% 0;}
+  &-nav-chat::after {max-width:20px;padding:0 0 100% 0;}
+  &-nav-contact::after {max-width:20px;padding:0 0 100% 0;}
+  &-search::after {max-width:12px;padding:0 0 100% 0;}
+  &-selection-remove::after {max-width:14px;padding:0 0 100% 0;}
+  &-settings::after {max-width:14px;padding:0 0 100% 0;}
+  &-sidebar::after {max-width:14px;padding:0 0 100% 0;}
+  &-switch-account::after {max-width:14px;padding:0 0 100% 0;}
+  &-window-close::after {max-width:10px;padding:0 0 100% 0;}
+  &-window-maximize::after {max-width:10px;padding:0 0 100% 0;}
+  &-window-minimize::after {max-width:10px;padding:0 0 20% 0;}
+  &-window-restore::after {max-width:12px;padding:0 0 100% 0;}
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  *[class^='sprite'], *[class*=' sprite']{
+    &::after {
+      background-image: url(./imgs/icon-sprite-2x.png);
+    }
+  }
+  .@{prefix} {
+    &-chat-history::after {background-position: 86.62420382165605% 50.955414012738856%;}
+    &-chat-mute::after {background-position: 99.36708860759494% 0.6369426751592356%;}
+    &-file-action-cancel::after {background-position: 94.26751592356688% 39.49044585987261%;}
+    &-file-action-download::after {background-position: 97.45222929936305% 27.388535031847134%;}
+    &-file-ai-large::after {background-position: 0.7092198581560284% 0.7092198581560284%;}
+    &-file-ai::after {background-position: 62.25165562913907% 0.6622516556291391%;}
+    &-file-code-large::after {background-position: 0.7092198581560284% 22.69503546099291%;}
+    &-file-code::after {background-position: 62.25165562913907% 14.56953642384106%;}
+    &-file-excel-large::after {background-position: 0.7092198581560284% 44.680851063829785%;}
+    &-file-excel::after {background-position: 62.25165562913907% 28.47682119205298%;}
+    &-file-folder-large::after {background-position: 0.7092198581560284% 66.66666666666667%;}
+    &-file-folder::after {background-position: 62.25165562913907% 42.384105960264904%;}
+    &-file-keynote-large::after {background-position: 0.7092198581560284% 88.65248226950355%;}
+    &-file-keynote::after {background-position: 62.25165562913907% 56.29139072847682%;}
+    &-file-media-large::after {background-position: 22.69503546099291% 0.7092198581560284%;}
+    &-file-media::after {background-position: 62.25165562913907% 70.19867549668874%;}
+    &-file-numbers-large::after {background-position: 22.69503546099291% 22.69503546099291%;}
+    &-file-numbers::after {background-position: 62.25165562913907% 84.10596026490066%;}
+    &-file-pages-large::after {background-position: 22.69503546099291% 44.680851063829785%;}
+    &-file-pages::after {background-position: 62.25165562913907% 98.01324503311258%;}
+    &-file-pdf-large::after {background-position: 22.69503546099291% 66.66666666666667%;}
+    &-file-pdf::after {background-position: 76.15894039735099% 0.6622516556291391%;}
+    &-file-powerpoint-large::after {background-position: 22.69503546099291% 88.65248226950355%;}
+    &-file-powerpoint::after {background-position: 76.15894039735099% 14.56953642384106%;}
+    &-file-ps-large::after {background-position: 44.680851063829785% 0.7092198581560284%;}
+    &-file-ps::after {background-position: 76.15894039735099% 28.47682119205298%;}
+    &-file-sketch-large::after {background-position: 44.680851063829785% 22.69503546099291%;}
+    &-file-sketch::after {background-position: 76.15894039735099% 42.384105960264904%;}
+    &-file-unknown-large::after {background-position: 44.680851063829785% 44.680851063829785%;}
+    &-file-unknown::after {background-position: 76.15894039735099% 56.29139072847682%;}
+    &-file-word-large::after {background-position: 44.680851063829785% 66.66666666666667%;}
+    &-file-word::after {background-position: 76.15894039735099% 70.19867549668874%;}
+    &-file-zip-large::after {background-position: 44.680851063829785% 88.65248226950355%;}
+    &-file-zip::after {background-position: 76.15894039735099% 84.10596026490066%;}
+    &-gender-f::after {background-position: 51.851851851851855% 99.36305732484077%;}
+    &-gender-m::after {background-position: 99.36708860759494% 10.19108280254777%;}
+    &-input-code::after {background-position: 0.6451612903225806% 98.11320754716981%;}
+    &-input-emoji::after {background-position: 86.62420382165605% 60.50955414012739%;}
+    &-input-file-collab::after {background-position: 94.96855345911949% 58.59872611464968%;}
+    &-input-file::after {background-position: 11.612903225806452% 98.11320754716981%;}
+    &-input-help::after {background-position: 86.62420382165605% 70.06369426751593%;}
+    &-input-image::after {background-position: 22.580645161290324% 98.11320754716981%;}
+    &-input-send::after {background-position: 96.17834394904459% 96.91358024691358%;}
+    &-member-mute::after {background-position: 85% 40.25974025974026%;}
+    &-more::after {background-position: 43.037974683544306% 98.80952380952381%;}
+    &-nav-app::after {background-position: 76.15894039735099% 98.01324503311258%;}
+    &-nav-chat::after {background-position: 90.06622516556291% 0.6622516556291391%;}
+    &-nav-contact::after {background-position: 90.06622516556291% 14.56953642384106%;}
+    &-search::after {background-position: 94.96855345911949% 75.47169811320755%;}
+    &-selection-remove::after {background-position: 86.62420382165605% 79.61783439490446%;}
+    &-settings::after {background-position: 86.62420382165605% 89.171974522293%;}
+    &-sidebar::after {background-position: 86.62420382165605% 98.72611464968153%;}
+    &-switch-account::after {background-position: 96.17834394904459% 49.044585987261144%;}
+    &-window-close::after {background-position: 97.51552795031056% 19.25465838509317%;}
+    &-window-maximize::after {background-position: 93.7888198757764% 90.6832298136646%;}
+    &-window-minimize::after {background-position: 32.298136645962735% 98.81656804733728%;}
+    &-window-restore::after {background-position: 94.96855345911949% 83.64779874213836%;}
+  }
+}

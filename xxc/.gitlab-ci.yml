@@ -1,0 +1,25 @@
+package-xxc-win:
+  cache:
+    paths:
+      - xxc/node_modules/
+      - xxc/app/node_modules/
+  stage: package
+  only:
+    - schedules
+  variables:
+    ELECTRON_MIRROR: https://cdn.npm.taobao.org/dist/electron/
+  script:
+    - cd xxc
+    - npm i --force
+    - rm -rf release
+    - npm run package-win
+    - npm run package-win-debug
+    - npm run package-mac-debug
+    - /usr/local/bin/sshpass -f /usr/local/etc/lacube-pass scp release/*/*.exe gitlab-ci@lwr.oop.cc:~/xxc-nightly/
+    - /usr/local/bin/sshpass -f /usr/local/etc/lacube-pass scp release/*/*.zip gitlab-ci@lwr.oop.cc:~/xxc-nightly/
+    - /usr/local/bin/sshpass -f /usr/local/etc/lacube-pass scp release/*/*.dmg gitlab-ci@lwr.oop.cc:~/xxc-nightly/
+  # artifacts:
+  #   paths:
+  #     - xxc/release/*/*.exe
+  #     - xxc/release/*/*.zip
+  #   expire_in: 1 week

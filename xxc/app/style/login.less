@@ -1,0 +1,164 @@
+.app-login {
+  width: 100%;
+  left: -100%;
+
+  .checkbox > label::before {
+    border-radius: 0 !important;
+  }
+
+  .checkbox > label::after {
+    border-radius: 0 !important;
+  }
+
+  >section {
+    transition: .5s opacity, .5s visibility;
+
+    >header>img {
+      max-width: 180px;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+  }
+
+  #app-view.hide-login>&>section {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  >.drag-area {
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    z-index: 0;
+    pointer-events: none;
+  }
+}
+
+#app-view {
+  transition: transform .4s;
+  transform: translateX(100%);
+
+  &.hide-login {
+    transform: translateX(0);
+  }
+}
+
+.app-login-form {
+  overflow: hidden;
+  padding-bottom: @space !important;
+
+  >.control {
+    >label {
+      color: @color-gray-dark;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    >input {
+      font-size: 14px;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  >.btn {
+    white-space: pre;
+  }
+
+  .settings-btn {
+    top: 2px;
+  }
+}
+
+.app-login-logo {
+  >img {
+    filter: drop-shadow(2px 2px 3px rgba(black, 0.1));
+  }
+}
+
+.app-login-tip {
+  max-width: 360px;
+}
+
+.app-login-server-control .input,
+.app-login-control .input {
+  padding-right: 30px;
+}
+
+.app-login-control-btn {
+  right: 0;
+  top: 30px;
+  position: absolute !important;
+}
+
+.app-net-diagnostic-result {
+  position: relative;
+
+  >.heading {
+    .darken-0;
+
+    >.title {
+      padding-left: 3px;
+    }
+
+    >.avatar {
+      margin-left: 0;
+    }
+  }
+
+  +.app-net-diagnostic-result {
+    border-top: 1px solid @border-color !important;
+    margin-top: 2px;
+  }
+}
+
+.app-net-diagnostic-result-section {
+  >.heading {
+    padding: 10px 10px 0 10px;
+
+    >.title {
+      padding: 0 0 0 5px;
+    }
+
+    >.avatar {
+      margin-left: 0;
+    }
+  }
+
+  pre {
+    background: none;
+    max-height: 300px;
+    overflow: auto;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+
+  ul {
+    padding: 10px 10px 10px 30px;
+    margin: 0;
+  }
+}
+
+.app-net-diagnostic-result-index {
+  padding-left: 10px;
+  padding-right: 8px;
+  font-size: 16px;
+}
+
+.app-net-diagnostic-result-border {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: 0;
+  width: 4px;
+}
+
+.app-login-showed #max-window-btn {
+  display: none;
+}
+
+.app-login-form > .row > .checkbox > input[type="checkbox"] {
+  display: none !important;
+}

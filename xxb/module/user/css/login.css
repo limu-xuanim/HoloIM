@@ -1,0 +1,298 @@
+/* 确保html和body撑满整个屏幕 */
+html,
+body {
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.container {
+    max-width: 100% !important;
+    height: 100vh !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login {
+    width: 800px;
+    height: 497px;
+    background-color: #fff;
+    border: 1px solid #dfdfdf;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 16px;
+    -moz-box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15);
+}
+
+#login .panel-head {
+    font-family: Source Han Sans SC;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    line-height: 32px;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 36px;
+    display: flex;
+
+}
+
+#login .panel-actions {
+    margin-left: auto;
+}
+
+.table td,
+.table th {
+    padding: 0 !important;
+}
+
+/* #login .panel-actions .dropdown {
+    display: inline-block;
+    margin-right: 2px
+} */
+#account {
+    margin-bottom: 20px;
+}
+
+#password {
+    margin-bottom: 26px;
+}
+
+.checkbox-inline {
+    /* margin-top: 26px; */
+}
+
+#login #submit {
+    width: 100%;
+    height: 48px;
+    margin-top: 32px;
+}
+
+#loginForm {
+    padding: 0;
+    height: 100%;
+}
+
+#loginForm form {
+    height: 100%;
+}
+
+#loginForm form .row {
+    height: 100%;
+    display: flex;
+}
+
+#loginForm img {
+    height: 125px;
+}
+
+.panel-actions .btn {
+    background-color: transparent;
+    border: 1px solid transparent;
+    font-size: 14px;
+    color: rgba(55, 65, 81, 1);
+    transition: none;
+    box-sizing: border-box;
+}
+
+.panel-actions .btn,
+.panel-actions .btn:hover,
+.panel-actions .btn:focus {
+    min-width: 58px;
+}
+
+.panel-actions .btn:focus {
+    outline: none;
+    box-shadow: none;
+    background: rgba(248, 250, 252, 1);
+    border-color: rgba(226, 232, 240, 1);
+    border-radius: 15px;
+}
+
+.panel-actions .btn:hover {
+    box-shadow: none;
+    background: rgba(248, 250, 252, 1);
+    border-color: rgba(226, 232, 240, 1);
+    border-radius: 15px;
+}
+
+.dropdown-menu {
+    min-width: 77px;
+    padding: 8px;
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:focus,
+.dropdown-menu>.active>a:hover {
+    border-radius: 4px;
+}
+
+.dropdown-menu>li>a:focus,
+.dropdown-menu>li>a:hover {
+    border-radius: 4px;
+}
+
+.panel-left {
+    border-radius: 16px 0 0 16px;
+    width: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(239, 247, 255, 1);
+}
+
+.panel-right {
+    width: 500px;
+    height: 100%;
+    padding: 76px 52px;
+}
+
+/* 输入框样式 */
+.form-control {
+    background: rgba(248, 250, 252, 1) !important;
+    /* border: 1px solid rgba(226, 232, 240, 1) !important; */
+    height: 38px !important;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px !important;
+    transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #3B82F6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 密码输入框包装器 */
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input {
+    padding-right: 40px !important;
+}
+
+/* 密码切换图标 */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-110%);
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    z-index: 10;
+}
+
+.password-toggle:hover {
+    color: #374151;
+}
+
+.password-icon {
+    transition: opacity 0.2s ease;
+    width: 20px;
+    height: 20px;
+}
+
+.password-icon.hidden {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+/* 错误提示框样式 */
+.error-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-modal-content {
+    width: 448px;
+    min-height: 120px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 8px 24px 0px rgba(153, 161, 176, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 32px;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.error-content-row {
+    display: flex;
+    /* align-items: flex-start; */
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.error-icon {
+    margin-right: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.error-text {
+    flex: 1;
+    font-family: Source Han Sans SC;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(55, 65, 81, 1);
+}
+
+.error-button-row {
+    display: flex;
+    justify-content: center;
+}
+
+.error-confirm-btn {
+    background: #3B82F6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    min-width: 74px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-confirm-btn:hover {
+    background: #2563EB;
+}

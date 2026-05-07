@@ -1,0 +1,11 @@
+package-xxb:
+  stage: package
+  only:
+    - schedules
+  script:
+    - cd xxb
+    - make xxb
+  artifacts:
+    paths:
+      - xxb/xxb.*.zip
+    expire_in: 1 week

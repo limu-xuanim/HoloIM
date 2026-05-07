@@ -1,0 +1,133 @@
+.app-file-infos {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding-left: 12px;
+    font-size: 12px;
+    > li {
+        display: block;
+    }
+}
+.app-file-info {
+    white-space: nowrap;
+    &[data-info="progress"] {
+        color: @color-primary;
+    }
+    &[data-info="size"],
+    &[data-info="date"] {
+        color: @color-gray;
+    }
+
+    &[data-info="error"] {
+        color: @color-danger;
+    }
+
+    + .app-file-info {
+        margin-left: 5px;
+    }
+
+    .compact & {
+        .btn {
+            padding: 0 4px;
+        }
+    }
+}
+
+.app-file-actions {
+    display: flex;
+    align-items: center;
+    margin-right: -5px;
+    flex: none;
+    > a {
+        color: @color-accent;
+        display: flex;
+        width: 32px;
+        height: 32px;
+        align-items: center;
+        justify-content: center;
+
+        > .icon {
+            font-size: 24px;
+        }
+
+        &:after {
+            border-radius: @border-radius-base;
+        }
+    }
+
+    .compact & {
+        > a {
+            width: 18px;
+            height: 18px;
+            > .icon {
+                font-size: 16px;
+            }
+
+            &:after {
+                border-radius: @border-radius-small;
+            }
+        }
+    }
+}
+
+.app-file-list-item {
+    position: relative;
+    display: flex;
+    padding: 10px;
+    max-width: 100%;
+
+    > .avatar {
+        flex: none;
+        margin-right: 10px;
+    }
+
+    > .content {
+        display: flex;
+        flex: auto;
+        align-items: center;
+        justify-content: flex-start;
+        min-width: 0; // see https://stackoverflow.com/a/38224283
+        > .title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+    }
+
+    &.multi-lines {
+        > .content {
+            flex-direction: column;
+            align-items: flex-start;
+
+            .app-file-infos {
+                padding-left: 0;
+            }
+        }
+    }
+
+    &.compact {
+        padding: 5px 10px;
+    }
+
+    &.editable {
+        > .content > .label {
+            flex-shrink: 0;
+            margin-right: 4px;
+        }
+    }
+    &.editable.compact {
+        > .content {
+            > .label {
+                position: absolute;
+                right: 8px;
+                top: 6px;
+                font-size: 11px;
+            }
+            > .title {
+              padding-right: 32px
+            }
+        }
+    }
+}

@@ -1,0 +1,69 @@
+.app-chat-avatar {
+  position: relative;
+  > .badge {
+    top: -4px;
+    right: -4px;
+  }
+  > .star {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    background: gold;
+    border-radius: 50%;
+    overflow: hidden;
+    color: white;
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+    line-height: 12px;
+
+    &:before {
+      min-width: 0;
+    }
+    &::after {
+      display: block;
+      content: " ";
+      position: absolute;
+      left: 0;
+      border-radius: 50%;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      border: 2px solid gold;
+    }
+  }
+  > .avatar {
+    > .text {
+      display: block;
+      overflow: hidden;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      text-align: center;
+      line-height: 1;
+
+      &.crowd- {
+        &0, &2 {
+          // 魔法数：直径为 100% 的圆中，最大正方形边长 `(100% / 2) * (2 ^ 0.5)` 的值，计为 70.71%
+          max-height: 70.71%;
+          max-width: 70.71%;
+        }
+        &1 {
+          // 魔法数：直径为 100% 的圆中，最大的由两个正方形组成的矩形宽高
+          max-height: 44.80%;
+          max-width: 89.58%;
+        }
+      }
+
+      > span {
+        display: inline-block;
+      }
+
+      > .joypixels {
+        display: inline-block;
+        object-fit: contain;
+        width: 1.7ch;
+        height: 1.7ch;
+      }
+    }
+  }
+}

@@ -1,0 +1,174 @@
+//
+// Navs
+// --------------------------------------------------
+
+
+// Base style
+
+.nav {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  > a {
+    flex: 0 0 auto;
+    display: flex;
+    min-width: 40px;
+    opacity: .8;
+    padding: 0 @padding-base-horizontal;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    line-height: 1;
+
+    &.active {
+      opacity: 1;
+      font-weight: bold;
+    }
+
+    > .icon + .text {
+      display: inline-block;
+      margin-left: @space-xs;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+
+// Secondary nav
+
+.nav-secondary {
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.1);
+
+  > .active {box-shadow: inset 0 -2px 0 @color-white;}
+
+  &.primary-pale > .active   {box-shadow: inset 0 -2px 0 @color-primary;}
+  &.success-pale > .active   {box-shadow: inset 0 -2px 0 @color-success;}
+  &.danger-pale > .active    {box-shadow: inset 0 -2px 0 @color-danger;}
+  &.warning-pale > .active   {box-shadow: inset 0 -2px 0 @color-warning;}
+  &.important-pale > .active {box-shadow: inset 0 -2px 0 @color-important;}
+  &.special-pale > .active   {box-shadow: inset 0 -2px 0 @color-special;}
+}
+
+
+// Skin options
+
+.nav.circle {border-radius: 20px}
+
+.nav.x-outline {
+  > a {
+    border-right: @border-width solid transparent;
+    border-right-color: inherit;
+
+    &:last-child {border-right: none}
+
+    &.active {
+      color: @color-fore;
+      background-color: @color-back;
+    }
+  }
+}
+
+
+// Large navs
+
+.nav-lg {> a {height: 48px;}}
+
+.nav-sm {
+  > a {
+    height: 24px;
+    min-width: 28px;
+    font-size: 13px;
+    padding: 0 @padding-small-horizontal;
+  }
+}
+
+
+// Affix navs
+
+.nav.affix {
+  background-color: @color-back;
+  &:extend(.nav-lg all);
+}
+
+.with-nav-top                   {padding-top: 48px;}
+.with-nav-bottom                {padding-bottom: 48px;}
+.with-heading-top.with-nav-top  {
+  padding-top: 48px*2;
+
+  > .nav.affix.dock-top {top: 48px}
+}
+
+.in-scroll.scroll-down {
+  &.with-heading-top, .with-heading-top {
+    > .nav.dock-top {
+      // Yes, not 100%! The magic 99% to prevent bug in safari
+      transform: translate(0, -100%);
+      &.dock-auto {
+        // Yes, not 200%! The magic 199% to prevent bug in safari
+        transform: translate(0, -199%);
+      }
+    }
+  }
+}
+
+.in-scroll > .dock-top .nav-secondary {.shadow-0()}
+
+// Nav tabs
+.nav-tabs {
+  > .active {
+    background-color: @color-white;
+    border: @color-primary solid 1px;
+    border-bottom-color: @color-white;
+    position: relative;
+    z-index: 1;
+
+    &:after {
+      bottom: -1px;
+    }
+  }
+
+  &.nav-sm {
+    > a {
+      padding-top: 2px;
+
+      &.active {
+        padding-top: 0;
+        height: 28px;
+        margin-top: 2px;
+      }
+    }
+  }
+}
+
+// Nav pills
+.nav-pills {
+  justify-content: center;
+  border-radius: 20px;
+
+  > a {
+    padding: 0 @padding-base-horizontal;
+    border-radius: 20px;
+    &::after {
+      border-radius: 20px;
+    }
+  }
+
+  &.nav-sm {
+    border-radius: 12px;
+    > a {
+      &,
+      &::after {
+        border-radius: 14px;
+      }
+      &.active {
+        .bg-primary;
+        background-color: @color-primary;
+      }
+    }
+  }
+}

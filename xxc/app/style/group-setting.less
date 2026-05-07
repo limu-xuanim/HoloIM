@@ -1,0 +1,146 @@
+.app-group-setting {
+    max-height: 500px;
+    font-size: 14px;
+}
+
+.avatar-settings {
+  .radio {
+    width: 170px;
+    font-size: 14px;
+  }
+
+  .preview-size {
+    width: 80px;
+    height: 80px;
+  }
+
+  .icon-custom-text {
+    padding-bottom: 20px;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  .checkbox-list {
+    display: flex;
+    width: 280px;
+    margin-bottom: 8px;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .checkbox-list .color-space {
+    border-radius: 10%;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    height: 20px;
+    width: 20px;
+  }
+  .color-space:hover {
+    transform: scale(1.5);
+  }
+
+  .abs-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  // 以下 input 样式生成于 http://danielstern.ca/range.css/
+  input[type=range].avatar-cropper {
+    width: 100%;
+    margin: 2.5px 0;
+    background-color: transparent;
+    -webkit-appearance: none;
+  }
+  input[type=range].avatar-cropper:focus {
+    outline: none;
+  }
+  input[type=range].avatar-cropper::-webkit-slider-runnable-track {
+    background: rgba(0, 0, 0, 0.1);
+    border: 0.5px solid rgba(1, 1, 1, 0.5);
+    border-radius: 25px;
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
+  }
+  input[type=range].avatar-cropper::-webkit-slider-thumb {
+    margin-top: -2.7px;
+    width: 15px;
+    height: 15px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 50px;
+    cursor: pointer;
+    -webkit-appearance: none;
+  }
+  input[type=range].avatar-cropper::-moz-range-track {
+    background: rgba(0, 0, 0, 0.1);
+    border: 0.5px solid rgba(1, 1, 1, 0.5);
+    border-radius: 25px;
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
+  }
+  input[type=range].avatar-cropper::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+  input[type=range].avatar-cropper::-ms-track {
+    background: transparent;
+    border-color: transparent;
+    border-width: 2.5px 0;
+    color: transparent;
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
+  }
+  input[type=range].avatar-cropper::-ms-fill-lower {
+    background: #000000;
+    border: 0.5px solid rgba(1, 1, 1, 0.5);
+    border-radius: 50px;
+  }
+  input[type=range].avatar-cropper::-ms-fill-upper {
+    background: rgba(0, 0, 0, 0.1);
+    border: 0.5px solid rgba(1, 1, 1, 0.5);
+    border-radius: 50px;
+  }
+  input[type=range].avatar-cropper::-ms-thumb {
+    width: 15px;
+    height: 15px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 0;
+    /*Needed to keep the Edge thumb centred*/
+  }
+  @supports (-ms-ime-align:auto) {
+    /* Pre-Chromium Edge only styles, selector taken from https://stackoverflow.com/a/32202953/7077589 */
+    input[type=range].avatar-cropper {
+      margin: 0;
+      /*Edge starts the margin from the thumb, not the track as other browsers do*/
+    }
+  }
+
+  .text-avatar-input{
+    input{
+      padding-right: 30px;
+    }
+  }
+  .emoji-btn{
+    position: relative;
+    left: calc(100% - 26px);
+    top: -27px; // 有 1px 的输入框 border
+  }
+}

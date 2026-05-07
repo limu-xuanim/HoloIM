@@ -1,0 +1,628 @@
+@app-nav-profile-width: 200px;
+@app-navbar-width: 48px;
+
+.app-navbar {
+  width: @app-navbar-width;
+  background-image: linear-gradient(-35deg, @color-secondary 0%, darken(@color-primary, 10%) 100%);
+  color: #fff;
+
+  nav[class^="app-nav"]:not(.app-nav-user)>a,
+  nav[class^="app-nav"]:not(.app-nav-user)>.nav-item {
+    >.avatar {
+      opacity: 0.4;
+    }
+
+    &:hover,
+    &.active {
+      >.avatar {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.app-nav-profile {
+  z-index: 1031;
+  width: @app-nav-profile-width;
+  padding: 0 10px 9px;
+  flex: none;
+}
+
+.app-profile-name {
+  margin: 0;
+  padding-left: 10px;
+
+  >span {
+    max-width: 115px;
+  }
+}
+
+.app-nav-user,
+.app-nav-main {
+  >a,
+  >.nav-item {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: @app-navbar-width;
+    height: @app-navbar-width;
+    flex-shrink: 0;
+
+    .icon {
+      font-size: 24px;
+    }
+  }
+
+  >.divider {
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+  }
+
+  .collapse-menu-items .title {
+    flex-grow: 0;
+  }
+}
+
+.app-titlebar {
+  left: @app-navbar-width;
+}
+
+.lang-switch-moved {
+  top: 20px;
+}
+
+.app-main-container {
+  z-index: 1060;
+  left: @app-navbar-width;
+  transition: none;
+}
+
+.app-member-list-item {
+  >.status-dot+.title {
+    margin-left: 5px;
+  }
+
+  >.title {
+    font-size: 13px;
+  }
+
+  >.icons>i {
+    margin-left: 4px;
+  }
+
+  &.disabled-member-item {
+    opacity: 0.5;
+    background-color: rgba(0, 0, 0, 0.03);
+
+    .title {
+      color: #999;
+    }
+  }
+}
+
+.app-member-profile {
+  .infos {
+    flex-wrap: wrap;
+
+    >div {
+      align-items: center;
+      display: inline-flex;
+      font-size: 13px;
+      padding-right: 10px;
+      line-height: 25px;
+
+      >.icon {
+        margin-right: 4px;
+      }
+
+      +div {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .app-member-profile-dialog & {
+    min-width: 450px;
+  }
+
+  &.compact {
+    >header {
+      padding: @space @space-sm;
+      margin-bottom: 0 !important;
+      flex-direction: column;
+
+      >.content {
+        margin: 0;
+        padding: @space 0 0 !important;
+        text-align: center;
+      }
+    }
+
+    .infos {
+      justify-content: center;
+
+      >div {
+        display: inline-flex;
+        padding: 0 5px !important;
+      }
+    }
+
+    >.divider {
+      margin: 0
+    }
+
+    >.contact-info-item {
+      display: block;
+      position: relative;
+
+      >.avatar {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 16px;
+        height: 16px;
+
+        >.icon {
+          font-size: 12px;
+        }
+      }
+
+      >.content {
+        margin: 0;
+
+        >.subtitle {
+          padding-left: 24px;
+        }
+      }
+    }
+  }
+}
+
+.app-member-profile-menu-title {
+  // 中文语言下使用紧凑布局（默认）
+  width: 42px;
+  margin-right: 12px;
+  flex: none;
+}
+
+// 其他语言下使用更宽的布局
+:lang(en) .app-member-profile-menu-title,
+:lang(vi) .app-member-profile-menu-title {
+  width: 60px;
+}
+
+// 日文标签较长，需要更宽的空间
+:lang(ja) .app-member-profile-menu-title {
+  width: 70px;
+}
+
+.app-about {
+  >section>img {
+    max-width: 240px;
+    max-height: 55px;
+  }
+}
+
+.app-user-setting {
+  max-height: 500px;
+
+  >section {
+    >.heading>.title {
+      padding-left: 0;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    >.items {
+      margin-left: 5px;
+      position: relative;
+
+      .control:not(:last-child) {
+        margin-bottom: @space-xs;
+      }
+
+      .app-reset-btn {
+        width: 106px !important;
+        height: 26px !important;
+
+        &:first-child {
+          margin-bottom: 10px;
+        }
+      }
+
+      .cache-tip-position {
+        position: absolute;
+        top: 5px;
+        left: 106px;
+      }
+
+      .reset-tip-position {
+        position: absolute;
+        top: 41px;
+        left: 106px;
+      }
+
+      .reset-tip-position-nocach {
+        position: absolute;
+        top: -20px;
+        left: 106px;
+      }
+
+      >.level-2 {
+        margin-left: 25px;
+
+        +.control:not(.level-2) {
+          margin-top: 5px;
+        }
+      }
+
+      .selectbox {
+        >label {
+          width: auto;
+          margin-right: 10px;
+        }
+      }
+
+      .rangebox {
+        >label {
+          width: auto;
+          margin-right: 10px;
+        }
+
+        >div {
+          margin-left: 10px;
+        }
+      }
+
+      .items-tips {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.app-setting-group-hotkeys {
+  .items>.control>label {
+    width: 250px !important;
+    flex: none !important;
+    margin-right: 10px;
+  }
+}
+
+.layer-image-viewer {
+  >.heading>.nav>.close {
+    color: white;
+    background: rgba(0, 0, 0, .25);
+  }
+
+  >.content img {
+    transition: transform .2s;
+  }
+}
+
+.app-user-change-pwd-dialog {
+  width: 300px;
+}
+
+.app-avatar {
+  padding: 10px 15px;
+  text-align: center;
+  width: 90px;
+  max-height: 100px;
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+
+    >.icon {
+      font-size: 36px;
+    }
+
+    >.text {
+      font-size: 30px;
+      font-weight: bold;
+      line-height: 1;
+    }
+  }
+
+  >.text {
+    .x-text-ellipsis;
+    margin: 5px -10px 0;
+    .small;
+  }
+}
+
+.user-avatar {
+  position: relative;
+  background-color: rgba(0, 0, 0, .05);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .5);
+}
+
+.app-page-header {
+  >.title {
+    font-size: 28px;
+    line-height: 36px;
+    padding: 20px;
+  }
+}
+
+.contextmenu-member_profile {
+  padding: @space-sm;
+
+  .dropdown-menu {
+    min-width: 260px;
+    max-width: 480px;
+
+    >.item {
+      display: flex;
+      align-items: center;
+      margin-bottom: @space-xs;
+      padding-left: 10px;
+
+      >.title,
+      >.content {
+        margin-left: 0;
+        color: #574F66;
+        flex: 1;
+      }
+
+      >.icon {
+        color: @color-fore;
+      }
+
+      &.is-member-name {
+        margin-bottom: @space;
+        display: flex;
+        align-items: center;
+
+        >.content {
+          margin-left: 14px;
+          flex: 1;
+
+          >.title>.icon {
+            position: relative;
+            top: 3px;
+            left: 3px;
+          }
+        }
+      }
+
+      >.status-dot {
+        margin-left: 0;
+
+        +.title {
+          margin-left: 0;
+        }
+      }
+    }
+
+    >.actions {
+      margin-top: @space;
+      margin-bottom: 0;
+
+      >.btn {
+        min-width: 70px;
+      }
+    }
+  }
+}
+
+.contextmenu-profile_menu {
+  .dropdown-menu>.item {
+    padding-left: 10px;
+
+    >.avatar,
+    >.status-dot {
+      margin-left: 8px;
+    }
+  }
+}
+
+.app-members-select {
+  .checkboxs-select {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-content: center;
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+
+      >label {
+        margin-left: 4px;
+      }
+    }
+
+    .btn-sm {
+      font-size: 13px;
+    }
+  }
+
+  .nav-tabs {
+    div {
+      line-height: 22px;
+    }
+
+    .btn {
+      font-size: 13px;
+      padding: 0 4px;
+      margin: 0 4px 0 0;
+
+      &.active {
+        border: unset;
+        box-shadow: 0 1px @color-primary;
+        color: @color-primary;
+      }
+    }
+  }
+}
+
+.app-select-panel-dialog {
+  width: 550px;
+  height: 450px;
+}
+
+.app-select-panel-dialog-with-preview {
+  width: 550px;
+  height: 600px;
+
+  .app-select-panel {
+    top: 150px;
+    .divider-top;
+  }
+}
+
+.app-select-panel {
+  >.column {
+    padding: @space @space-lg 0 @space;
+    width: 50%;
+    bottom: 68px;
+
+    &.dock-left, &.dock-right {
+      padding: 20px 10px 0 10px;
+    }
+
+    &.dock-right > .heading > .title {
+      padding: 10px 0;
+      line-height: 22px;
+    }
+  }
+
+  .actions {
+    .btn+.btn {
+      margin-left: 20px
+    }
+  }
+}
+
+.app-select-panel-body {
+  .menu-recents, .menu-groups {
+    padding: 0 0 0 20px!important;
+  }
+}
+
+.app-select-panel-tree {
+  .group-list {
+    .heading {
+      >.icon {
+        color: @color-gray;
+        opacity: 1;
+      }
+
+      >.title {
+        color: @color-gray-dark;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 14px;
+        opacity: 1;
+      }
+    }
+  }
+
+  .list>.heading>.btn {
+    font-size: 12px;
+    color: @color-gray;
+
+    &:hover {
+      color: @color-accent;
+    }
+  }
+}
+
+.app-auto-reconnect-bar {
+  z-index: 1090;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+
+  >.heading {
+    padding: 1px 10px 2px;
+
+    >.title {
+      padding: 2px 10px;
+      font-size: 13px;
+    }
+  }
+}
+
+// Mac os 上布局优化
+.os-mac {
+  .app-navbar {
+    width: 68px;
+
+    .app-navbar-main {
+      top: 24px;
+    }
+  }
+
+  .app-nav-user>a,
+  .app-nav-main>a {
+    &:after {
+      border-radius: (50%);
+    }
+  }
+
+  .app-main-container {
+    left: 68px;
+  }
+}
+
+.maximized {
+  .app-navbar .app-navbar-drag-area {
+    margin-left: 0;
+  }
+}
+
+.app-user-edit-info {
+  min-width: 320px;
+  padding: 10px 0 0;
+
+  .user-info-item {
+    margin-bottom: 24px;
+    position: relative;
+
+    &:nth-child(2) {
+      margin-bottom: 18px;
+    }
+
+    .radio {
+      margin-right: 4px;
+    }
+
+    .control {
+      margin: 0;
+      width: 100%;
+
+      label {
+        width: 60px;
+        text-align: right;
+        margin-right: 10px;
+        display: inline-block;
+      }
+
+      input {
+        width: 200px;
+        display: inline-block;
+      }
+
+      .help-text {
+        padding-left: 70px;
+        height: 24px;
+        margin: 0;
+      }
+    }
+
+    .user-info-edit-label {
+      width: 60px;
+      height: 26px;
+      line-height: 26px;
+      margin-right: 10px;
+    }
+
+    .text-red {
+      position: absolute;
+      left: 280px;
+      top: 8px;
+    }
+  }
+}

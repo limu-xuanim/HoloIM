@@ -1,0 +1,46 @@
+# Linux arm64 交叉编译基础环境（容器内在 amd64 交叉编 Linux/arm64 版 xxd）
+#
+# 基于 Debian 11（bullseye, amd64），安装 aarch64-linux-gnu 交叉工具链。
+# 构建镜像：
+#   docker build -f xxd/docker/Dockerfile.linux-arm64 -t xxd-linux-arm64:latest xxd/docker
+
+FROM debian:11
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    GOROOT=/usr/local/go \
+    GOPATH=/go \
+    GOBIN=/go/bin \
+    GO111MODULE=on \
+    GOTOOLCHAIN=auto \
+    GOPROXY=https://goproxy.cn,direct \
+    PATH=/usr/local/go/bin:/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+ARG APT_MIRROR=mirrors.aliyun.com
+RUN set -eux; \
+    if [ -f /etc/apt/sources.list ]; then \
+        sed -i "s|http://deb.debian.org/debian|http://${APT_MIRROR}/debian|g; s|http://security.debian.org/debian-security|http://${APT_MIRROR}/debian-security|g" /etc/apt/sources.list; \
+    fi; \
+    apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        gcc-aarch64-linux-gnu \
+        g++-aarch64-linux-gnu \
+        binutils-aarch64-linux-gnu \
+        make \
+        patchelf \
+        ca-certificates \
+        curl \
+        pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG GO_VERSION=1.25.0
+RUN set -eux; \
+    curl -fsSL "https://mirrors.aliyun.com/golang/go${GO_VERSION}.linux-amd64.tar.gz" | tar -C /usr/local -xz; \
+    ln -sf /usr/local/go/bin/go /usr/bin/go; \
+    /usr/local/go/bin/go version; \
+    aarch64-linux-gnu-gcc --version
+
+RUN mkdir -p /work/xxd /work/xxb
+
+WORKDIR /work
+CMD ["/bin/bash"]

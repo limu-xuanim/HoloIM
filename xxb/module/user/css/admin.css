@@ -1,0 +1,133 @@
+.search {
+    margin-top: -7px;
+    margin-right: -25px;
+}
+
+.btn.btn-xs {
+    margin-top: 4px;
+}
+
+#treeMenuBox .tree li.active>a {
+    font-weight: bold;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+tr.text-center>th>div {
+    text-align: center;
+}
+
+.table-actions {
+    margin-left: auto;
+}
+
+thead tr .headerSortDown,
+thead tr .headerSortUp {
+    cursor: pointer;
+}
+
+.modal-title-name, .modal-title {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.nav-tabs {
+    margin-bottom: 12px;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-tabs>li {
+    margin-bottom: 0;
+}
+
+.nav-tabs>li>a {
+    margin-right: 0px;
+    line-height: 1.53846154;
+    border: none;
+    border-radius: 4px;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li>a:hover,
+.nav-tabs>li>a:focus
+{
+    cursor: pointer;
+    border: none;
+    margin: 0;
+    background-color: #cce5ff;
+    color: #000;
+    border-radius: 4px;
+}
+
+.nav-tabs>li>a:hover {
+    background: #EBEDF3;
+}
+.nav-tabs>li>a .badge {
+    background-color: #fff;
+    color: #000;
+    border-radius: 4px;
+    padding: 2px 3px;
+    font-size: 12px;
+}
+
+.search-content {
+    display: inline-block;
+}
+.search-content .form-control {
+    height: 24px;
+    border-radius: 12px !important;
+}
+
+.input-group-btn {
+    font-size: 0;
+    white-space: nowrap;
+    position: absolute;
+    z-index: 10;
+    width: auto;
+    right: 0;
+    margin-top: 2px;
+    margin-right: 4px !important;  
+}
+
+.input-group-btn button:hover {
+    border: none;
+}
+
+.input-group-btn button.btn.btn-xs {
+    border: none;
+    background-color: transparent;
+    margin-top: 0 !important;
+}
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: #3280fc;
+    border-color: #145ccd;
+}
+
+.table-actions .btn-link {
+    color: #000;
+}
+
+.btn-content {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+body {
+    padding-top: 96px !important;
+}
+
+.sub-menu-top {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    top: 52px;
+}

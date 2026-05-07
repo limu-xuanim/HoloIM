@@ -1,0 +1,313 @@
+body {
+    background: rgba(244, 245, 247, 1);
+}
+
+.profile-login-item .profile-label {
+    color: #6B7280;
+    font-size: 14px;
+    font-weight: 400;
+}
+.profile-login-item .profile-value {
+    color: #111827;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+#noticeGoUpgrade {
+    opacity: 0;
+    animation: setOpacity 1s linear 1s both;
+    width: 380px;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    z-index: 9999;
+    display: none;
+}
+
+#noticeGoUpgrade>.close {
+    position: absolute;
+    top: 4px;
+    right: 10px
+}
+
+@keyframes setOpacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.table-row {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    vertical-align: middle;
+}
+
+.table-col,
+.table-row>.col,
+.table-row>[class*=col-],
+.table-row>[class*="-col"] {
+    display: table-cell;
+    float: none;
+    vertical-align: top;
+}
+
+.statusBlock .col {
+    height: 200px;
+    text-align: center;
+    padding-top: 60px;
+}
+
+.statusBlock .col h2 {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.statusBlock .date h2 {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.statusBlock .server a {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background: linear-gradient(#ffffff, #ecf4ff);
+    color: #477cf9;
+}
+
+.statisticsBlock .col {
+    height: 100px;
+    text-align: center;
+    /* padding-top: 20px; */
+}
+
+.statisticsBlock .col h2 {
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+/* .dashboard .panel {
+    height: 186px !important;
+} */
+ .sys-label {
+    font-weight: 400;
+    font-size: 14px;
+    color: #6B7280;
+ }
+ .content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+ }
+ .version-label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #111827;
+ }
+ .point {
+    width: 3px;
+    height: 3px;
+    background: #111827;
+    border-radius: 50%;
+    margin-right: 4px;
+ }
+.dashboard .panel .panel-heading {
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 24px;
+    background: transparent;
+    color: #111827;
+
+}
+
+.dashboard .panel .panel-heading .panel-actions {
+    float: right;
+}
+
+.dashboard .panel {
+    border-radius: 8px;
+    border: 1px solid rgba(238, 238, 238, 1);
+}
+
+.dashboard .download-content {
+    background-color: #F9FAFB;
+    padding: 16px;
+    display: flex;
+    margin: 0 16px;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 8px;
+}
+
+.dashboard .download-content-tips {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.dashboard .download-content .content {
+    font-size: 18px;
+}
+
+.dashboard .download-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard .download-icon i {
+    font-size: 30px;
+}
+
+.dashboard .btn-primary, .dashboard .btn-default {
+    border-radius: 8px;
+    padding: 0 12px;
+}
+.status-value {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: Source Han Sans SC;
+}
+.dashboard .btn-primary {
+    min-width: 94px;
+    height: 40px;
+    background-color: #1b9af5;
+    border: none;
+    color: #FFFFFF;
+    line-height: 40px;
+    font-size: 14px;
+}
+
+.dashboard .btn-default {
+    background-color: #FFFFFF;
+    min-width: 150px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #D1D5DB;
+    font-size: 14px;
+}
+.params-actions  .btn-default {
+    width: 80px;
+}
+
+
+/* 参数配置项样式 */
+.params-container {
+    width: calc(100% - 120px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start;
+}
+
+.params-block {
+    margin: 0 24px;
+}
+
+.params-item {
+    flex-basis: calc(25% - 12px);
+    text-align: left;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.params-item-label {
+    font-family: 'Source Han Sans SC';
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    display: block;
+    color: #6B7280;
+
+}
+
+.params-item-value {
+    font-family: 'Source Han Sans SC';
+    font-size: 14px;
+    font-weight: 400;
+    word-break: break-all;
+    color: #111827;
+}
+
+.params-item-value.code {
+    font-family: 'Source Han Sans SC';
+    /* padding: 4px 8px; */
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 60px;
+}
+
+.params-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px;
+    gap: 12px;
+}
+
+.profile-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 24px 24px 24px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    height: 64px;
+}
+
+.profile-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+}
+.profile-name {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.profile-concat {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.profile-email,
+.profile-mobile {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.profile-email svg,
+.profile-mobile svg {
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+.profile-login {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-login-item {
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    gap: 8px;
+}

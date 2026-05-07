@@ -1,0 +1,101 @@
+.user{display:block; width:80px; float:left; overflow:hidden}
+.user-list div{overflow:hidden;width:90%;float:left}
+.hide-list{display:none}
+.more-list{display:none;float:left}
+
+html,body {height: 100%;}
+body {background: #F4F5F7;}
+
+.panel-actions {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+.modal-header {
+    padding: 24px 32px;
+    border-bottom:none;
+}
+.modal-body {
+    padding: 0 32px 24px 32px;
+}
+.modal-title-name, .modal-title {
+    font-size: 16px;
+    font-weight: 800;
+}
+.btn {
+    min-width: 100px;
+    height: 32px;
+    border-radius: 2px;
+}
+.btn-default {
+    background: #fff;
+    color: #313C52;
+    border: 1px solid #D8DBDE;
+}
+
+ .panel>.panel-heading {
+    border: 1px solid #EEEEEEEE !important;
+}
+.col-md-5 .panel>.panel-body {
+    border: 1px solid #EEEEEEEE !important;
+}
+
+.empty-state {
+    height: 200px;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    background: #fff;
+    width: 100%;
+    border-radius: 2px;
+}
+
+.empty-message {
+    color: #9EA3B0;
+    font-family: Source Han Sans SC;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+}
+
+.empty-btn {
+    min-width: 92px;
+    padding: 0 12px;
+    height: 32px;
+    color: #2E7FFF;
+    font-family: Source Han Sans SC;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    border-radius: 2px;
+    background: #E6F0FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.empty-btn:hover {
+    background: #D4E5FF;
+    color: #1E6EFF;
+}
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+body {
+    padding-top: 96px !important;
+}
+
+.sub-menu-top {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    top: 52px;
+}

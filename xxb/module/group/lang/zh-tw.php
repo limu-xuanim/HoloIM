@@ -1,0 +1,54 @@
+<?php
+/**
+ * The group module zh-tw file of XXB.
+ *
+ * @copyright   Copyright 2009-now 禪道軟件（青島）有限公司(ZenTao Software (Qingdao) Co., Ltd., www.zentao.net)
+ * @license     AGPL-3.0 (https://www.gnu.org/licenses/agpl-3.0.html)
+ * @package     group
+ * @link        https://xuanim.com
+ */
+$lang->group->common             = '權限分組';
+$lang->group->browse             = '瀏覽分組';
+$lang->group->create             = '新增分組';
+$lang->group->edit               = '編輯分組';
+$lang->group->delete             = '刪除分組';
+$lang->group->manageAppPriv      = '應用';
+$lang->group->moduleTitle        = '模組';
+$lang->group->managePriv         = '權限';
+$lang->group->managePrivByGroup  = '權限維護';
+$lang->group->managePrivByModule = '按模組分配權限';
+$lang->group->byModuleTips       = '<span class="tips">（可以按住shift或者control鍵進行多選）</span>';
+$lang->group->manageMember       = '成員';
+$lang->group->linkMember         = '關聯用戶';
+$lang->group->unlinkMember       = '移除用戶';
+$lang->group->confirmDelete      = '您確定刪除該用戶分組嗎？';
+$lang->group->successSaved       = '成功保存';
+$lang->group->errorNotSaved      = '沒有保存，請確認選擇了權限數據。';
+$lang->group->manageMemberTitle  = '維護成員';
+
+$lang->group->id       = '編號';
+$lang->group->name     = '分組名稱';
+$lang->group->desc     = '分組描述';
+$lang->group->users    = '用戶列表';
+$lang->group->module   = '模組';
+$lang->group->method   = '方法';
+$lang->group->priv     = '權限';
+$lang->group->option   = '選項';
+$lang->group->inside   = '組內用戶';
+$lang->group->outside  = '組外用戶';
+$lang->group->other    = '其他模組';
+$lang->group->all      = '所有權限';
+$lang->group->extent   = '權限範圍';
+$lang->group->havePriv = '已授權';
+$lang->group->noPriv   = '未授權';
+$lang->group->hide     = '收起...';
+$lang->group->show     = '更多...';
+$lang->group->noData   = '暫時沒有權限分組。';
+
+$lang->group->manageAll = '可瀏覽所有客戶和訂單';
+
+$lang->group->placeholder = new stdclass();
+$lang->group->placeholder->tree = '類目包括對區域、行業、收入科目、支出科目、論壇版塊、博客類目、部門的權限設置';
+$lang->group->placeholder->lang = '設置包括對產品狀態、產品綫、客戶類型、客戶規模、客戶級別、客戶狀態、貨幣設置、維護角色的權限設置';
+
+include (dirname(__FILE__) . '/resource.php');

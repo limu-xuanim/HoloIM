@@ -1,0 +1,540 @@
+//
+// Form controls
+// --------------------------------------------------
+
+// Variables
+@input-control-height: 26px;
+
+// Input, Textarea, select
+
+.input,
+.textarea,
+.select>select {
+  display: block;
+  border: @border-width solid @input-border-color;
+  line-height: @line-height-base;
+  padding: (@padding-small-vertical - (@border-width*2)) @padding-small-horizontal;
+  width: 100%;
+  background-color: @color-back;
+  -webkit-appearance: none;
+  // border-radius: 0; // reset safari style
+  min-height: @input-control-height;
+  transition: border @animation-speed-fast @animation-type, box-shadow @animation-speed-fast @animation-type;
+  box-shadow: none;
+  color: inherit;
+
+  &:hover {
+    border-color: darken(@input-border-color, 20%);
+  }
+
+  &:focus {
+    border-color: @color-focus;
+    outline: none;
+    box-shadow: 0 0 0 2px fade(@color-focus, 30%);
+  }
+
+  &[readonly],
+  &[disabled],
+  .disabled {
+    opacity: 1 !important;
+    background-color: darken(@color-back, 10%);
+  }
+
+  &.-rounded-full {
+    border-radius: 15px;
+    padding: (@padding-small-vertical - (@border-width*2)) (@padding-small-horizontal + 4px);
+  }
+}
+
+.select {
+  position: relative;
+
+  >select {
+    outline: none;
+    border-radius: 0;
+
+    &:not([multiple]) {
+      padding-right: 25px;
+    }
+
+    &[multiple] {
+      max-height: 75px;
+      overflow-y: auto;
+    }
+  }
+
+  &:not(.multiple):after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 11px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 7px 5px 0 5px;
+    border-color: @input-border-color transparent transparent transparent;
+    pointer-events: none;
+  }
+}
+
+
+// Help text
+
+.help-text {
+  font-size: @font-size-small;
+  color: @color-gray;
+  padding: @padding-small-vertical 0;
+
+  &:empty {
+    display: none
+  }
+}
+
+
+// Radio and checkbox
+
+.radio,
+.checkbox {
+  position: relative;
+
+  >input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  >label {
+    position: relative;
+    z-index: 0;
+    padding: 5px 0 5px 25px;
+    display: block;
+    height: 30px;
+    line-height: 20px;
+
+    &:before,
+    &:after {
+      content: ' ';
+      display: flex;
+      position: absolute;
+      left: 0;
+      top: (5px + 1px);
+      height: 18px;
+      width: 18px;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      border: (@border-width * 2) solid @color-gray;
+      .transition-fast();
+    }
+  }
+
+  >label:after {
+    opacity: 0;
+    transform: scale(0);
+    color: @color-gray;
+  }
+
+  >input:focus+label:before {
+    border-color: @color-primary;
+    box-shadow: inset 0 0 0 1px fade(@color-focus, 30%), 0 0 0 2px fade(@color-focus, 30%);
+  }
+
+  &.checked>label:after,
+  >input:checked+label:after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  >input[disabled],
+  >input.disabled {
+    opacity: 0 !important;
+
+    +label {
+      opacity: @state-disabled-opacity;
+    }
+  }
+
+  &.inline-block+.inline-block {
+    margin-left: 1px;
+  }
+}
+
+.checkbox {
+  >label:before {
+    border-radius: 50%;
+  }
+
+  >label:after {
+    .mdi();
+    content: @mdi-check;
+    border: none;
+  }
+
+  &:focus>label:after {
+    color: @color-primary;
+  }
+
+  &:checked>label:before,
+  &:checked>label:after,
+  &.checked>label:before,
+  &.checked>label:after {
+    color: @color-white;
+    background-color: @color-primary;
+    border-radius: 50%;
+  }
+
+  &.checkbox-sm {
+    >label {
+      height: 20px;
+      line-height: 14px;
+      padding: 3px 0 3px 20px;
+
+      &:before,
+      &:after {
+        top: 3px;
+        height: 14px;
+        width: 14px;
+        border-width: @border-width;
+      }
+
+      &:after {
+        font-size: 12px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.radio {
+  >label:before {
+    border-radius: 50%;
+  }
+
+  >label:after {
+    width: 8px;
+    height: 8px;
+    background-color: @color-gray;
+    border-radius: 4px;
+    border: none;
+    left: 5px;
+    top: (@padding-small-vertical + 6px);
+  }
+
+  &:focus>label:after {
+    background-color: @color-primary;
+  }
+
+  &:checked>label:before {
+    border-color: @color-primary;
+  }
+
+  &:checked>label:after {
+    background-color: @color-primary;
+  }
+
+  &.checked>label:before {
+    border-color: var(--color-primary);
+  }
+
+  &.checked>label:after {
+    background-color: var(--color-primary);
+  }
+
+  &.radio-sm {
+    >label {
+      height: 20px;
+      line-height: 14px;
+      padding: 3px 0 3px 20px;
+
+      &:before,
+      &:after {
+        top: 3px;
+        height: 14px;
+        width: 14px;
+        border-width: @border-width;
+      }
+
+      &:after {
+        width: 6px;
+        height: 6px;
+        border-radius: 3px;
+        left: 4px;
+        top: 7px;
+      }
+    }
+  }
+}
+
+
+// Control
+
+.control {
+  >label {
+    display: block;
+    // font-weight: bold;
+    padding: @padding-small-vertical 0;
+    font-size: @font-size-small;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: (@space/2);
+  }
+}
+
+::-webkit-input-placeholder {
+  font-size: 13px;
+}
+
+.control {
+
+  &.has-label-left,
+  &.has-btn-right,
+  &.has-icon-right {
+    position: relative;
+  }
+
+  &.has-label-left {
+    >label {
+      position: absolute;
+      left: 5px;
+      top: 0;
+      min-width: 2px;
+      text-align: center;
+      opacity: .5;
+    }
+
+    .input,
+    .textarea,
+    .select>select {
+      padding-left: 25px;
+
+      &:focus+label {
+        color: @color-focus;
+        opacity: 1;
+      }
+    }
+  }
+
+  &.has-btn-right,
+  &.has-icon-right {
+    >.icon {
+      position: absolute;
+      right: 5px;
+      top: 4px;
+      min-width: 20px;
+      text-align: center;
+      opacity: .5;
+    }
+
+    .input,
+    .textarea,
+    .select>select {
+      padding-right: 25px;
+
+      &:focus+.icon,
+      &:focus+label+.icon {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.has-btn-right {
+    >.btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      min-width: 20px;
+      text-align: center;
+      opacity: .5;
+    }
+  }
+}
+
+.row,
+.column {
+  .control {
+    width: 100%
+  }
+}
+
+
+// Control state
+
+.control.has-error {
+
+  .input,
+  .textarea,
+  .select>select {
+    border-color: @color-danger;
+  }
+
+  label,
+  .help-text {
+    color: @color-danger;
+  }
+}
+
+.control.has-success {
+
+  .input,
+  .textarea,
+  .select>select {
+    border-color: @color-success;
+  }
+
+  label,
+  .help-text {
+    color: @color-success;
+  }
+}
+
+.control.has-warning {
+
+  .input,
+  .textarea,
+  .select>select {
+    border-color: @color-warning;
+  }
+
+  label,
+  .help-text {
+    color: @color-warning;
+  }
+}
+
+
+// Search control
+.control.search {
+  position: relative;
+  margin: 0;
+
+  >label {
+    position: absolute;
+    height: @input-control-height;
+    min-width: @input-control-height;
+    padding: 0;
+    line-height: @input-control-height;
+    text-align: center;
+    opacity: .6;
+    transition: transform @animation-speed-fast @animation-type, opacity @animation-speed-fast @animation-type;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  >.-relative>.input {
+    padding-left: @input-control-height;
+    padding-right: @input-control-height;
+    transition: all @animation-speed-fast @animation-type;
+  }
+
+  >.close {
+    display: block;
+    position: absolute;
+    height: @input-control-height;
+    min-width: @input-control-height;
+    line-height: @input-control-height;
+    text-align: center;
+    right: 0;
+    top: 0;
+    opacity: 0.6;
+    transform: scale(1);
+    transition: transform @animation-speed-fast @animation-type, opacity @animation-speed-fast @animation-type;
+    cursor: pointer;
+  }
+
+  >.-rounded-full+.close:after {
+    border-radius: 50%;
+  }
+
+  &:not(.empty),
+  &.focus {
+    >.-relative>.input {
+      padding-left: 5px;
+
+      &.-rounded-full {
+        padding-left: 10px;
+      }
+    }
+
+    >label {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  &.empty {
+    >.close {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+}
+
+
+// Flex control group
+
+.control.flex {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+
+  >.select,
+  >.textarea,
+  >.-relative>.input {
+    flex: auto;
+    width: auto;
+  }
+
+  >label {
+    font-weight: normal;
+    width: 60px;
+    align-self: flex-start;
+    font-size: @font-size-base;
+  }
+
+  >label,
+  >div,
+  >span,
+  >.addon,
+  >.btn {
+    flex: none;
+  }
+
+  >.-block,
+  >.help-text {
+    flex: auto;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  >.addon {
+    line-height: @line-height-base;
+    padding: (@padding-small-vertical - @border-width) @padding-small-horizontal;
+    border: @border-width solid @input-border-color;
+    background-color: @color-gray-light;
+  }
+
+  >*:first-child {
+    border-right: none;
+  }
+
+  >.btn:last-child {
+    border-left: none !important;
+  }
+}
+
+// clean readonly input box
+
+.clean.input[readonly] {
+  padding: 0;
+  border-color: transparent;
+  min-height: inherit;
+  line-height: inherit;
+}

@@ -1,0 +1,185 @@
+<?php
+/**
+ * The user module english file of XXB.
+ *
+ * @copyright   Copyright 2009-now 禅道软件（青岛）有限公司(ZenTao Software (Qingdao) Co., Ltd., www.zentao.net)
+ * @license     AGPL-3.0 (https://www.gnu.org/licenses/agpl-3.0.html)
+ * @package     user
+ * @link        https://www.xuanim.com
+ */
+$lang->user->common    = 'User';
+
+$lang->user->id        = 'ID';
+$lang->user->account   = 'Account';
+$lang->user->super     = 'Admin';
+$lang->user->password  = 'Password';
+$lang->user->password2 = 'Repeat';
+$lang->user->realname  = 'Name';
+$lang->user->nickname  = 'Nickname';
+$lang->user->dept      = 'Department';
+$lang->user->role      = 'Title';
+$lang->user->avatar    = 'Avatar';
+$lang->user->birthyear = 'Birthyear';
+$lang->user->birthday  = 'Birthday';
+$lang->user->gender    = 'Gender';
+$lang->user->email     = 'Email';
+$lang->user->msn       = 'MSN';
+$lang->user->qq        = 'QQ';
+$lang->user->yahoo     = 'Y!';
+$lang->user->weixin    = 'Wechat';
+$lang->user->gtalk     = 'GTalk';
+$lang->user->wangwang  = 'Wangwang';
+$lang->user->mobile    = 'Mobile';
+$lang->user->phone     = 'Phone';
+$lang->user->dept      = 'Department';
+$lang->user->address   = 'Address';
+$lang->user->zipcode   = 'Zipcode';
+$lang->user->join      = 'Join date';
+$lang->user->visits    = 'Visit';
+$lang->user->ip        = 'Last IP';
+$lang->user->last      = 'Last login';
+$lang->user->allowTime = 'Allow time';
+$lang->user->status    = 'Status';
+$lang->user->alert     = 'Your account has been disabled';
+$lang->user->keepLogin = 'Keep Login';
+$lang->user->ignore    = 'Ignore';
+$lang->user->notset    = 'Not set';
+$lang->user->userType  = 'User Type';
+
+$lang->user->userTypeList = array('super' => 'Administrator', 'no' => 'Normal User');
+
+
+$lang->user->lastLoginTime = 'Last Login';
+$lang->user->lastLoginIP   = 'Login IP';
+$lang->user->editRole      = 'Manage Title';
+
+$lang->user->unlimited = 'infinite';
+
+$lang->user->actionWidth = 130;
+$lang->user->genderWidth = 140;
+
+$lang->user->pageTitle            = 'User Management';
+$lang->user->admin                = 'Admin';
+$lang->user->list                 = 'Users';
+$lang->user->colleague            = 'Colleagues';
+$lang->user->view                 = "User info";
+$lang->user->create               = "Add User";
+$lang->user->batchCreate          = "Batch Add";
+$lang->user->edit                 = "Edit";
+$lang->user->update               = "Edit";
+$lang->user->delete               = "Delete";
+$lang->user->browse               = "Borwse";
+$lang->user->deny                 = "Access is denied.";
+$lang->user->confirmDelete        = "Do you want to delete this user?";
+$lang->user->confirmActivate      = "Do you want to activate this user?";
+$lang->user->relogin              = "Login again";
+$lang->user->asGuest              = "Guest login";
+$lang->user->goback               = "Back";
+$lang->user->allUsers             = 'All';
+$lang->user->submit               = "Submit";
+$lang->user->confirm              = "Confirm";
+$lang->user->forbid               = 'Disable';
+$lang->user->forbidList           = 'Disabled Users';
+$lang->user->normalList           = 'Normal Users';
+$lang->user->deletedList          = 'Deleted Users';
+$lang->user->active               = 'Active';
+$lang->user->recover              = 'Recover';
+$lang->user->setReferer           = 'Set Referrer';
+$lang->user->vcard                = 'Vcard';
+$lang->user->uploadAvatar         = 'Upload avatar';
+$lang->user->cropAvatar           = 'Crop avatar';
+$lang->user->cropAvatarTip        = 'Drag to crop avatar';
+$lang->user->goUploadAvatar       = 'Go upload avatar';
+$lang->user->lang                 = 'Title';
+$lang->user->adminUser            = 'User';
+$lang->user->resetClientConfig    = 'Reset config';
+$lang->user->resetClientConfigMsg = 'User client configuration reset successful, will take effect the next time the user login from client';
+
+$lang->user->profile     = 'Profile';
+$lang->user->editProfile = 'Edit';
+$lang->user->thread      = 'My Thread';
+$lang->user->reply       = 'My Reply';
+$lang->user->message     = 'My Message';
+
+$lang->user->avatar = 'Avatar';
+$lang->user->cropAvatarLiteSuccess  = 'Successfully saved new avatar';
+
+$lang->user->inputAccount   = 'Please enter an account';
+$lang->user->inputPassword  = 'Please enter password';
+$lang->user->searchUser     = 'Search';
+
+$lang->user->errorDeny     = "Sorry, you don't have the permission to visit <b>%s</b>'s <b>%s</b>. Please contact the administrator.<br/> This page will jump to homepage after 5 seconds";
+$lang->user->loginFailed   = "Login failed. Check you account and password.";
+$lang->user->tokenInvalid  = "Automatic login expired, please re-enter your password.";
+$lang->user->locked        = "Failed too many times. Please login ten minutes later.";
+$lang->user->lockedForEver = "User has been disabled permanently.";
+$lang->user->forbidSuccess = 'Forbidden.';
+$lang->user->actionFail    = 'Failed.';
+$lang->user->uploadSuccess = 'Uploaded.';
+$lang->user->actionError   = 'Error, there are records created by this user.';
+$lang->user->retainAccount = 'You cannot set <strong>%s</strong> as an account.';
+
+$lang->user->errorUnique = 'Cannot be duplicated.';
+
+$lang->user->tips = new stdclass();
+$lang->user->tips->saveDuplicate   = "Don't check if the realname is duplicated.";
+$lang->user->tips->ignoreDuplicate = "Don't import the record.";
+
+$lang->user->placeholder= new stdclass();
+$lang->user->placeholder->emptyDept = "The empty dept won't be created.";
+
+$lang->user->duplicateResult['save']   = 'Save';
+$lang->user->duplicateResult['ignore'] = 'Ignore';
+
+$lang->user->import        = 'Import';
+$lang->user->importResult  = '%s imported. %s failed. Details are as follows';
+$lang->user->failReason    = 'Reason';
+
+$lang->user->forbidUser = 'Manage users';
+$lang->user->operate    = 'Operate';
+
+$lang->user->genderList = $lang->genderList;
+
+$lang->user->basicInfo   = 'Basic Info';
+$lang->user->contactInfo = 'Contact Info';
+
+$lang->user->statusList = new stdclass();
+$lang->user->statusList->locked    = "<label class='label label-danger'>Locked</label>";
+$lang->user->statusList->forbidden = "<label class='label label-danger'>Forbidden</label>";
+$lang->user->statusList->normal    = "<label class='label label-success'>Normal</label>";
+$lang->user->statusList->deleted    = "<label class='label label-danger'>Deleted</label>";
+
+$lang->user->notice = new stdclass();
+$lang->user->notice->password = 'Numbers and letters, at least 6 characters.';
+
+$lang->user->login  = new stdclass();
+$lang->user->login->common  = "Login";
+
+$lang->dept = new stdclass();
+$lang->dept->common     = 'Department';
+$lang->dept->name       = 'Name';
+$lang->dept->alias      = 'Alias';
+$lang->dept->edit       = 'Manage Dept';
+$lang->dept->parent     = 'Parent';
+$lang->dept->children   = 'Child';
+$lang->dept->desc       = 'Description';
+$lang->dept->keywords   = 'Tags';
+$lang->dept->moderators = 'Dept Manager';
+
+$lang->user->roleList['']           = '';
+$lang->user->roleList['dev']        = 'Developer';
+$lang->user->roleList['pm']         = 'Project Manager';
+$lang->user->roleList['market']     = 'Marketing';
+$lang->user->roleList['sale']       = 'Sales';
+$lang->user->roleList['hr']         = 'HR';
+$lang->user->roleList['office']     = 'Administrator';
+$lang->user->roleList['service']    = 'Service';
+$lang->user->roleList['support']    = 'Support';
+$lang->user->roleList['marketmgr']  = 'Marketing Manager';
+$lang->user->roleList['salemgr']    = 'Sales Manager';
+$lang->user->roleList['hrmgr']      = 'HR Manager';
+$lang->user->roleList['adminmgr']   = 'Office Manager';
+$lang->user->roleList['servicemgr'] = 'Service Manager';
+$lang->user->roleList['supportmgr'] = 'Support Manager';
+$lang->user->roleList['top']        = 'Senior Manager';
+$lang->user->roleList['others']     = 'Others';

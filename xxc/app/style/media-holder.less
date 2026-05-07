@@ -1,0 +1,146 @@
+.media-holder {
+    position: relative;
+    overflow: hidden;
+
+    &.has-given-size {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.media-holder-media {
+    flex: auto;
+    margin: 0;
+    max-width: 100%;
+    display: block;
+}
+.media-holder-aspectratio {
+    flex: none;
+    width: 1px;
+    margin: -1px;
+    z-index: -1;
+}
+
+.media-holder-media-audio {
+    audio {width: 100%;}
+    audio::-webkit-media-controls-enclosure {
+        border-radius: 0!important;
+    }
+}
+.media-holder-media-video {
+    max-height: fit-content!important;
+}
+
+.media-holder-broken {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+
+    .has-given-size & {
+        width: 100%;
+    }
+
+    .text {
+        white-space: nowrap;
+    }
+}
+
+.media-holder-progress {
+    min-height: 80px;
+    padding: 5px;
+    font-size: 13px;
+    color: rgba(0,0,0,.5);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    background-color: rgba(0,0,0,.05);
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    position: absolute;
+
+    > .progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0,0,0,.05);
+        height: 4px;
+
+        > .bar {
+            height: 4px;
+            background-color: rgba(0,0,0,.15);
+            transition: width .2s;
+        }
+    }
+}
+
+.media-holder-waiting > .progress {
+    .animate-flash;
+}
+
+
+img {
+    &:before,
+    &:after {
+        content: ' ';
+        transition: color .5s 2s;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        color: transparent;
+    }
+    &.broken {
+        position: relative;
+        min-width: 70px;
+        min-height: 70px;
+        display: block;
+
+        &:before {
+            .mdi;
+            .icon-3x;
+            color: @color-gray;
+            content: @mdi-image-broken-variant;
+            background-color: @color-gray-pale;
+            padding-bottom: 24px;
+        }
+
+        &:after {
+            color: @color-gray;
+            padding-top: 24px;
+            content: attr(data-broken);
+            font-size: 0.8571428571em;
+        }
+    }
+}
+
+.image-load {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    border-radius: 0.3rem;
+    padding: 0 0.5em;
+    height: 1.2rem;
+    border: none;
+    background-color: rgba(0,0,0,.7);
+    color: #fff;
+    cursor: pointer;
+    opacity: .4;
+
+    span {
+        margin-left: 5px;
+    }
+}
+
+.image-load:hover{
+    opacity: 1;
+}

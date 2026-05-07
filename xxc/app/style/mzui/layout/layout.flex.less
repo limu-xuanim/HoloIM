@@ -1,0 +1,39 @@
+// Flex container
+
+.flex           {display: flex!important;}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gap-xs {
+  gap: @space-xs;
+}
+.gap-sm {
+  gap: @space-sm;
+}
+.gap {
+  gap: @space;
+}
+.gap-lg {
+  gap: @space-lg;
+}
+.gap-xl {
+  gap: @space-xl;
+}
+
+// Flex item
+
+.flex-first    {order: -1;}
+.flex-last     {order: 1;}
+
+// Misc
+
+.justified {
+  display: flex;
+  flex-wrap: wrap;
+
+  > * {flex: auto !important;}
+}

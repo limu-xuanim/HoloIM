@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# 交互式设置 Adminer 登录账号密码
+# 优先复用同目录下的 start.sh（以保持与 Linux 包装脚本一致的行为）
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [[ -x "$SCRIPT_DIR/start.sh" ]]; then
+    exec "$SCRIPT_DIR/start.sh" auth
+fi
+
+XXD_BIN="$SCRIPT_DIR/xxd"
+
+if [[ ! -x "$XXD_BIN" ]]; then
+    echo "错误: 未找到可执行的 xxd 二进制文件: $XXD_BIN"
+    exit 1
+fi
+
+echo "正在设置 Adminer 访问控制账号"
+read -r -p "account: " ADMINER_USER
+if [[ -z "$ADMINER_USER" ]]; then
+    echo "用户名为空，已取消。"
+    exit 1
+fi
+
+read -r -s -p "password: " ADMINER_PASS
+echo
+if [[ -z "$ADMINER_PASS" ]]; then
+    echo "密码为空，已取消。"
+    exit 1
+fi
+
+read -r -s -p "password (again): " ADMINER_PASS2
+echo
+if [[ "$ADMINER_PASS" != "$ADMINER_PASS2" ]]; then
+    echo "两次密码不一致，已取消。"
+    exit 1
+fi
+
+"$XXD_BIN" -adminer-passwd-user "$ADMINER_USER" -adminer-passwd-password "$ADMINER_PASS"
+

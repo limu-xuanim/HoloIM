@@ -1,0 +1,104 @@
+免责声明 / Disclaimer
+
+本项目以 GNU Affero General Public License v3.0 (AGPLv3) 协议开源发布。
+
+本免责声明是对 AGPLv3 协议条款的补充说明，不替代、不修改 AGPLv3 协议中的任何条款。
+AGPLv3 协议第15-16条所规定的免责和责任限制条款继续完全适用。
+
+使用本软件前，请务必仔细阅读并理解以下条款：
+
+1. 合法使用声明
+
+   本软件仅供合法用途使用。严禁将本软件用于任何违反当地法律法规的活动，
+   包括但不限于：
+   - 侵犯他人隐私
+   - 传播违法信息
+   - 进行网络攻击或黑客活动
+   - 从事诈骗、勒索等犯罪行为
+   - 其他任何违反法律法规的行为
+
+2. 用户责任
+
+   用户在使用本软件时，须确保其行为符合所在国家/地区的法律法规。
+   用户对使用本软件进行的任何活动承担全部法律责任。
+   本软件开发者及贡献者不对用户的违法行为承担任何责任。
+
+3. 免责条款
+
+   本软件按"原样"提供，不附带任何明示或暗示的保证。
+   在任何情况下，本软件开发者、贡献者或相关方均不对以下情况承担责任：
+   - 因使用或无法使用本软件导致的任何损失
+   - 用户违法使用本软件导致的任何后果
+   - 任何直接、间接、偶然、特殊或后果性损害
+
+4. 知识产权
+
+   本软件尊重知识产权，用户在使用本软件时须遵守相关知识产权法律法规。
+   严禁利用本软件侵犯他人知识产权。
+
+5. 适用法律与解释
+
+   本免责声明依据中华人民共和国法律解释和执行。
+   如有争议，应友好协商解决；协商不成的，可向有管辖权的人民法院提起诉讼。
+   本声明中如有任何条款被认定为无效或不可执行，不影响其他条款的有效性。
+
+如果您不同意上述条款，请勿使用本软件。
+一旦开始使用本软件，即表示您已完全理解并同意接受本免责声明的所有条款。
+
+---
+
+Disclaimer
+
+This project is released under the GNU Affero General Public License v3.0 (AGPLv3).
+
+This disclaimer serves as a supplementary statement to the AGPLv3 terms and does 
+not replace or modify any terms of the AGPLv3 license. The disclaimer and limitation 
+of liability provisions in Sections 15-16 of AGPLv3 remain fully applicable.
+
+Before using this software, please read and understand the following terms carefully:
+
+1. Legal Use Statement
+
+   This software is intended solely for legal purposes. It is strictly prohibited 
+   to use this software for any activities that violate local laws and regulations, 
+   including but not limited to:
+   - Infringing on others' privacy
+   - Distributing illegal information
+   - Conducting cyber attacks or hacking activities
+   - Engaging in fraud, extortion, or other criminal activities
+   - Any other activities that violate laws and regulations
+
+2. User Responsibility
+
+   Users must ensure that their use of this software complies with the laws and 
+   regulations of their country/region. Users bear full legal responsibility for 
+   any activities conducted using this software. The developers and contributors 
+   of this software assume no responsibility for users' illegal activities.
+
+3. Disclaimer
+
+   This software is provided "as is" without any express or implied warranties.
+   In no event shall the developers, contributors, or related parties of this 
+   software be liable for:
+   - Any losses resulting from the use or inability to use this software
+   - Any consequences arising from users' illegal use of this software
+   - Any direct, indirect, incidental, special, or consequential damages
+
+4. Intellectual Property
+
+   This software respects intellectual property rights. Users must comply with 
+   relevant intellectual property laws when using this software. It is strictly 
+   prohibited to use this software to infringe on others' intellectual property.
+
+5. Governing Law and Interpretation
+
+   This disclaimer shall be interpreted and enforced in accordance with the 
+   laws of the People's Republic of China. Any disputes shall be resolved 
+   through friendly negotiation; if negotiation fails, the dispute may be 
+   submitted to a competent people's court. If any provision of this 
+   disclaimer is deemed invalid or unenforceable, it shall not affect the 
+   validity of the remaining provisions.
+
+If you do not agree with the above terms, please do not use this software.
+By starting to use this software, you indicate that you fully understand and 
+agree to accept all terms of this disclaimer.

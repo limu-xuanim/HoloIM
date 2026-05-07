@@ -1,0 +1,29 @@
+.emoticon-list {
+  .emoticon-item {
+    transition: border @animation-type @animation-speed-normal, transform @animation-type @animation-speed-normal;
+    cursor: pointer;
+  }
+
+  .emoji, .emoji:hover, .emoticon-item:hover, .emoji svg {
+    cursor: pointer;
+  }
+
+  .emoticon-item:hover {
+    background: @color-back;
+    border-color: @color-focus!important;
+    transform: scale(2);
+  }
+}
+
+.emoji,
+.joypixels {
+  max-width: 64px;
+  max-height: 64px;
+}
+
+.os-win {
+  img.emoji,
+  img.joypixels {
+    filter: drop-shadow(0 0 1px rgba(0,0,0,.8));
+  }
+}

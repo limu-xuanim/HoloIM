@@ -1,0 +1,54 @@
+.table-currency td .checkbox {width: 170px; margin: 0 10px 10px 0; display: inline-block;}
+.input-group .input-group-addon + input {left: -2px;}
+.roleKey {padding-left: 15px !important;}
+.panel {
+    border: none;
+    box-shadow: none;
+}
+
+.panel .table-form {
+    width: 680px;
+    margin: 0 auto;
+}
+
+.panel-heading-title {
+    width: 680px;
+    margin: 0 auto;
+}
+.panel>.panel-heading {
+    background: transparent;
+    padding: 12px;
+    border-bottom: 1px solid #EFF1F3;
+    font-family: Source Han Sans SC;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 20px;
+    color: #181818;
+}
+.btn-primary {
+    width: 100px;
+    height: 32px;
+    border-radius: 2px;
+    background: #2E7FFF;
+    border: none;
+    color: #fff;
+    font-family: Source Han Sans SC;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+#submit {
+    margin-right: 24px;
+}
+
+.deleter {
+    width: 100px;
+    height: 32px;
+    border-radius: 2px;
+    background: #fff;
+    border: 1px solid #D8DBDE;
+    color: #313C52;
+    font-family: Source Han Sans SC;
+    font-weight: 400;
+    font-size: 14px;
+}

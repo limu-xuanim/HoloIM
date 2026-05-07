@@ -1,0 +1,43 @@
+# Linux amd64 构建基础环境（容器内编 Linux 版 xxd）
+#
+# 基于 Ubuntu 22.04.5 LTS（Jammy），用于 x86_64/amd64 构建。
+# 构建镜像：
+#   docker build -f xxd/docker/Dockerfile.linux-amd64 -t xxd-linux-amd64:latest xxd/docker
+
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    GOROOT=/usr/local/go \
+    GOPATH=/go \
+    GOBIN=/go/bin \
+    GO111MODULE=on \
+    GOTOOLCHAIN=auto \
+    GOPROXY=https://goproxy.cn,direct \
+    PATH=/usr/local/go/bin:/go/bin:$PATH
+
+ARG APT_MIRROR=mirrors.aliyun.com
+RUN set -eux; \
+    if [ -f /etc/apt/sources.list ]; then \
+        sed -i "s|http://archive.ubuntu.com/ubuntu|http://${APT_MIRROR}/ubuntu|g; s|http://security.ubuntu.com/ubuntu|http://${APT_MIRROR}/ubuntu|g" /etc/apt/sources.list; \
+    fi; \
+    if [ -f /etc/apt/sources.list.d/ubuntu.sources ]; then \
+        sed -i "s|http://archive.ubuntu.com/ubuntu|http://${APT_MIRROR}/ubuntu|g; s|http://security.ubuntu.com/ubuntu|http://${APT_MIRROR}/ubuntu|g" /etc/apt/sources.list.d/ubuntu.sources; \
+    fi; \
+    apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        make \
+        patchelf \
+        ca-certificates \
+        curl \
+        pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG GO_VERSION=1.25.0
+RUN set -eux; \
+    curl -fsSL "https://mirrors.aliyun.com/golang/go${GO_VERSION}.linux-amd64.tar.gz" | tar -C /usr/local -xz
+
+RUN mkdir -p /work/xxd /work/xxb
+
+WORKDIR /work
+CMD ["/bin/bash"]

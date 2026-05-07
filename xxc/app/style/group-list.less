@@ -1,0 +1,86 @@
+.group-list {
+    .heading {
+        transition: @animation-type @animation-speed-fast;
+        transition-property: opacity, background-color;
+        cursor: pointer;
+
+        >.icon {
+            color: @group-heading-icon-color;
+            transition: opacity @animation-type @animation-speed-fast;
+        }
+
+        >.title {
+            font-weight: normal;
+            color: @group-heading-color;
+            text-transform: none;
+            padding: 4px;
+            font-size: 13px;
+            opacity: 1;
+        }
+
+        &:hover {
+            .darken-0;
+        }
+
+        &.drop-top:before,
+        &.drop-bottom:before {
+            content: ' ';
+            display: block;
+            height: 3px;
+            border: @color-accent dotted 1px;
+            left: @space-xs;
+            right: @space-xs;
+            position: absolute;
+            z-index: 10;
+        }
+
+        &.drop-top:before {
+            top: -1px;
+        }
+
+        &.drop-bottom:before {
+            bottom: -1px;
+        }
+    }
+}
+
+.group-list,
+.group-list-root {
+    margin-left: 0!important;
+    position: relative;
+
+    > .menu-recents,
+    > .menu-groups {
+        padding-left: 1.1rem!important;
+    }
+
+    > .group-list > .group-list {
+        > .heading {
+            padding-left: 16px;
+        }
+
+        > .item {
+            padding-left: 24px;
+        }
+    }
+
+    > .group-list > .group-list > .group-list {
+        >.heading {
+            padding-left: 36px;
+        }
+
+        >.item {
+            padding-left: 44px;
+        }
+    }
+
+    > .group-list > .group-list > .group-list .group-list {
+        > .heading {
+            padding-left: 56px;
+        }
+
+        > .item {
+            padding-left: 64px;
+        }
+    }
+}

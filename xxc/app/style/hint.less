@@ -1,0 +1,150 @@
+.hint,
+[data-hint]:before {
+  background: @hint-background;
+  color: @hint-color;
+  border: @hint-border;
+  border-radius: @hint-border-radius;
+  white-space: nowrap;
+  font-size: @hint-font-size;
+  padding: @hint-padding;
+  line-height: 1;
+  font-weight: normal;
+  box-shadow: @hint-shadow;
+  font-style: normal;
+}
+
+[data-hint] {
+  position: relative;
+  display: inline-block;
+
+  &:before {
+    content: attr(data-hint);
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1000000;
+    pointer-events: none;
+    transition: .2s ease;
+    transition-delay: 0s;
+    transition-property: transform, opacity, visibility;
+    top: calc(100% + 2px);
+    left: 0;
+  }
+
+  // Fix btn style
+  .btn& {
+    display: inline-flex;
+  }
+
+  // Hover style
+  &:hover:before {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: @hint-delay;
+  }
+}
+
+// reduce navbar hints delay time.
+.app-navbar [data-hint]:hover:before{
+  transition-delay: 0.5s;
+}
+
+.hint-fast:before {
+  display: none;
+  transition: none!important;
+}
+.hint-fast:hover:before {
+  display: block;
+}
+
+
+// Positions
+.hint--bottom:before {
+  top: calc(100% + 2px);
+  left: auto;
+}
+
+.hint--top:before {
+  bottom: calc(100% + 2px);
+  left: auto;
+  top: auto;
+}
+
+.hint--left:before {
+  right: calc(100% + 2px);
+  left: auto;
+  top: auto;
+}
+
+.hint--right:before {
+  left: calc(100% + 2px);
+  top: auto;
+}
+
+.hint--bottom-left:before {
+  top: calc(100% + 2px);
+  left: 0;
+}
+
+.hint--top-left:before {
+  bottom: calc(100% + 2px);
+  left: 0;
+  top: auto;
+}
+
+.hint--bottom-right:before {
+  top: calc(100% + 2px);
+  left: auto;
+  right: 0;
+}
+
+.hint--top-right:before {
+  bottom: calc(100% + 2px);
+  left: auto;
+  right: 0;
+  top: auto;
+}
+
+// Sizes
+.hint--md:before {
+  white-space: normal;
+  min-width: 200px;
+  word-break: break-all;
+}
+
+.hint--sm:before {
+  white-space: normal;
+  min-width: 100px;
+  word-break: break-all;
+}
+
+.hint--lg:before {
+  white-space: normal;
+  min-width: 300px;
+  word-break: break-all;
+}
+
+// Colors
+.hint--danger:before {
+  background: @color-danger;
+  color: @color-white;
+  border-color: @color-danger;
+}
+
+.hint--info:before {
+  background: @color-info;
+  color: @color-white;
+  border-color: @color-info;
+}
+
+.hint--success:before {
+  background: @color-success;
+  color: @color-white;
+  border-color: @color-success;
+}
+
+.hint--warning:before {
+  background: @color-warning;
+  color: @color-white;
+  border-color: @color-warning;
+}

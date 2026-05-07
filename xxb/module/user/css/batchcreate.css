@@ -1,0 +1,94 @@
+.table>thead>tr>th {background-color: unset;}
+.input-group > .chosen+.chosen-container > .chosen-single {border-top-right-radius: 0; border-bottom-right-radius: 0;}
+.panel {
+    border:none;
+    box-shadow: 2px 0px 16px 0px #6C90C31F;
+}
+#batchCreateForm .panel-heading {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
+    gap: 20px;
+    border-bottom: 1px solid #EFF1F3;
+}
+#batchCreateForm .panel-title {
+    font-family: Source Han Sans SC;
+font-weight: 800;
+font-size: 16px;
+line-height: 20px;
+color: #181818;
+}
+#batchCreateForm .panel-warning {
+    font-family: ABeeZee;
+font-weight: 400;
+line-height: 13px;
+color: #838A9D;
+ display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+#batchCreateForm .panel-body {
+    padding: 16px 24px;
+}
+/* 统一输入/选择框边框 */
+#batchCreateForm input.form-control,
+#batchCreateForm select.form-control,
+#batchCreateForm .chosen-container-single .chosen-single {
+    border: 1px solid #D8DBDE;
+    box-shadow: none;
+}
+#batchCreateForm .ops, #batchCreateForm .ops-btn {
+    width: 80px;
+}
+#batchCreateForm .ops-btn .btn {
+    padding: 5px 6px;
+}
+#batchCreateForm .table td, .table th {
+    padding: 5px 8px;
+}
+#batchCreateForm .input-group-addon {
+    background-color: transparent;
+    color: #5E626D;
+
+}
+/* 替换chosen下拉图标为指定SVG */
+#batchCreateForm .chosen-container-single .chosen-single div b {
+    background: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 10 7" fill="none"><path d="M5.10212 6.33826C4.942 6.54626 4.62832 6.54626 4.46819 6.33825L0.0847535 0.644C-0.117725 0.380972 0.0697808 2.00754e-06 0.401716 1.97489e-06L9.1686 1.11266e-06C9.50053 1.08002e-06 9.68804 0.380971 9.48556 0.643999L5.10212 6.33826Z" fill="%23838A9D"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px 7px;
+    width: 10px;
+    height: 7px;
+    border: none;
+}
+/* 职位 select（未使用 Chosen 时）替换下拉图标 */
+#batchCreateForm select[id^="role"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 10 7" fill="none"><path d="M5.10212 6.33826C4.942 6.54626 4.62832 6.54626 4.46819 6.33825L0.0847535 0.644C-0.117725 0.380972 0.0697808 2.00754e-06 0.401716 1.97489e-06L9.1686 1.11266e-06C9.50053 1.08002e-06 9.68804 0.380971 9.48556 0.643999L5.10212 6.33826Z" fill="%23838A9D"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 10px 7px;
+    padding-right: 22px;
+}
+#batchCreateForm .table>thead>tr>th {
+    color: #0B0F18;
+}
+
+#batchCreateForm .form-actions .btn {
+    width: 100px;
+    height: 32px;
+    border-radius: 2px;
+}
+
+#batchCreateForm .btn-back {
+    background: #fff;
+    border: 1px solid #D8DBDE;
+    color: #30354A;
+}
+.form-actions {
+    padding: 16px 0 !important;
+}

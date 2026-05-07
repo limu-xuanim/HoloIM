@@ -1,0 +1,162 @@
+body {
+    background: rgba(244, 245, 247, 1);
+}
+
+.groupsetting-container {
+    flex: 1;
+}
+
+.groupsetting-container .panel {
+    width: 100%;
+}
+
+.panel {
+    border-width: 0px, 0px, 0px, 0px;
+    border-style: solid;
+    border-color: #EFF1F3;
+    position: relative;
+}
+
+.panel-body {
+    padding: 0;
+}
+
+.panel>.panel-heading {
+    background-color: #fff;
+    padding-left: 32px;
+    font-size: 16px;
+    font-weight: 700;
+    border-bottom: 1px solid #EFF1F3;
+}
+
+/* 编辑状态下居中 */
+.panel.edit-mode > .panel-heading {
+    text-align: left;
+    padding-left: 32px;
+    border-bottom: none;
+    position: relative;
+}
+
+/* 编辑状态下，使用伪元素创建充满整个宽度的底部边线 */
+.panel.edit-mode > .panel-heading::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background-color: #EFF1F3;
+}
+
+.panel.edit-mode #ajaxForm {
+    padding: 32px;
+}
+
+/* 编辑态复用用户模块两列表单布局思想 */
+.form-horizontal-2col .form-row {
+    display: flex;
+    gap: 24px;
+}
+
+.form-horizontal-2col .form-group {
+    flex-basis: calc(50% - 12px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.checkbox-inline, .radio-inline {
+    color: #181818;
+}
+.form-horizontal-2col .form-group>label {
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-right: 12px;
+    color: #181818;
+    font-size: 14px;
+    width: 150px;
+    flex-shrink: 0;
+    text-align: left;
+}
+
+.form-horizontal-2col .form-group.form-group-full {
+    flex: none;
+    width: 100%;
+}
+
+.form-horizontal-2col .form-group .groupsetting-field {
+    flex: 1;
+}
+
+.form-horizontal-2col .form-group.form-actions {
+    flex: none;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.form-horizontal-2col .form-group.form-actions .btn {
+    width: 100px;
+    height: 32px;
+    border-radius: 2px;
+}
+
+.form-horizontal-2col .form-group.form-actions .btn-back {
+    background-color: #fff;
+}
+
+.read-actions {
+    padding-top: 12px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.read-actions .btn {
+    width: 140px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: #1B9AF5;
+    border-color: transparent;
+}
+
+.btn:focus {
+    outline: none;
+    /* outline: 5px auto -webkit-focus-ring-color; */
+    /* outline-offset: -2px; */
+}
+
+/* 阅读态键值对布局（与 LDAP 页面保持一致） */
+.read-view {
+    padding: 24px 32px;
+}
+
+.read-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+} 
+.read-row .read-label {
+    text-align: left;
+}
+
+.read-row:last-child {
+    border-bottom: none;
+}
+
+.read-label {
+    width: 150px;
+    color: #6B7280;
+    line-height: 20px;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.read-value {
+    flex: 1;
+    font-weight: 400;
+    font-size: 14px;
+    color: #181818;
+    line-height: 20px;
+}

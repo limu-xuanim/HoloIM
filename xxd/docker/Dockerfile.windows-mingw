@@ -1,0 +1,44 @@
+# MinGW64 交叉编译环境（Linux 容器内编 Windows 版 xxd）
+#
+# 依赖目录：将 export-win-build-bundle.sh 打出的 bundle 中 msys-home 挂载为 HOME_PATH
+#（默认 /opt/msys-home），内含 frankenphp、PHP 头文件与库、frankenphp-go、DLL 等，见 README-windows-mingw.md。
+#
+# 构建镜像：
+#   docker build -f xxd/docker/Dockerfile.windows-mingw -t xxd-mingw-w64:latest xxd/docker
+#
+# 构建上下文使用 xxd/docker 即可；Go 版本请与 go.mod 对齐（GO_VERSION build-arg）。
+
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    DOCKER_WIN_BUILD=1 \
+    HOME_PATH=/opt/msys-home \
+    GOROOT=/usr/local/go \
+    GOPATH=/go \
+    GOBIN=/go/bin \
+    GO111MODULE=on \
+    GOTOOLCHAIN=auto \
+    GOPROXY=https://goproxy.cn,direct \
+    PATH=/usr/local/go/bin:/go/bin:$PATH
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        gcc-mingw-w64-x86-64 \
+        g++-mingw-w64-x86-64 \
+        mingw-w64-x86-64-dev \
+        make \
+        ca-certificates \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG GO_VERSION=1.25.0
+RUN set -eux; \
+    curl -fsSL "https://mirrors.aliyun.com/golang/go${GO_VERSION}.linux-amd64.tar.gz" | tar -C /usr/local -xz
+
+# Windows 头文件大小写在 Linux 容器内敏感，补一个兼容软链避免 Ws2tcpip.h 引用失败。
+RUN ln -sf /usr/x86_64-w64-mingw32/include/ws2tcpip.h /usr/x86_64-w64-mingw32/include/Ws2tcpip.h
+
+RUN mkdir -p /opt/msys-home /work/xxd /work/xxb
+
+WORKDIR /work
+CMD ["/bin/bash"]

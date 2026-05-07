@@ -1,0 +1,71 @@
+//
+// Article style
+// --------------------------------------------------
+
+
+.article {
+  img, video, iframe, object, embed {
+    max-width: 100%;
+    height: auto;
+  }
+
+  ul, ol {
+    ul, ol {margin-bottom: 0}
+  }
+
+  a {color: @color-primary}
+
+  blockquote {
+    margin: @space-sm 0 @space-sm @space;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+
+details {
+  padding-bottom: @space-sm;
+  + details {
+    padding-top: @space-sm;
+    border-top: 1px solid @border-color;
+  }
+
+  > summary {
+    position: relative;
+    font-weight: bold;
+    cursor: pointer;
+    padding-left: 24px;
+    line-height: 18px;
+    .muted;
+
+    &::marker {
+      display: none;
+      content: ' ';
+    }
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
+
+    &:after {
+      content: @mdi-chevron-right;
+      .mdi;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0.9;
+    }
+  }
+
+  > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  &[open] > summary {
+    margin-bottom: 4px;
+    &:after {
+      content: @mdi-chevron-down;
+    }
+  }
+}

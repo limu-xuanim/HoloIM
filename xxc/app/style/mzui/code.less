@@ -1,0 +1,57 @@
+//
+// Code
+// --------------------------------------------------
+
+
+// Inline code styles
+
+.code,
+code,
+kbd,
+pre,
+samp {
+  font-family: @font-family-monospace;
+}
+
+
+// Inline code
+
+kbd,
+code {
+  padding: 2px 5px;
+  color: #0d47a1;
+}
+
+
+// Keyboard text
+
+kbd {
+  border: @border-width solid @border-color;
+  border-radius: .1rem;
+  border-bottom-width: .1rem;
+  color: #666;
+  font-weight: bold;
+}
+
+
+// Blocks of code
+
+pre:not(.shiki) {
+  display: block;
+  font-size: @font-size-small;
+  padding: @space-sm;
+  border: 1px solid transparent;
+  background-color: rgba(0,0,0,.05);
+  word-break: normal;
+  word-wrap: normal;
+  max-width: 100%;
+  overflow: auto;
+
+  code {
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    background-color: transparent;
+    border-radius: 0;
+  }
+}

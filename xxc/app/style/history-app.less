@@ -1,0 +1,68 @@
+@import "./mzui/mzui.less";
+
+@import "./hint.less";
+@import "./scroll-list.less";
+@import "./scroll-list-classic.less";
+@import "./circle-progress.less";
+@import "./resizer.less";
+
+@import "./markdown.less";
+@import "./emoticon.less";
+@import "./media-holder.less";
+@import "./group-list.less";
+
+@import "./basic.less";
+@import "./main.less";
+@import "./chats/index.less";
+@import "./files.less";
+
+@import "./icon-sprite.less";
+
+@import "./settings.less";
+@import (optional) "./custom.less";
+
+body {
+  overflow: hidden;
+}
+
+.page {
+  overflow: hidden;
+  color: inherit;
+}
+
+.app-titlebar {
+  @media (prefers-color-scheme: dark) {
+    background-color: #312524;
+    border-bottom: #0f1011 solid 1px;
+  }
+  @media (prefers-color-scheme: light) {
+    background-color: #eee8e8;
+    border-bottom: #d7d9da solid 1px;
+  }
+
+  height: 26px!important;
+  left: 0!important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .app-titlebar-title {
+    line-height: 26px;
+  }
+}
+
+.app-chats-history-header {
+  .os-linux &,
+  .os-win & {
+    padding-right: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @import "./dark-theme.less";
+}
+
+.app-chat-history-search-result .app-file-list-item .app-file-actions {
+  display: none;
+}

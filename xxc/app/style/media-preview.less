@@ -1,0 +1,150 @@
+.media-preview {
+  > header {
+    position: relative;
+    z-index: 10;
+    backdrop-filter: blur5px;
+    background-color: rgba(255,255,255,.8);
+    border-bottom: 1px solid rgba(0,0,0,.1);
+
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(255,255,255,.1);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+
+    > .title {
+      padding: 0 10px;
+      line-height: 26px;
+      font-size: 13px;
+    }
+    .os-mac & {
+      > .title {
+        justify-content: center;
+      }
+    }
+  }
+
+  > .content {
+    position: relative;
+    overflow: visible;
+    z-index: 0;
+
+    img {
+      margin: 0;
+      max-height: 100%;
+    }
+
+    .media-holder-media {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+
+    .switch-image-btn {
+      transition: opacity .2s;
+      opacity: 0;
+      z-index: 1050;
+      position: absolute;
+      width: 60px;
+      height: 100px;
+
+      &.show,
+      &:hover {
+        opacity: .8;
+        background: rgba(0, 0, 0, .1);
+      }
+
+      &.prev-image-btn {left: 0;}
+      &.next-image-btn {right: 0;}
+    }
+
+    &:hover {
+      img {
+        .shadow-1;
+      }
+    }
+  }
+
+  .toolbar {
+    z-index: 20;
+    background-color: rgba(255,255,255,.9);
+    border-radius: @border-radius-large;
+    transition: opacity .2s;
+    opacity: 0;
+    padding: 0 4px;
+    backdrop-filter: blur10px;
+
+    .iconbutton {
+      height: unset;
+      color: #333;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(255,255,255,.6);
+
+      .iconbutton:active,
+      .iconbutton:focus {
+        background-color: transparent;
+      }
+    }
+
+    &.show,
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  .os-linux &,
+  .os-win & {
+    > .toolbar {
+      right: 120px;
+    }
+  }
+
+  .os-mac & {
+    > header {
+      background-color: rgba(255,255,255,.35);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(0,0,0,.1);
+
+      > header {
+        background-color: rgba(150,150,150,.3);
+      }
+    }
+  }
+
+  .layer & {
+    .switch-image-btn {
+      color: #fff;
+    }
+  }
+}
+
+
+.advance-image-viewer {
+  img {
+    transition: cubic-bezier(0.5,0.25,0,1) transform .2s
+  }
+}
+.advance-image-viewer-scale-label {
+  position: absolute;
+  top: 20px;
+  opacity: 0;
+  transition: opacity .2s;
+
+  .is-scaling & {
+    opacity: 1;
+  }
+
+  .platform-electron & {
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(0,0,0,.5);
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.table-row.statusBlock {
+  padding: 0 24px;
+}
+.status-block-row {
+  text-align: center;
+  display: flex;
+  margin-bottom: 24px;
+}
+.status-block-row .status-cell {
+  height: 123px;
+  padding-top: 20px;
+  width: 25%;
+  box-sizing: border-box;
+}
+.status-block-row .sys-label {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #6B7280;
+}
+.status-block-row .status-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}

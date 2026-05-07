@@ -1,0 +1,73 @@
+body {
+    overscroll-behavior: none;
+}
+.scroll-list {
+    position: relative;
+    overflow: hidden;
+
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+.scroll-list-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+
+    .touch-accelerating &,
+    .has-animation & {
+        transition: top .15s cubic-bezier(0, 0.55, 0.45, 1), bottom .15s cubic-bezier(0, 0.55, 0.45, 1);
+    }
+    .is-rapid & {
+        transition: none;
+    }
+
+    .touch-accelerating & {
+        transition: top .6s cubic-bezier(0, 0.55, 0.45, 1), bottom .6s cubic-bezier(0, 0.55, 0.45, 1) !important;
+    }
+
+    .is-stick-top & {top: 0;}
+    .is-stick-bottom & {bottom: 0;}
+}
+.scroll-list-scrollbar {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: @scrollbar-size;
+    z-index: 1080;
+
+    .has-animation & {
+        transition: box-shadow .1s, background-color .1s;
+    }
+
+    &:hover {
+        box-shadow: inset 1px 0 0 rgba(0, 0, 0, .15);
+        background-color: rgba(0, 0, 0, .075);
+    }
+}
+.scroll-list-scrollbar-bar {
+    box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0 rgba(0, 0, 0, .07);
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: @scrollbar-radius;
+    position: absolute;
+    right: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity .1s;
+
+    &:hover {
+        box-shadow: inset 1px 1px 1px rgba(0, 0, 0, .25);
+        background-color: rgba(0, 0, 0, .4);
+    }
+
+    .scroll-list:hover &,
+    .scroll-list.is-scrolling & {
+        opacity: 1;
+    }
+
+    .is-stick-top & {top: 0;}
+    .is-stick-bottom & {bottom: 0;}
+}

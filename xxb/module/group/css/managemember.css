@@ -1,0 +1,59 @@
+.group-item {display:block; width:100px; float:left}
+.outer .table th {vertical-align: top;}
+
+.col-md-5 {
+    width:260px !important;
+}
+
+.col-md-7 {
+    width: calc(100% - 260px) !important;
+}
+
+.panel {
+    border: none;
+    box-shadow: none;
+}
+
+.panel>.panel-body, .panel>.panel-heading{
+    border: 1px solid transparent;
+    border-color: #ddd;
+    border-radius: 4px;
+}
+
+.panel>.panel-heading {
+    padding: 12px 32px;
+    background: transparent;
+    color: #30354A;
+    font-family: Source Han Sans SC;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 12px;
+}
+
+.panel>.panel-body.no-border {
+    border: none;
+}
+
+.panel-heading-title {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.panel-actions button{
+    width: 100px;
+    height: 32px;
+}
+
+.panel-actions.button-center {
+    justify-content: center;
+    gap: 24px;
+}
+
+.group-item {
+    margin-bottom: 12px;
+}
+
+.table-form>thead>tr>th, .table-form>tbody>tr>th {
+    vertical-align: top;
+}

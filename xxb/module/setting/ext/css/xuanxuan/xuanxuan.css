@@ -1,0 +1,657 @@
+.page-content.with-menu {
+    margin: 41px 0 0 0;
+}
+
+.table-form td+td {
+    padding-left: 10px;
+}
+
+#infoBox {
+    display: none;
+    font-size: 14px;
+}
+
+#downloadIng {
+    display: none;
+    font-size: 14px;
+}
+
+.container-fluid {
+    display: none;
+}
+.config-container {
+    flex: 1;
+}
+.panel {
+
+    border: 1px solid #EEEEEEEE;
+    box-shadow: 2px 0px 16px 0px #6C90C31F;
+    /* padding: 32px; */
+    background: #fff;
+}
+.form-ajax {
+    padding: 24px 32px;
+}
+input[type=checkbox], input[type=radio] {
+    margin: 0;
+}
+body {
+    height: 100%;
+    background: #F4F5F7;
+}
+
+.config-section:last-of-type {
+    margin-bottom: 0;
+}
+
+/* 页面标题样式 */
+.config-page-title {
+    font-family: Source Han Sans SC;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 44px;
+    color: #30354A;
+    border-bottom: 1px solid #EFF1F3;
+    padding-left: 32px;
+    /* margin-bottom: 32px; */
+}
+
+/* 标题样式 */
+.config-title {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    line-height: 36px;
+    /* margin-bottom: 24px; */
+}
+
+.config-title-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #181818;
+    margin-right: 4px;
+}
+
+.title-line {
+    flex: 1;
+    height: 0;
+    border-top: 1.5px dashed #E3E4E9;
+}
+
+/* 内容区域样式 */
+.config-content {
+    padding: 24px 0;
+}
+
+/* 编辑状态下的内容区域样式 */
+.config-content.edit-mode {
+    padding: 16px 32px;
+}
+
+/* 编辑状态下的表单元素样式 */
+.config-content.edit-mode .config-item .form-input,
+.config-content.edit-mode .config-item .form-select,
+.config-content.edit-mode .config-item .form-textarea {
+    margin-top: 4px;
+}
+
+.config-content.edit-mode .config-item .input-with-unit {
+    margin-top: 4px;
+}
+
+.config-content.edit-mode .config-item .form-error {
+    margin-top: 4px;
+}
+
+/* 编辑状态下的单选按钮组 */
+.config-content.edit-mode .config-item .radio-group {
+    margin-top: 0;
+}
+
+.config-row {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.config-row:last-child {
+    margin-bottom: 0;
+}
+
+.config-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.config-item:first-child {
+    padding-left: 0;
+}
+
+.config-item:last-child {
+    padding-right: 0;
+}
+
+/* 查看模式下的config-label样式 */
+.config-label {
+    width: 128px;
+    font-size: 14px;
+    color: #6B7280;
+    font-weight: 400;
+    font-family: "Source Han Sans SC";
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0px;
+}
+
+/* 编辑模式下的config-label样式 */
+.config-content.edit-mode .config-label {
+    font-size: 14px;
+    color: #181818;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.config-value {
+    font-size: 14px;
+    color: #181818;
+    font-weight: 400;
+    margin-left: 8px;
+    line-height: 20px;
+}
+
+/* 按钮样式 */
+.config-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.config-buttons .btn {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.config-buttons .btn-save,
+.config-buttons .btn-back {
+    width: 100px;
+    height: 32px;
+    border-radius: 2px !important;
+}
+
+.config-buttons .btn-primary {
+    background: #1B9AF5;
+    color: #fff;
+}
+
+.config-buttons .btn-primary:hover {
+    background: #0d8ae6;
+}
+
+.config-buttons .btn-secondary {
+    background: #fff;
+    color: #181818;
+    border: 1px solid #E3E4E9;
+}
+
+.config-buttons .btn-secondary:hover {
+    background: #f9f9f9;
+    border-color: #d1d5db;
+}
+
+
+.btn:focus {
+    outline: none;
+}
+
+/* 编辑表单样式 */
+.edit-panel {
+    margin-top: 24px;
+}
+
+.config-form {
+    width: 100%;
+}
+
+/* 表单区域样式 */
+.form-section {
+    margin-bottom: 32px;
+}
+
+.form-section:last-of-type {
+    margin-bottom: 0;
+}
+
+/* 表单标题样式 */
+.form-title {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    line-height: 36px;
+    margin-bottom: 24px;
+}
+
+.form-title-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #181818;
+    margin-right: 4px;
+}
+
+/* 表单内容区域 */
+.form-content {
+    padding: 0;
+}
+
+.form-row {
+    display: flex;
+    margin-bottom: 24px;
+    align-items: flex-start;
+}
+
+.form-row:last-child {
+    margin-bottom: 0;
+}
+
+.form-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    position: relative;
+}
+
+.form-item:first-child {
+    padding-left: 0;
+}
+
+.form-item:last-child {
+    padding-right: 0;
+}
+
+.form-item.full-width {
+    flex: 100%;
+    padding: 0;
+}
+
+/* 表单标签样式 */
+.form-label {
+    font-size: 14px;
+    color: #181818;
+    font-weight: 400;
+    font-family: "Source Han Sans SC", sans-serif;
+    margin-bottom: 0px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0px;
+}
+
+/* 帮助图标样式 */
+.help-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12px;
+    height: 12px;
+    margin-left: 4px;
+    cursor: help;
+    transition: opacity 0.3s;
+}
+
+.help-icon:hover {
+    opacity: 0.7;
+}
+
+.help-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* 输入框样式 */
+.form-input {
+    width: 100%;
+    height: 32px;
+    padding: 0 32px 0 12px;
+    border: 1px solid #D2D6E5;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #606266;
+    background: #fff;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+/* 移除数字输入框的上下按钮 */
+.form-input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.form-input[type="number"]::-webkit-outer-spin-button,
+.form-input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #409EFF;
+}
+
+.form-input:disabled {
+    background: #F5F7FA;
+    color: #C0C4CC;
+    cursor: not-allowed;
+}
+
+.form-input:invalid {
+    border-color: #F56C6C;
+}
+
+/* 下拉选择框样式 */
+.form-select {
+    width: 100%;
+    height: 32px;
+    padding: 0 32px 0 12px;
+    border: 1px solid #D2D6E5;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #606266;
+    background: #fff;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L6 8L11 4' stroke='%236D6D6D'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px 12px;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #409EFF;
+}
+
+/* 带单位的输入框 */
+.input-with-unit {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-with-unit .form-input {
+    padding-right: 40px;
+    width: 100%;
+}
+
+.unit {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #909399;
+    pointer-events: none;
+    line-height: 1;
+}
+
+/* 文本域样式 */
+.form-textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    border: 1px solid #D2D6E5;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #606266;
+    background: #fff;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: #409EFF;
+}
+
+/* 单选按钮组样式 */
+.radio-group {
+    display: flex;
+    gap: 24px;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #181818;
+    font-weight: 400;
+    font-family: "Source Han Sans SC", sans-serif;
+    margin-bottom: 0;
+}
+
+.radio-item input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.radio-text {
+    transition: color 0.3s;
+}
+
+/* 错误提示样式 */
+.form-error {
+    font-size: 12px;
+    color: #F56C6C;
+    margin-top: 4px;
+    display: none;
+}
+
+.config-item.error .form-error {
+    display: block;
+}
+
+/* 必填项提示显示控制 */
+.config-item.show-required .form-error {
+    display: block;
+}
+
+.config-item.show-required .form-input,
+.config-item.show-required .form-select,
+.config-item.show-required .form-textarea {
+    border-color: #F56C6C;
+}
+
+/* 表单按钮样式 */
+.form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #EBEEF5;
+}
+
+.form-buttons .btn {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 80px;
+}
+
+.form-buttons .btn-primary {
+    background: #409EFF;
+    color: #fff;
+}
+
+.form-buttons .btn-primary:hover {
+    background: #66B1FF;
+}
+
+.form-buttons .btn-primary:active {
+    background: #3A8EE6;
+}
+
+.form-buttons .btn-secondary {
+    background: #fff;
+    color: #606266;
+    border: 1px solid #DCDFE6;
+}
+
+.form-buttons .btn-secondary:hover {
+    background: #F5F7FA;
+    border-color: #C0C4CC;
+}
+
+.form-buttons .btn-secondary:active {
+    background: #EBEEF5;
+}
+
+.form-buttons .btn:focus {
+    outline: none;
+}
+
+/* 必填星号样式 */
+.required-star {
+    color: #F56C6C;
+    margin-right: 4px;
+    font-weight: bold;
+    cursor: default;
+}
+
+.required-star:hover {
+    cursor: default;
+}
+
+/* 半宽布局 */
+.config-item.half-width {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+/* 全宽布局 */
+.config-item.full-width {
+    flex: 100%;
+    width: 100%;
+}
+
+/* 单选按钮内联布局 */
+.radio-item-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+}
+
+.radio-item-inline .config-label {
+    margin-bottom: 0;
+    margin-right: 16px;
+    flex-shrink: 0;
+}
+
+.radio-item-inline .radio-group {
+    flex: 1;
+    /* justify-content: flex-end; */
+}
+
+
+/* 确保config-item在编辑模式下使用flex布局 */
+.config-content.edit-mode .config-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* 单选按钮内联布局优化 */
+.radio-item-inline {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+}
+
+.radio-item-inline .config-label {
+    width: 128px;
+    margin-bottom: 0;
+    margin-right: 16px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #181818;
+    font-weight: 400;
+    font-family: "Source Han Sans SC", sans-serif;
+    margin-bottom: 4px;
+    line-height: 20px;
+    letter-spacing: 0px;
+}
+
+.radio-item-inline .radio-group {
+    display: flex;
+    gap: 24px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-item {
+        padding: 0;
+        margin-bottom: 16px;
+    }
+
+    .form-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .radio-group {
+        gap: 16px;
+    }
+
+    .config-item.half-width {
+        flex: 100%;
+        max-width: 100%;
+    }
+
+    .radio-item-inline {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .radio-item-inline .config-label {
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+
+    .radio-item-inline .radio-group {
+        justify-content: flex-start;
+    }
+}

@@ -1,0 +1,60 @@
+//
+// Labels
+// --------------------------------------------------
+
+
+// Base style
+
+.label {
+  display: inline-flex;
+  font-size: @font-size-small;
+  height: 20px;
+  min-width: 20px;
+  padding: 0 @padding-small-horizontal;
+  background-color: @color-gray-lighter;
+  border: @border-width solid transparent;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  line-height: 1;
+  vertical-align: middle;
+
+  >.icon {
+    line-height: 1
+  }
+
+  &.-rounded-full {
+    padding: 1px 5px;
+  }
+}
+
+.label-sm {
+  height: 16px;
+  min-width: 16px;
+  padding: 0 (@padding-small-horizontal/4);
+
+  &.-rounded-full {
+    padding: 0 2px;
+  }
+}
+
+.label-xs {
+  height: 14px;
+  min-width: 14px;
+  padding: 0 1px;
+
+  &.-rounded-full {
+    border-radius: 7px;
+    padding: 0 2px;
+  }
+}
+
+
+// Badge
+
+.label.badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+}

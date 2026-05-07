@@ -1,0 +1,234 @@
+.table-priv caption {
+    background-color: #f5f5f5;
+    border: 1px solid #DDD;
+    height: 40;
+    line-height: 40px;
+    text-align: left;
+    padding-left: 8px;
+    font-size: 15px;
+}
+
+.table-priv caption label {
+    font-weight: 800;
+}
+#ajaxForm .panel { 
+    border: none;
+}
+.table-priv .thead-tr th {
+    background: #E6EAF1;
+    border: none;
+    margin-bottom: 2px;
+
+}
+
+.table-priv td {
+    padding: 8px 40px;
+    line-height: 20px;
+}
+
+.table-priv th {
+    vertical-align: middle;
+    line-height: 20px;
+}
+
+.table-priv th label {
+    font-weight: 600;
+    padding-left: 0;
+    padding-right: 20px;
+}
+
+.table-priv th label input[type="checkbox"] {
+    position: relative;
+    margin-right: 6px;
+    top: 1px
+}
+
+.table-priv td label input[type="checkbox"] {
+    position: relative;
+    margin-right: 6px;
+    top: 1px
+}
+
+.table-priv td label {
+    width: 170px;
+    font-size: 14px;
+    /* padding: 0 10px; */
+    display: inline-block;
+}
+
+.table-priv td label.checkbox-inline+.checkbox-inline {
+    margin-left: 0
+}
+
+.table-priv a:hover {
+    text-decoration: none;
+}
+
+#search {
+    padding: 8px 40px;
+    line-height: 20px;
+}
+
+.table-priv {
+    border: none;
+}
+
+.table-priv thead th {
+    background-color: #E6EAF1;
+    border: none;
+    padding: 0 16px;
+    height: 29px;
+    line-height: 29px;
+    text-align: center;
+    font-weight: 500;
+    color: #313C52;
+    font-size: 14px;
+}
+
+.table-priv thead th:first-child {
+    padding-left: 20px;
+    text-align: center;
+    width: 112px;
+}
+
+.table-priv tbody tr th {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 112px;
+    max-width: 112px;
+}
+
+.table-priv tbody tr th label {
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.table-priv {
+    border-collapse: collapse;
+}
+
+.table-priv tbody tr td {
+    background-color: #fff;
+    border: none;
+    padding: 20px 16px;
+    vertical-align: middle;
+}
+
+.table-priv tbody tr th {
+    background-color: #F0F2F7;
+    border: none;
+    padding: 20px 16px;
+    vertical-align: middle;
+}
+
+.table-priv .divider-row td {
+    background-color: transparent !important;
+    padding: 2px 0 !important;
+    border: none;
+    height: 5px;
+    line-height: 0;
+}
+.table-priv tbody .divider-row:first-of-type td:first-child:after { 
+    display: none;
+ }
+.table-priv .divider-row td:first-child,
+.table-priv .divider-row td:last-child {
+    position: relative;
+}
+
+.table-priv .divider-row td:first-child:after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
+    height: 1px;
+    border-bottom: 1px dashed #E6EAF1;
+    margin: 2px 0;
+}
+
+.custom-checkbox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #313C52;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-checkbox .checkmark {
+    position: relative;
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    flex-shrink: 0;
+    margin-right: 4px;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0.5' y='0.5' width='11' height='11' rx='1.5' fill='white' stroke='%23D8DBDE'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.custom-checkbox .module-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.custom-checkbox input:checked~.checkmark {
+    background-color: transparent;
+    border-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='12' height='12' rx='2' fill='%232E7FFF'/%3E%3Cpath d='M9 3L5 7L3 5' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+}
+
+.custom-checkbox .checkmark.indeterminate {
+    background-color: transparent;
+    border-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0.5' y='0.5' width='11' height='11' rx='1.5' fill='white' stroke='%23D8DBDE'/%3E%3Crect x='3' y='5.5' width='6' height='1' fill='%23D8DBDE'/%3E%3C/svg%3E");
+}
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    padding: 16px 20px;
+    border-top: 1px solid #E6EAF1;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+    z-index: 1000;
+    text-align: center;
+}
+
+.fixed-footer button {
+    width: 100px;
+    height: 32px;
+    border-radius: 2px;
+    margin: 0 8px;
+}
+
+.fixed-footer .btn-primary {
+    background-color: #409EFF;
+    border-color: #409EFF;
+    color: #fff;
+}
+
+.fixed-footer .btn:not(.btn-primary) {
+    background-color: #fff;
+    border-color: #D8DBDE;
+    color: #313C52;
+}
