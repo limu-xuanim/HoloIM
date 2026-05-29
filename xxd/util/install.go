@@ -183,6 +183,14 @@ func getPortWithCheck(portName, defaultPort string) string {
 	// 递归询问，直到用户输入一个可用的端口
 	return getPortWithCheck(portName, port)
 }
+// 确保服务器主机地址以 /xxb/ 结尾
+func ensureServerHostXXBSuffix(serverHost string) string {
+	serverHost = strings.TrimRight(strings.TrimSpace(serverHost), "/")
+	if !strings.HasSuffix(serverHost, "/xxb") {
+		serverHost += "/xxb"
+	}
+	return serverHost + "/"
+}
 
 // getServerHostInteractively 交互式获取服务器主机地址
 // scheme: 协议类型 ("http" 或 "https")
@@ -407,6 +415,8 @@ func (i *Installer) configureServer() error {
 			return fmt.Errorf("get server host interactively failed: %w", err)
 		}
 	}
+
+	serverHost = ensureServerHostXXBSuffix(serverHost)
 
 	Config.CommonPort = commonPort
 	Config.ChatPort = chatPort
@@ -785,6 +795,8 @@ func (i *Installer) applyServerParams(params InstallParams) {
 		serverHost += "/"
 	}
 
+	serverHost = ensureServerHostXXBSuffix(serverHost)
+
 	Config.CommonPort = commonPort
 	Config.ChatPort = chatPort
 	Config.ApiPort = "9090"
@@ -1128,7 +1140,7 @@ func updateConfigWithQuietParams() error {
 		config.SetValue("server", "https", QuietInstallHttps)
 	}
 	if QuietInstallServerHost != "" {
-		config.SetValue("server", "serverHost", QuietInstallServerHost)
+		config.SetValue("server", "serverHost", ensureServerHostXXBSuffix(QuietInstallServerHost))
 	}
 	if QuietInstallDbPort != "" {
 		config.SetValue("mysql", "dbPort", QuietInstallDbPort)
@@ -1165,10 +1177,11 @@ func updateConfigWithQuietParams() error {
 // 若 https=on（IsHttps=="1"），确保 ServerHost 使用 https:// 协议；
 // 若 https=off，确保使用 http:// 协议。协议不一致时自动修正并保存到 xxd.conf。
 func autoCorrectServerHost() {
-	serverHost := strings.TrimSpace(Config.ServerHost)
-	if serverHost == "" {
+	originalServerHost := strings.TrimSpace(Config.ServerHost)
+	if originalServerHost == "" {
 		return
 	}
+	serverHost := ensureServerHostXXBSuffix(originalServerHost)
 
 	u, err := url.Parse(serverHost)
 	if err != nil || u.Host == "" {
@@ -1180,13 +1193,13 @@ func autoCorrectServerHost() {
 		expectedScheme = "https"
 	}
 
-	if u.Scheme == expectedScheme {
+	u.Scheme = expectedScheme
+	newHost := u.String()
+	if newHost == originalServerHost {
 		return
 	}
 
-	u.Scheme = expectedScheme
-	newHost := u.String()
-	fmt.Printf("[Config] serverHost corrected: %s -> %s\n", serverHost, newHost)
+	fmt.Printf("[Config] serverHost corrected: %s -> %s\n", originalServerHost, newHost)
 	if Config.BackendUrl == Config.ServerHost {
 		Config.BackendUrl = newHost
 	}
