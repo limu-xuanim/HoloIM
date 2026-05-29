@@ -104,7 +104,7 @@
               </div>
             </td>
             <td><?php echo html::input("password[$i]", '', "id='password{$i}' class='form-control' autocomplete='off'")?></td>
-            <td class='text-center'><?php echo html::radio("gender[$i]", $lang->genderList);?></td>
+            <td class='text-center'><?php echo html::radio("gender[$i]", $lang->genderList, 'm');?></td>
             <td>
               <div class='input-group'>
                 <?php echo html::input("deptName[$i]", '', "id='deptName{$i}' class='form-control' style='display:none;' autocomplete='off' placeholder=\"{$lang->user->placeholder->emptyDept}\"");?>
