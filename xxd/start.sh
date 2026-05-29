@@ -54,18 +54,34 @@ detect_paths() {
 detect_loader() {
     # 检测系统架构并选择对应的动态链接器
     ARCH=$(uname -m)
+    LD_LOADER=""
     case "$ARCH" in
         x86_64)
-            LD_LOADER="ld-linux-x86-64.so.2"
+            LOADER_CANDIDATES="ld-linux-x86-64.so.2"
             ;;
-        aarch64)
-            LD_LOADER="ld-linux-aarch64.so.1"
+        aarch64|arm64)
+            LOADER_CANDIDATES="ld-linux-aarch64.so.1 ld-linux-aarch64.so.2"
+            ;;
+        sw_64|sw64)
+            LOADER_CANDIDATES="ld-linux.so.2 ld-linux-sw64.so.1 ld-linux-sw64.so.2"
             ;;
         *)
             echo "错误: 不支持的架构: $ARCH"
             exit 1
             ;;
     esac
+
+    for candidate in $LOADER_CANDIDATES; do
+        if [ -f "$phpPath/lib/$candidate" ]; then
+            LD_LOADER="$candidate"
+            break
+        fi
+    done
+
+    if [ -z "$LD_LOADER" ]; then
+        echo "错误: 未找到架构 $ARCH 对应的动态链接器，已尝试: $LOADER_CANDIDATES"
+        exit 1
+    fi
 }
 
 run_xxd_foreground() {
