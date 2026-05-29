@@ -53,7 +53,6 @@ func (u *UserService) SyncSettings(paramSlice []any, xxbResponse api.XxbResponse
 	switch s := params.Settings.(type) {
 	case map[string]any:
 		// 上传指定 settings（合并写回）
-		settingObj = s
 		updateMap := mergeMaps(userSettingMap, s)
 		updateJsonData, err := json.Marshal(updateMap)
 		if err != nil {
@@ -64,6 +63,7 @@ func (u *UserService) SyncSettings(paramSlice []any, xxbResponse api.XxbResponse
 			return api.FailResponse(xxbResponse, err)
 		}
 		userSettingMap = updateMap
+		settingObj = updateMap
 	case []any:
 		// 下载指定 keys 的子集
 		for _, k := range s {
