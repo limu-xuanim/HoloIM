@@ -100,7 +100,7 @@ export class MemberSelectDialog extends PureComponent {
                             changeDelay={500}
                         />
                     </header>
-                    <div className="-flex-auto -overflow-y-auto">
+                    <div className="-flex-auto -overflow-y-scroll">
                         <MemberSelectRadio
                             chatGid={chatGid}
                             excludes={excludes}
