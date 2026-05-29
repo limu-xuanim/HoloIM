@@ -1,9 +1,10 @@
 module xxd
 
-go 1.25.0
+go 1.24.6
 
 // build in windows need to replace github.com/dunglas/frankenphp
 // replace github.com/dunglas/frankenphp => PATH_TO_FRANKENPHP
+// replace golang.org/x/sys => ./php/linux_sw64/golang-sys-sw64
 
 require (
 	github.com/Unknwon/goconfig v0.0.0-20200817131228-2444c9802e76

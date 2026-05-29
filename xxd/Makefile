@@ -31,14 +31,24 @@ GO_BUILD_X := $(if $(filter 1 true yes on,$(DEBUG)),-x,)
 # 架构与发布目录后缀
 ARCH := $(shell uname -m)
 TARGET_ARCH ?= $(ARCH)
-RELEASE_SUFFIX := $(if $(filter x86_64 amd64,$(TARGET_ARCH)),.linux.x64,$(if $(filter aarch64 arm64,$(TARGET_ARCH)),.arm64,.linux.x64))
-RELEASE_DIR := ./release/xxd.$(VERSION)$(RELEASE_SUFFIX)
+TARGET_ARCH_CANONICAL = $(if $(filter x86_64 amd64,$(TARGET_ARCH)),amd64,$(if $(filter aarch64 arm64,$(TARGET_ARCH)),arm64,$(if $(filter sw_64 sw64,$(TARGET_ARCH)),sw64,$(TARGET_ARCH))))
+RELEASE_SUFFIX = $(if $(filter amd64,$(TARGET_ARCH_CANONICAL)),.linux.x64,$(if $(filter arm64,$(TARGET_ARCH_CANONICAL)),.arm64,$(if $(filter sw64,$(TARGET_ARCH_CANONICAL)),.linux.sw64,.linux.$(TARGET_ARCH_CANONICAL))))
+RELEASE_DIR = ./release/xxd.$(VERSION)$(RELEASE_SUFFIX)
 WIN_RELEASE_DIR := ./release/xxd.$(VERSION).win.x64
 WIN_DOCKER_IMAGE ?= xxd-mingw-w64:latest
 LINUX_AMD64_DOCKER_IMAGE ?= xxd-linux-amd64:latest
 LINUX_ARM64_DOCKER_IMAGE ?= xxd-linux-arm64:latest
+LINUX_SW64_DOCKER_IMAGE ?= xxd-linux-sw64:latest
 CROSS_CC_arm64 ?= aarch64-linux-gnu-gcc
 CROSS_CXX_arm64 ?= aarch64-linux-gnu-g++
+SW64_GOARCH ?= sw64
+SW64_PHP_DIR ?= linux_sw64
+SW64_PHP_INI ?= ../../xxd/php/$(SW64_PHP_DIR)/php.ini
+LINUX_RELEASE_PHP_INI ?= $(if $(filter sw64,$(TARGET_ARCH_CANONICAL)),$(SW64_PHP_INI),./php/php.ini)
+SW64_LD_LOADER ?= ld-linux.so.2
+SW64_SYSROOT_LIB_DIRS ?= usr/sw_64-sunway-linux-gnu/lib usr/lib_for_gcc/lib usr/lib_for_gcc usr/lib lib usr/lib64 lib64
+CROSS_CC_sw64 ?= /opt/swgcc830_cross_tools/usr/bin/sw_64-sunway-linux-gnu-gcc
+CROSS_CXX_sw64 ?= /opt/swgcc830_cross_tools/usr/bin/sw_64-sunway-linux-gnu-g++
 
 DOCKER_HOST_UID ?= $(shell id -u)
 DOCKER_HOST_GID ?= $(shell id -g)
@@ -90,8 +100,9 @@ else ifneq (,$(findstring Linux,$(UNAME_S)))
     # Linux 环境 - 使用本地 PHP
 	MAKEFILE_DIR = $(PWD)
     # 根据架构选择 PHP 路径
-    PHP_DIR = $(if $(filter aarch64 arm64,$(TARGET_ARCH)),linux_arm,linux)
+    PHP_DIR = $(if $(filter arm64,$(TARGET_ARCH_CANONICAL)),linux_arm,$(if $(filter sw64,$(TARGET_ARCH_CANONICAL)),$(SW64_PHP_DIR),linux))
     PHP_PATH = $(MAKEFILE_DIR)/php/$(PHP_DIR)
+    LINUX_LD_LOADER = $(if $(filter arm64,$(TARGET_ARCH_CANONICAL)),ld-linux-aarch64.so.2,$(if $(filter sw64,$(TARGET_ARCH_CANONICAL)),$(SW64_LD_LOADER),ld-linux-x86-64.so.2))
 
     INCLUDES = -I$(PHP_PATH)/include -I$(PHP_PATH)/include/main -I$(PHP_PATH)/include/TSRM -I$(PHP_PATH)/include/Zend -I$(PHP_PATH)/include/ext
     LIBS = -L$(PHP_PATH)/lib -Wl,-rpath,$(PHP_PATH)/lib -lphp
@@ -197,10 +208,10 @@ build-linux: setenv-linux
 	@cp -rf ./php/$(PHP_DIR)/lib "$(RELEASE_DIR)/php/lib"
 	@cp -f start.sh "$(RELEASE_DIR)"
 	@if [ -f "./setauth" ]; then cp -f ./setauth "$(RELEASE_DIR)/setauth"; fi
-	@cp -f ./php/php.ini "$(RELEASE_DIR)"
+	@cp -f "$(LINUX_RELEASE_PHP_INI)" "$(RELEASE_DIR)"
 	@cd "$(RELEASE_DIR)" && \
 	patchelf --set-rpath '$$ORIGIN/php/lib' xxd && \
-	patchelf --set-interpreter ./php/lib/$(if $(filter aarch64 arm64,$(TARGET_ARCH)),ld-linux-aarch64.so.2,ld-linux-x86-64.so.2) xxd && \
+	patchelf --set-interpreter ./php/lib/$(LINUX_LD_LOADER) xxd && \
 	cd ../..
 	@cd "$(RELEASE_DIR)/php/lib" && \
 	patchelf --set-rpath '$$ORIGIN' libphp.so &&  \
@@ -217,19 +228,20 @@ build-linux-docker: setenv-linux
 	@cp -rf ./php/$(PHP_DIR)/lib "$(RELEASE_DIR)/php/lib"
 	@cp -f start.sh "$(RELEASE_DIR)"
 	@if [ -f "./setauth" ]; then cp -f 	./setauth "$(RELEASE_DIR)/setauth"; fi
-	@cp -f ./php/php.ini "$(RELEASE_DIR)"
+	@cp -f "$(LINUX_RELEASE_PHP_INI)" "$(RELEASE_DIR)"
 	@cd "$(RELEASE_DIR)" && \
 	patchelf --set-rpath '$$ORIGIN/php/lib' xxd && \
-	patchelf --set-interpreter ./php/lib/$(if $(filter aarch64 arm64,$(TARGET_ARCH)),ld-linux-aarch64.so.2,ld-linux-x86-64.so.2) xxd && \
+	patchelf --set-interpreter ./php/lib/$(LINUX_LD_LOADER) xxd && \
 	cd ../..
 	@cd "$(RELEASE_DIR)/php/lib" && \
 	patchelf --set-rpath '$$ORIGIN' libphp.so
 
-build-linux-arm64-cross:
+build-linux-arm64-cross: TARGET_ARCH = arm64
+build-linux-arm64-cross: prep
 	@echo "Building Linux arm64 via cross-compiler..."
 	@bash -ec ' \
 		set -euo pipefail; \
-		LIBDIR="$(CURDIR)/php/linux_arm/lib"; \
+		LIBDIR="$(CURDIR)/php/$(PHP_DIR)/lib"; \
 		BACKUP="$$LIBDIR/.glibc-hide-tmp"; \
 		restore_libs() { \
 			if [ -d "$$BACKUP" ]; then \
@@ -243,27 +255,73 @@ build-linux-arm64-cross:
 		done; \
 		trap restore_libs EXIT; \
 		SYSROOT="$$(aarch64-linux-gnu-gcc -print-sysroot)"; \
-		CGO_CFLAGS="-I$(CURDIR)/php/linux_arm/include -I$(CURDIR)/php/linux_arm/include/main -I$(CURDIR)/php/linux_arm/include/TSRM -I$(CURDIR)/php/linux_arm/include/Zend -I$(CURDIR)/php/linux_arm/include/ext" \
-		CGO_LDFLAGS="-L$$LIBDIR -Wl,-rpath,$(CURDIR)/php/linux_arm/lib -lphp -Wl,-rpath-link,$$SYSROOT/lib/aarch64-linux-gnu -Wl,-rpath-link,$$SYSROOT/usr/lib/aarch64-linux-gnu" \
+		CGO_CFLAGS="-I$(CURDIR)/php/$(PHP_DIR)/include -I$(CURDIR)/php/$(PHP_DIR)/include/main -I$(CURDIR)/php/$(PHP_DIR)/include/TSRM -I$(CURDIR)/php/$(PHP_DIR)/include/Zend -I$(CURDIR)/php/$(PHP_DIR)/include/ext" \
+		CGO_LDFLAGS="-L$$LIBDIR -Wl,-rpath,$(CURDIR)/php/$(PHP_DIR)/lib -lphp -Wl,-rpath-link,$$SYSROOT/lib/aarch64-linux-gnu -Wl,-rpath-link,$$SYSROOT/usr/lib/aarch64-linux-gnu" \
 		GOOS=linux GOARCH=arm64 CGO_ENABLED=1 CC="$(CROSS_CC_arm64)" CXX="$(CROSS_CXX_arm64)" \
 		go build -tags "$(BUILD_TAGS)" -o ./xxd $(GO_BUILD_X); \
 		restore_libs; \
 		trap - EXIT; \
 	'
-	@rm -rf ./release/xxd.$(VERSION).arm64 2>/dev/null || true
-	@mkdir -p "./release/xxd.$(VERSION).arm64/php"
-	@mv ./xxd "./release/xxd.$(VERSION).arm64/xxd"
-	@cp -rf ./config "./release/xxd.$(VERSION).arm64/config"
-	@cp -rf ./pages "./release/xxd.$(VERSION).arm64/pages"
-	@cp -rf ./php/linux_arm/lib "./release/xxd.$(VERSION).arm64/php/lib"
-	@cp -f start.sh "./release/xxd.$(VERSION).arm64"
-	@if [ -f "./setauth" ]; then cp -f ./setauth "./release/xxd.$(VERSION).arm64/setauth"; fi
-	@cp -f ./php/php.ini "./release/xxd.$(VERSION).arm64"
-	@cd "./release/xxd.$(VERSION).arm64" && \
+	@rm -rf "$(RELEASE_DIR)" 2>/dev/null || true
+	@mkdir -p "$(RELEASE_DIR)/php"
+	@mv ./xxd "$(RELEASE_DIR)/xxd"
+	@cp -rf ./config "$(RELEASE_DIR)/config"
+	@cp -rf ./pages "$(RELEASE_DIR)/pages"
+	@cp -rf "./php/$(PHP_DIR)/lib" "$(RELEASE_DIR)/php/lib"
+	@cp -f start.sh "$(RELEASE_DIR)"
+	@if [ -f "./setauth" ]; then cp -f ./setauth "$(RELEASE_DIR)/setauth"; fi
+	@cp -f "$(LINUX_RELEASE_PHP_INI)" "$(RELEASE_DIR)"
+	@cd "$(RELEASE_DIR)" && \
 	patchelf --set-rpath '$$ORIGIN/php/lib' xxd && \
-	patchelf --set-interpreter ./php/lib/ld-linux-aarch64.so.2 xxd && \
+	patchelf --set-interpreter ./php/lib/$(LINUX_LD_LOADER) xxd && \
 	cd ../..
-	@cd "./release/xxd.$(VERSION).arm64/php/lib" && \
+	@cd "$(RELEASE_DIR)/php/lib" && \
+	patchelf --set-rpath '$$ORIGIN' libphp.so
+
+build-linux-sw64-cross: TARGET_ARCH = sw64
+build-linux-sw64-cross: prep
+	@echo "Building Linux $(SW64_GOARCH) via cross-compiler..."
+	@bash -ec ' \
+		set -euo pipefail; \
+		LIBDIR="$(CURDIR)/php/$(PHP_DIR)/lib"; \
+		BACKUP="$$LIBDIR/.glibc-hide-tmp"; \
+		restore_libs() { \
+			if [ -d "$$BACKUP" ]; then \
+				for f in "$$BACKUP"/*; do [ -e "$$f" ] || continue; mv "$$f" "$$LIBDIR/"; done; \
+				rmdir "$$BACKUP" 2>/dev/null || true; \
+			fi; \
+		}; \
+		mkdir -p "$$BACKUP"; \
+		for f in libpthread.so libpthread.so.0 libdl.so libdl.so.2 libc.so libc.so.6 librt.so librt.so.1 libm.so libm.so.6 libresolv.so libresolv.so.2 ld-linux.so.2 ld-linux-sw64.so.1 ld-linux-sw64.so.2; do \
+			if [ -e "$$LIBDIR/$$f" ]; then mv "$$LIBDIR/$$f" "$$BACKUP/"; fi; \
+		done; \
+		trap restore_libs EXIT; \
+		SYSROOT="$$($(CROSS_CC_sw64) -print-sysroot)"; \
+		RPATH_LINKS=""; \
+		for dir in $(SW64_SYSROOT_LIB_DIRS); do \
+			if [ -d "$$SYSROOT/$$dir" ]; then RPATH_LINKS="$$RPATH_LINKS -Wl,-rpath-link,$$SYSROOT/$$dir"; fi; \
+		done; \
+		CGO_CFLAGS="-I$(CURDIR)/php/$(PHP_DIR)/include -I$(CURDIR)/php/$(PHP_DIR)/include/main -I$(CURDIR)/php/$(PHP_DIR)/include/TSRM -I$(CURDIR)/php/$(PHP_DIR)/include/Zend -I$(CURDIR)/php/$(PHP_DIR)/include/ext" \
+		CGO_LDFLAGS="-L$$LIBDIR -Wl,-rpath,$(CURDIR)/php/$(PHP_DIR)/lib -lphp $$RPATH_LINKS" \
+		GOOS=linux GOARCH="$(SW64_GOARCH)" CGO_ENABLED=1 CC="$(CROSS_CC_sw64)" CXX="$(CROSS_CXX_sw64)" \
+		go build -tags "$(BUILD_TAGS)" -o ./xxd $(GO_BUILD_X); \
+		restore_libs; \
+		trap - EXIT; \
+	'
+	@rm -rf "$(RELEASE_DIR)" 2>/dev/null || true
+	@mkdir -p "$(RELEASE_DIR)/php"
+	@mv ./xxd "$(RELEASE_DIR)/xxd"
+	@cp -rf ./config "$(RELEASE_DIR)/config"
+	@cp -rf ./pages "$(RELEASE_DIR)/pages"
+	@cp -rf "./php/$(PHP_DIR)/lib" "$(RELEASE_DIR)/php/lib"
+	@cp -f start.sh "$(RELEASE_DIR)"
+	@if [ -f "./setauth" ]; then cp -f ./setauth "$(RELEASE_DIR)/setauth"; fi
+	@cp -f "$(LINUX_RELEASE_PHP_INI)" "$(RELEASE_DIR)"
+	@cd "$(RELEASE_DIR)" && \
+	patchelf --set-rpath '$$ORIGIN/php/lib' xxd && \
+	patchelf --set-interpreter ./php/lib/$(LINUX_LD_LOADER) xxd && \
+	cd ../..
+	@cd "$(RELEASE_DIR)/php/lib" && \
 	patchelf --set-rpath '$$ORIGIN' libphp.so
 
 docker-image-win:
@@ -274,6 +332,9 @@ docker-image-linux-amd64:
 
 docker-image-linux-arm64:
 	docker build -f docker/Dockerfile.linux-arm64 -t "$(LINUX_ARM64_DOCKER_IMAGE)" docker
+
+docker-image-linux-sw64:
+	docker build -f docker/Dockerfile.linux-sw64 -t "$(LINUX_SW64_DOCKER_IMAGE)" docker
 
 run-win-docker:
 	@git checkout ./util/sysrun.go ./go.mod
@@ -346,7 +407,7 @@ install-deps-macos:
 	brew install php brotli
 
 .PHONY: prep _assert_docker_win setenv-win setenv-win-docker setenv-linux \
-	build build-win build-win-docker build-linux build-linux-docker build-linux-arm64-cross \
+	build build-win build-win-docker build-linux build-linux-docker build-linux-arm64-cross build-linux-sw64-cross \
 	run-win-docker run-linux-amd64-docker run-linux-arm64-docker \
-	docker-image-win docker-image-linux-amd64 docker-image-linux-arm64 \
+	docker-image-win docker-image-linux-amd64 docker-image-linux-arm64 docker-image-linux-sw64 \
 	build-macos clean debug install-deps-linux install-deps-macos
