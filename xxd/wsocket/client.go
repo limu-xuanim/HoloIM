@@ -9,10 +9,8 @@
 package wsocket
 
 import (
-	"encoding/json"
 	"net/http"
 	"regexp"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -107,10 +105,14 @@ func switchMethod(parseData api.XxbResponse, client *Client) (error, bool) {
 		}
 
 	case "chattyping":
-		chatTyping(parseData, client)
+		if err := chatTyping(parseData, client); err != nil {
+			return err, false
+		}
 
 	case "datatransfer":
-		handleDataTransfer(parseData, client)
+		if err := handleDataTransfer(parseData, client); err != nil {
+			return err, false
+		}
 
 	case "userlogout": // user normally logout, not disconnect
 		client.hub.unregister <- client
@@ -119,10 +121,14 @@ func switchMethod(parseData api.XxbResponse, client *Client) (error, bool) {
 		return nil, true
 
 	case "ping":
-		handlePing(parseData, client)
+		if err := handlePing(parseData, client); err != nil {
+			return err, false
+		}
 
 	case "usersubscribe": // subscribe userupdate responses
-		userSubscribe(parseData, client)
+		if err := userSubscribe(parseData, client); err != nil {
+			return err, false
+		}
 
 	default:
 		err := transitData(parseData, client)
@@ -135,92 +141,84 @@ func switchMethod(parseData api.XxbResponse, client *Client) (error, bool) {
 }
 
 func handlePing(parseData api.XxbResponse, client *Client) error {
-	rid := strings.Trim(strings.SplitN(string(parseData.JSON), ",", 3)[1], "[]\"")
-	pingJSON := "{\"method\":\"ping\",\"result\":\"success\",\"rid\":\"" + rid + "\"}"
-	parseData.JSON = []byte(pingJSON)
+	request, err := decodePingRequest(parseData.JSON)
+	if err != nil {
+		return err
+	}
 
-	var message []byte
-	if util.Config.EnableClientAES == 1 {
-		message = api.UnparseData(parseData, util.Token)
-	} else {
-		message = parseData.JSON
+	message, err := buildClientProtocolMessage(parseData, pingResponse{
+		Method: "ping",
+		Result: api.ResultSuccess,
+		RID:    request.RID,
+	})
+	if err != nil {
+		return err
 	}
 
 	return X2cSend(client.serverName, []int64{client.userID}, message, client, "", true)
 }
 
 func chatTyping(parseData api.XxbResponse, client *Client) error {
-	typingRequestBody := strings.SplitN(string(parseData.JSON), ",[", 2)
-	typingParams := strings.Split(strings.TrimSuffix(typingRequestBody[1], "]]"), ",")
-
-	targetUser, _ := util.String2Int64(strings.Trim((typingParams[2]), "[]"))
-	targetUsers := []int64{targetUser}
-
-	typingJSON := "{\"module\":\"im\",\"method\":\"chattyping\",\"result\":\"success\",\"data\":{\"cgid\":" + typingParams[1] + ",\"typing\":\"" + typingParams[3] + "\",\"user\":" + typingParams[4] + "}}"
-	parseData.JSON = []byte(typingJSON)
-
-	var message []byte
-	if util.Config.EnableClientAES == 1 {
-		message = api.UnparseData(parseData, util.Token)
-	} else {
-		message = parseData.JSON
+	request, err := decodeChatTypingRequest(parseData.JSON)
+	if err != nil {
+		return err
 	}
 
-	return X2cSend(client.serverName, targetUsers, message, client, "", true)
+	message, err := buildClientProtocolMessage(parseData, chatTypingResponse{
+		Module: "im",
+		Method: "chattyping",
+		Result: api.ResultSuccess,
+		Data: chatTypingResponseData{
+			CGID:   request.CGID,
+			Typing: request.Typing,
+			UserID: request.UserID,
+		},
+	})
+	if err != nil {
+		return err
+	}
+
+	return X2cSend(client.serverName, []int64{request.TargetUserID}, message, client, "", true)
 }
 
 func handleDataTransfer(parseData api.XxbResponse, client *Client) error {
-	paramsRegex := regexp.MustCompile(`(?m){.*}`)
-	params := paramsRegex.FindString(string(parseData.JSON))
-
-	var jsonData map[string]any
-	json.Unmarshal([]byte(params), &jsonData)
-
-	cgid := jsonData["cgid"].(string)
-	targetUser := int64(jsonData["user"].(float64))
-	data := jsonData["data"].(string)
-	user := int64(jsonData["userID"].(float64))
-
-	targetUserIDs := []int64{targetUser}
-
-	transferJSON := "{\"module\":\"im\",\"method\":\"datatransfer\",\"result\":\"success\",\"data\":{\"cgid\":\"" + cgid + "\",\"data\":" + strconv.Quote(data) + ",\"userID\":" + util.Int642String(user) + "}}"
-	parseData.JSON = []byte(transferJSON)
-
-	var message []byte
-	if util.Config.EnableClientAES == 1 {
-		message = api.UnparseData(parseData, util.Token)
-	} else {
-		message = parseData.JSON
+	request, err := decodeDataTransferRequest(parseData.JSON)
+	if err != nil {
+		return err
 	}
 
-	return X2cSend(client.serverName, targetUserIDs, message, client, "", true)
+	message, err := buildClientProtocolMessage(parseData, dataTransferResponse{
+		Module: "im",
+		Method: "datatransfer",
+		Result: api.ResultSuccess,
+		Data: dataTransferResponseData{
+			CGID:   request.CGID,
+			Data:   request.Data,
+			UserID: request.UserID,
+		},
+	})
+	if err != nil {
+		return err
+	}
+
+	return X2cSend(client.serverName, []int64{request.TargetUserID}, message, client, "", true)
 }
 
 func userSubscribe(parseData api.XxbResponse, client *Client) error {
-	subscribeRequestBody := strings.SplitN(string(parseData.JSON), ",[", 2)
-	subscribeParams := strings.SplitN(strings.TrimSuffix(subscribeRequestBody[1], "]]"), ",", 3)
-
-	rid := strings.Trim(subscribeParams[0], "\"")
-	subscribeType := strings.Trim(subscribeParams[1], "\"")
-	objectsData := strings.Split(subscribeParams[2][1:strings.Index(subscribeParams[2], "]")], ",")
-	objects := []int64{}
-	for _, obj := range objectsData {
-		objInt, err := util.String2Int64(obj)
-		if err != nil {
-			return err
-		}
-		objects = append(objects, objInt)
+	request, err := decodeUserSubscribeRequest(parseData.JSON)
+	if err != nil {
+		return err
 	}
 
-	switch subscribeType {
+	switch request.SubscribeType {
 	case "userupdate":
 		subs := client.subscription
 		if subs == nil {
 			subs = map[string][]int64{}
 		}
-		subs["userlogin"] = util.Int64SliceUnique(append(client.subscription["userlogin"], objects...))
-		subs["userlogout"] = util.Int64SliceUnique(append(client.subscription["userlogout"], objects...))
-		subs["userupdate"] = util.Int64SliceUnique(append(client.subscription["userupdate"], objects...))
+		subs["userlogin"] = util.Int64SliceUnique(append(subs["userlogin"], request.Objects...))
+		subs["userlogout"] = util.Int64SliceUnique(append(subs["userlogout"], request.Objects...))
+		subs["userupdate"] = util.Int64SliceUnique(append(subs["userupdate"], request.Objects...))
 		client.hub.subscribesMutex.Lock()
 		client.hub.subscribes[client.serverName]["userlogin"] = true
 		client.hub.subscribes[client.serverName]["userlogout"] = true
@@ -228,14 +226,18 @@ func userSubscribe(parseData api.XxbResponse, client *Client) error {
 		client.hub.subscribesMutex.Unlock()
 		client.subscription = subs
 
-		subscribeResponse := "[\"usersubscribeResponse\",[\"" + rid + "\",\"usersubscribe\",\"im\",\"" + subscribeType + "\",\"success\",\"\"]]"
-		parseData.JSON = []byte(subscribeResponse)
-		var message []byte
-		if util.Config.EnableClientAES == 1 {
-			message = api.UnparseData(parseData, util.Token)
-		} else {
-			message = parseData.JSON
+		message, err := buildClientProtocolMessage(parseData, userSubscribeResponse{
+			RID:           request.RID,
+			Method:        "usersubscribe",
+			Module:        "im",
+			SubscribeType: request.SubscribeType,
+			Result:        api.ResultSuccess,
+			Message:       "",
+		})
+		if err != nil {
+			return err
 		}
+
 		return X2cSend(client.serverName, []int64{client.userID}, message, client, "", true)
 	default:
 		break
