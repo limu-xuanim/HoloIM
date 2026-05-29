@@ -21,7 +21,7 @@ include '../../common/view/chosen.html.php';
         <strong><?php echo $lang->user->create;?></strong>
       </div>
       <div class='panel-body'>
-        <form method='post' id='ajaxForm' class='form-horizontal-2col'>
+        <form method='post' id='ajaxForm' class='form-horizontal-2col form-create'>
           <div class='form-row'>
             <div class='form-group'>
               <label><span class='field-required-mark'></span><?php echo $lang->user->dept;?></label>
@@ -80,12 +80,9 @@ include '../../common/view/chosen.html.php';
               <div><?php echo html::input('mobile', '', "class='form-control' autocomplete='off'");?></div>
             </div>
           </div>
-          
-          <div class='form-row'>
-            <div class='form-group form-actions'>
-              <?php echo html::submitButton(); ?>
-              <button type="button" class='btn btn-secondary btn-back' onclick="window.location.href='<?php echo $this->createLink('user', 'admin');?>'"><?php echo $lang->goback;?></button>
-            </div>
+          <div class='form-actions text-center'>
+            <?php echo html::submitButton(); ?>
+            <button type="button" class='btn btn-secondary btn-back' onclick="window.location.href='<?php echo $this->createLink('user', 'admin');?>'"><?php echo $lang->goback;?></button>
           </div>
         </form>
       </div>

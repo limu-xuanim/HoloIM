@@ -98,6 +98,7 @@ body {
     gap: 24px;
 }
 
+.form-create .form-actions .btn,
 .form-horizontal-2col .form-group.form-actions .btn {
     width: 100px;
     height: 32px;
@@ -110,6 +111,10 @@ body {
 .form-horizontal-2col .form-group.form-group-full {
     flex: none;
     width: 100%;
+}
+
+.form-create #submit {
+    margin: 0 24px 0 0;
 }
 
 .form-horizontal-2col .form-section-title {
