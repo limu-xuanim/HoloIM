@@ -67,8 +67,9 @@ css::internal('.table-form>tbody>tr>th{width:80px}');
                 </td>
               </tr>
               <tr>
-                <td>
+                <td class="btns">
                   <?php echo html::checkbox('keepLogin', array('on' => $lang->user->keepLogin), $this->cookie->keepLogin ? $this->cookie->keepLogin : 'off'); ?>
+                  <?php echo html::a('/resetpassword.php', $lang->user->recoverPassword . '?', "class='forgot-password'"); ?>
                 </td>
               </tr>
               <tr>
