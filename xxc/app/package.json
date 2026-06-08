@@ -2,8 +2,8 @@
     "name": "xuanxuan",
     "productName": "xuanxuan",
     "displayName": "喧喧",
-    "version": "10.3.0",
-    "displayVersion": "10.3",
+    "version": "10.4.0",
+    "displayVersion": "10.4",
     "description": "专注于协同的聊天软件",
     "main": "./main.js",
     "author": {

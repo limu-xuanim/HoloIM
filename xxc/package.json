@@ -1,7 +1,7 @@
 {
     "name": "xuanxuan",
     "productName": "喧喧",
-    "version": "10.3.0",
+    "version": "10.4.0",
     "description": "专注于协同的聊天软件",
     "scripts": {
         "hot-server": "cross-env HOT=1 NODE_ENV=development node --max_old_space_size=2096 -r esbuild-register ./webpack/server.ts",
