@@ -105,10 +105,9 @@ func handleResetPasswordToken(w http.ResponseWriter, r *http.Request) {
 		Result:       "success",
 		Token:        token,
 		FileName:     state.FileName,
-		RelativePath: filepath.ToSlash(filepath.Join("tmp", state.FileName)),
+		RelativePath: filepath.ToSlash(state.FileName),
 	})
 }
-
 
 func cleanupResetPasswordTokensLocked(now time.Time) {
 	for token, state := range resetPasswordTokens {

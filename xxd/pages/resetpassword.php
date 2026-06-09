@@ -81,7 +81,7 @@ $clientLang = $lang->$acceptLang;
 $xxbUrl     = '/xxb/';
 
 $runDir = dirname(__DIR__);
-$tmpDir = $runDir . DIRECTORY_SEPARATOR;
+$tmpDir = $runDir . DIRECTORY_SEPARATOR . 'tmp';
 if (!is_dir($tmpDir)) @mkdir($tmpDir, 0777, true);
 $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
 ?>
@@ -95,13 +95,13 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
   <link rel="stylesheet" href="zui/zui.css">
   <style>
     body { background: #f4f5f7; color: #1f2329; font-size: 14px; }
-    .page-main { max-width: 1000px; margin: 50px auto 0; padding: 0 20px; }
+    .page-main { max-width: 1000px; margin: 36px auto 0; padding: 0 20px; }
     .reset-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 16px; box-shadow: 0px 4px 12px 0px #0000001F; overflow: hidden; }
     .reset-card-body { padding: 48px 0; }
     .steps { width: 100%; padding: 0 40px; margin-bottom: 48px; display: flex; justify-content: space-between; align-items: stretch; gap: 0; position: relative;}
     .step { flex: 1; min-width: 70px;  display: flex; flex-direction: column; align-items: center; position: relative; text-align: center; font-size: 14px; }
     .step:not(:last-child)::after { content: ""; position: absolute; top: 13px; left: 50%; width: 100%; height: 2px; background-color: #d4dee8; z-index: 1; transform: translateX(0%); }
-    .step-index { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; transition: all 0.2s ease; position: relative; z-index: 3; background: #C9CED8; margin-bottom: 6px;}
+    .step-index { width: 26px; height: 26px; border-radius: 50%; line-height: 26px; font-weight: 700; color: #fff; transition: all 0.2s ease; position: relative; z-index: 3; background: #C9CED8; margin-bottom: 6px;}
     .step-text { color: #98A2B3; max-width: 100px; word-break: keep-all; text-align: center;}
     .step.done::after {background: #2B80FF;}
     .step.active .step-index, .step.done .step-index { color: #fff; background: #2B80FF; border-color: #2B80FF; }
@@ -176,6 +176,7 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
   </main>
   <script src="zui/zui.js"></script>
   <script>
+    let currentStep = 1;
     function switchStep(step) {
       currentStep = step;
       document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
