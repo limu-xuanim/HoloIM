@@ -17,6 +17,7 @@ js::set('random', $this->session->random);
 js::set('notEncryptedPwd', empty($config->notEncryptedPwd) ? false : $config->notEncryptedPwd);
 css::internal('body{background-color:#f6f5f5}');
 css::internal('.table-form>tbody>tr>th{width:80px}');
+$clientLang = $this->app->clientLang == 'en' ? 'en' : 'cn';
 ?>
 <div class='container' style="background: url('<?php echo $webRoot ?>theme/default/images/main/login_bg.png') no-repeat; background-size: 100% 100%;">
   <div id='login'>
@@ -69,7 +70,7 @@ css::internal('.table-form>tbody>tr>th{width:80px}');
               <tr>
                 <td class="btns">
                   <?php echo html::checkbox('keepLogin', array('on' => $lang->user->keepLogin), $this->cookie->keepLogin ? $this->cookie->keepLogin : 'off'); ?>
-                  <?php echo html::a('/resetpassword.php', $lang->user->recoverPassword . '?', "class='forgot-password'"); ?>
+                  <?php echo html::a('/resetpassword.php?clientLang=' . $clientLang, $lang->user->recoverPassword . '?', "class='forgot-password'"); ?>
                 </td>
               </tr>
               <tr>

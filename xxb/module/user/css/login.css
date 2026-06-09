@@ -78,6 +78,7 @@ body {
 }
 
 #login .btns .forgot-password {
+    padding: 4px;
     color: #4B5563;
     text-decoration: none;
 }
