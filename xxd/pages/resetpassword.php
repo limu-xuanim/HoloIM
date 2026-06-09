@@ -139,13 +139,14 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     .step-text { color: #98A2B3; max-width: 100px; word-break: keep-all; text-align: center;}
     .step.done::after {background: #2B80FF;}
     .step.active .step-index, .step.done .step-index { color: #fff; background: #2B80FF; border-color: #2B80FF; }
+    .step.active .step-text, .step.done .step-text { color: #2B80FF; }
     .step-panel { display: none; padding: 0 130px; }
     .step-panel.active { display: block; }
     .verify-box { display: flex; gap: 5px; background: #E6F2FF; border-radius: 8px; padding: 24px 16px; }
-    .verify-intro {color: #1D4ED8;}
+    .verify-intro { color: #1D4ED8; font-size: 16px; }
     .command-row { display: flex; gap: 10px; align-items: center; margin: 14px 0; }
     .command-text { flex: 1; padding: 8px 10px; background: #f8fafc; border: 1px solid #dfe3eb; border-radius: 4px; font-family: Menlo, Monaco, Consolas, monospace; font-size: 12px; word-break: break-all; }
-    #copy-button { width: 80px; background: #F8FAFC; }
+    #copyButton { width: 80px; background: #F8FAFC; }
     .notes-title {margin-top: 12px; font-weight: 700;}
     .notes { margin: 8px 0 0; padding-left: 18px; line-height: 24px; color: #374151; }
     .actions { margin-top: 24px; display: flex; justify-content: center; align-items: center; gap: 16px; }
@@ -181,8 +182,8 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
             <div>
               <div class="verify-intro"><?php echo htmlspecialchars($clientLang->verifyIntro); ?></div>
               <div class="command-row">
-                <div class="command-text" id="copy-command">...</div>
-                <button class="btn" type="button" id="copy-button"><?php echo htmlspecialchars($clientLang->copyCommand); ?></button>
+                <div class="command-text" id="copyCommand">...</div>
+                <button class="btn" type="button" id="copyButton"><?php echo htmlspecialchars($clientLang->copyCommand); ?></button>
               </div>
             </div>
           </div>
@@ -210,6 +211,29 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
   </main>
   <script src="zui/zui.js"></script>
   <script>
+    const tokenDir = '<?php echo $tokenDir; ?>';
+    const lang = <?php echo json_encode(array(
+      'copied' => $clientLang->copied,
+      'reqErr' => $clientLang->reqErr,
+      'fileErr' => $clientLang->fileErr,
+      'expiredErr' => $clientLang->expiredErr,
+    )); ?>;
+
+    const codeConfig = {4003: lang.expiredErr, 4004: lang.expiredErr, 4005: lang.fileErr};
+
+    let resetToken = '';
+
+    const copyButton = document.getElementById('copyButton');
+    const copyCommand = document.getElementById('copyCommand');
+
+    function showError(message) {
+      window.zui.Modal.alert({
+        message,
+        icon: 'icon-exclamation-sign',
+        iconClass: 'warning-pale rounded-full icon-2x'
+      });
+    }
+
     let currentStep = 1;
     function switchStep(step) {
       currentStep = step;
@@ -221,6 +245,39 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
         item.classList.toggle('done', itemStep < step);
       });
     }
+
+    async function initToken() {
+      try {
+        const res = await fetch('/api/resetPasswordToken', {headers: {'Cache-Control': 'no-store'}});
+        const data = await res.json();
+        if (data.result !== 'success') return showError(codeConfig[data.code] || lang.reqErr);
+        resetToken = data.token;
+        let path = tokenDir + data.relativePath;
+        path = path.replace("'", "'\\''",);
+        const touchCommand = "touch '" + path + "'";
+        copyCommand.textContent = touchCommand;
+      } catch (e) {
+        showError(codeConfig[e.code] || lang.reqErr);
+      }
+    }
+
+    copyButton.addEventListener('click', async function() {
+      const text = copyCommand.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (e) {
+        const input = document.createElement('textarea');
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+      }
+      copyButton.textContent = lang.copied;
+      setTimeout(() => { copyButton.textContent = '<?php echo htmlspecialchars($clientLang->copyCommand); ?>'; }, 1600);
+    });
+
+    initToken();
   </script>
 </body>
 </html>
