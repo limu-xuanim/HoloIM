@@ -18,6 +18,7 @@ js::set('notEncryptedPwd', empty($config->notEncryptedPwd) ? false : $config->no
 css::internal('body{background-color:#f6f5f5}');
 css::internal('.table-form>tbody>tr>th{width:80px}');
 $clientLang = $this->app->clientLang == 'en' ? 'en' : 'cn';
+if($this->app->clientLang == 'zh-tw') $clientLang = 'tw';
 ?>
 <div class='container' style="background: url('<?php echo $webRoot ?>theme/default/images/main/login_bg.png') no-repeat; background-size: 100% 100%;">
   <div id='login'>

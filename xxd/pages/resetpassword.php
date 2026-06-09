@@ -7,6 +7,7 @@ error_reporting(0);
 
 if (!isset($lang) || !is_object($lang)) $lang = new stdClass();
 if (!isset($lang->cn) || !is_object($lang->cn)) $lang->cn = new stdClass();
+if (!isset($lang->tw) || !is_object($lang->tw)) $lang->tw = new stdClass();
 if (!isset($lang->en) || !is_object($lang->en)) $lang->en = new stdClass();
 
 $lang->cn->pageTitle       = '重置密码';
@@ -75,6 +76,39 @@ $lang->en->passwordSame    = 'Passwords must be the same';
 $lang->en->reqErr          = 'Request failed, please try again.';
 $lang->en->doneMessage     = 'Password reset successfully. Please log in with the new password.';
 
+$lang->tw->pageTitle       = '重置密碼';
+$lang->tw->serverName      = '喧喧';
+$lang->tw->stepVerify      = '驗證伺服器權限';
+$lang->tw->stepPassword    = '設定新密碼';
+$lang->tw->stepDone        = '重置完成';
+$lang->tw->verifyIntro     = '請管理員登入喧喧伺服器，執行以下指令：';
+$lang->tw->noteTitle       = '注意：';
+$lang->tw->note1           = '檔案內容必須為空。';
+$lang->tw->note2           = '如果之前檔案已存在，請刪除後重新建立。';
+$lang->tw->note3           = '校驗成功後，該檔案將自動失效。';
+$lang->tw->copyCommand     = '複製指令';
+$lang->tw->copied          = '已複製';
+$lang->tw->verifyButton    = '我已建立，開始驗證';
+$lang->tw->fileErr         = '未偵測到指定檔案，請確認檔案路徑和檔名是否正確。';
+$lang->tw->expiredErr      = '目前重置請求已過期，請返回登入頁重新發起。';
+$lang->tw->continueButton  = '繼續設定密碼';
+$lang->tw->backLogin       = '返回登入';
+$lang->tw->account         = '管理員帳號';
+$lang->tw->accountHolder   = '請輸入管理員帳號';
+$lang->tw->password        = '新密碼';
+$lang->tw->passwordHolder  = '請輸入新密碼';
+$lang->tw->password2       = '確認新密碼';
+$lang->tw->password2Holder = '請再次輸入新密碼';
+$lang->tw->submit          = '確認重置';
+$lang->tw->backPrev        = '返回上一步';
+$lang->tw->confirmBack     = '返回後已填寫的密碼將被清空，是否繼續？';
+$lang->tw->emptyPassword   = '密碼/重複密碼不允許為空';
+$lang->tw->emptyAccount    = '請輸入管理員帳號';
+$lang->tw->passwordRule    = '密碼應該符合規則，長度至少為六位';
+$lang->tw->passwordSame    = '兩次輸入必須一致';
+$lang->tw->reqErr          = '請求失敗，請重試。';
+$lang->tw->doneMessage     = '密碼重置成功，請使用新密碼登入。';
+
 $acceptLang = isset($_GET['clientLang']) ? $_GET['clientLang'] : 'en';
 if (!isset($lang->$acceptLang)) $acceptLang = 'en';
 $clientLang = $lang->$acceptLang;
@@ -112,7 +146,7 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     .command-row { display: flex; gap: 10px; align-items: center; margin: 14px 0; }
     .command-text { flex: 1; padding: 8px 10px; background: #f8fafc; border: 1px solid #dfe3eb; border-radius: 4px; font-family: Menlo, Monaco, Consolas, monospace; font-size: 12px; word-break: break-all; }
     #copy-button { width: 80px; background: #F8FAFC; }
-    .notes-title {margin-top: 12px; font-weight: 500;}
+    .notes-title {margin-top: 12px; font-weight: 700;}
     .notes { margin: 8px 0 0; padding-left: 18px; line-height: 24px; color: #374151; }
     .actions { margin-top: 24px; display: flex; justify-content: center; align-items: center; gap: 16px; }
     .verify-panel .btn { width: 174px; }
