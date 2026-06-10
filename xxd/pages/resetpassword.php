@@ -151,6 +151,9 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     .notes { margin: 8px 0 0; padding-left: 18px; line-height: 24px; color: #374151; }
     .actions { margin-top: 24px; display: flex; justify-content: center; align-items: center; gap: 16px; }
     .verify-panel .btn { width: 174px; }
+    .btn-primary { background: #2B80FF; border-color: #2B80FF; color: #fff; }
+    .btn-primary:hover { background: #1756c2; color: #fff; }
+    .btn-ghost { height: 32px; line-height: 32px; text-decoration: none; color: #313C52; }
   </style>
 </head>
 <body>
@@ -214,6 +217,8 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     const tokenDir = '<?php echo $tokenDir; ?>';
     const lang = <?php echo json_encode(array(
       'copied' => $clientLang->copied,
+      'verifyButton' => $clientLang->verifyButton,
+      'continueButton' => $clientLang->continueButton,
       'reqErr' => $clientLang->reqErr,
       'fileErr' => $clientLang->fileErr,
       'expiredErr' => $clientLang->expiredErr,
@@ -222,7 +227,10 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     const codeConfig = {4003: lang.expiredErr, 4004: lang.expiredErr, 4005: lang.fileErr};
 
     let resetToken = '';
+    let verifyToken = '';
+    let tokenVerified = false;
 
+    const verifyButton = document.getElementById('verifyButton');
     const copyButton = document.getElementById('copyButton');
     const copyCommand = document.getElementById('copyCommand');
 
@@ -278,6 +286,29 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     });
 
     initToken();
+
+    verifyButton.addEventListener('click', async function() {
+      if (tokenVerified) return switchStep(2);
+      if (!resetToken) return showError(codeConfig[1001]);
+      verifyButton.disabled = true;
+      try {
+        const res = await fetch('/api/verifyResetPasswordToken', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({token: resetToken})
+        });
+        const data = await res.json();
+        if (data.result !== 'success') return showError(codeConfig[data.code] || lang.reqErr);
+        verifyToken = data.verifyToken;
+        tokenVerified = true;
+        verifyButton.textContent = lang.continueButton;
+        switchStep(2);
+      } catch (e) {
+        showError(codeConfig[e.code] || lang.reqErr);
+      } finally {
+        verifyButton.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>
