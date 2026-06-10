@@ -69,9 +69,28 @@ type resetPasswordJSONResponse struct {
 	Code    int    `json:"code,omitempty"`
 }
 
+
+type verifyResetPasswordRequest struct {
+	Token string `json:"token"`
+}
+
+type verifyResetPasswordResponse struct {
+	Result      string `json:"result"`
+	VerifyToken string `json:"verifyToken,omitempty"`
+	Message     string `json:"message,omitempty"`
+}
+
+type resetPasswordRequest struct {
+	VerifyToken string `json:"verifyToken"`
+	Account     string `json:"account"`
+	Password    string `json:"password"`
+	Password2   string `json:"password2"`
+}
+
 // RegisterResetPasswordRoutes registers the guided admin password reset APIs.
 func RegisterResetPasswordRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/api/resetPasswordToken", handleResetPasswordToken)
+	mux.HandleFunc("/api/verifyResetPasswordToken", handleVerifyResetPasswordToken)
 }
 
 func handleResetPasswordToken(w http.ResponseWriter, r *http.Request) {
@@ -107,6 +126,100 @@ func handleResetPasswordToken(w http.ResponseWriter, r *http.Request) {
 		FileName:     state.FileName,
 		RelativePath: filepath.ToSlash(state.FileName),
 	})
+}
+
+func handleVerifyResetPasswordToken(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeResetPasswordJSON(w, "fail", "仅支持 POST", resetPasswordCodeMethodNotAllowed, http.StatusMethodNotAllowed)
+		return
+	}
+
+	r.Body = http.MaxBytesReader(w, r.Body, resetPasswordMaxBytes)
+	defer r.Body.Close()
+
+	var req verifyResetPasswordRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeResetPasswordJSON(w, "fail", resetPasswordFileError, resetPasswordCodeFile, http.StatusBadRequest)
+		return
+	}
+
+	token := strings.TrimSpace(req.Token)
+	if !resetPasswordTokenRE.MatchString(token) {
+		writeResetPasswordJSON(w, "fail", resetPasswordFileError, resetPasswordCodeFile, http.StatusOK)
+		return
+	}
+
+	now := time.Now()
+	resetPasswordTokensM.Lock()
+	cleanupResetPasswordTokensLocked(now)
+	state, ok := resetPasswordTokens[token]
+	if !ok || state.Used || now.Sub(state.CreatedAt) > resetPasswordTokenLifetime {
+		resetPasswordTokensM.Unlock()
+		writeResetPasswordJSON(w, "fail", resetPasswordExpiredError, resetPasswordCodeVerifyToken, http.StatusOK)
+		return
+	}
+	fileName := state.FileName
+	resetPasswordTokensM.Unlock()
+
+	guardPath, err := validateResetPasswordGuardFile(fileName)
+	if err != nil {
+		writeResetPasswordJSON(w, "fail", err.Error(), resetPasswordCodeFile, http.StatusOK)
+		return
+	}
+
+	verifyToken, err := randomHex(16)
+	if err != nil {
+		util.Log("warn", "reset password create verify token: %v", err)
+		writeResetPasswordJSON(w, "fail", "验证失败，请重试", resetPasswordCodeTokenCreateFailed, http.StatusInternalServerError)
+		return
+	}
+
+	resetPasswordTokensM.Lock()
+	state, ok = resetPasswordTokens[token]
+	if !ok || state.Used || time.Since(state.CreatedAt) > resetPasswordTokenLifetime {
+		resetPasswordTokensM.Unlock()
+		writeResetPasswordJSON(w, "fail", resetPasswordExpiredError, resetPasswordCodeVerifyToken, http.StatusOK)
+		return
+	}
+	state.Used = true
+	state.Verified = true
+	state.VerifyToken = verifyToken
+	state.VerifiedAt = now
+	resetPasswordTokensM.Unlock()
+
+	if err := os.Remove(guardPath); err != nil && !os.IsNotExist(err) {
+		util.Log("warn", "reset password remove guard file %s: %v", guardPath, err)
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	_ = json.NewEncoder(w).Encode(verifyResetPasswordResponse{Result: "success", VerifyToken: verifyToken})
+}
+
+func validateResetPasswordGuardFile(fileName string) (string, error) {
+	if filepath.Base(fileName) != fileName || !strings.HasPrefix(fileName, "reset_") || !strings.HasSuffix(fileName, ".txt") {
+		return "", errors.New(resetPasswordFileError)
+	}
+
+	tmpDir := filepath.Join(util.GetRuningDir(), "tmp")
+	guardPath := filepath.Join(tmpDir, fileName)
+	guardAbs, err := filepath.Abs(guardPath)
+	if err != nil {
+		return "", errors.New(resetPasswordFileError)
+	}
+	tmpAbs, err := filepath.Abs(tmpDir)
+	if err != nil {
+		return "", errors.New(resetPasswordFileError)
+	}
+	if filepath.Dir(guardAbs) != tmpAbs {
+		return "", errors.New(resetPasswordFileError)
+	}
+
+	info, err := os.Stat(guardAbs)
+	if err != nil || info.IsDir() || info.Size() != 0 {
+		return "", errors.New(resetPasswordFileError)
+	}
+
+	return guardAbs, nil
 }
 
 func cleanupResetPasswordTokensLocked(now time.Time) {
