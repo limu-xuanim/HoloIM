@@ -21,8 +21,8 @@ const (
 	resetPasswordMaxBytes       = 1 << 20
 	resetPasswordTokenLifetime  = 3 * time.Minute
 	resetPasswordVerifyLifetime = 10 * time.Minute
-	resetPasswordFileError      = "未检测到指定文件，请确认文件路径和文件名是否正确。"
-	resetPasswordExpiredError   = "当前重置请求已过期，请返回登录页重新发起。"
+	resetPasswordFileError      = "File not found"
+	resetPasswordExpiredError   = "Reset password expired"
 
 	resetPasswordCodeMethodNotAllowed  = 4001 // 方法不允许
 	resetPasswordCodeBadRequest        = 4002 // 请求错误
@@ -87,22 +87,29 @@ type resetPasswordRequest struct {
 	Password2   string `json:"password2"`
 }
 
+type resetPasswordUser struct {
+	ID      int64  `gorm:"column:id"`
+	Account string `gorm:"column:account"`
+	Admin   string `gorm:"column:admin"`
+}
+
 // RegisterResetPasswordRoutes registers the guided admin password reset APIs.
 func RegisterResetPasswordRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/api/resetPasswordToken", handleResetPasswordToken)
 	mux.HandleFunc("/api/verifyResetPasswordToken", handleVerifyResetPasswordToken)
+	mux.HandleFunc("/api/resetPassword", handleResetPassword)
 }
 
 func handleResetPasswordToken(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		writeResetPasswordJSON(w, "fail", "仅支持 GET", resetPasswordCodeMethodNotAllowed, http.StatusMethodNotAllowed)
+		writeResetPasswordJSON(w, "fail", "Method Not Allowed", resetPasswordCodeMethodNotAllowed, http.StatusMethodNotAllowed)
 		return
 	}
 
 	token, err := randomHex(16)
 	if err != nil {
 		util.Log("warn", "reset password create token: %v", err)
-		writeResetPasswordJSON(w, "fail", "生成重置请求失败", resetPasswordCodeTokenCreateFailed, http.StatusInternalServerError)
+		writeResetPasswordJSON(w, "fail", "Create token failed", resetPasswordCodeTokenCreateFailed, http.StatusInternalServerError)
 		return
 	}
 
@@ -130,7 +137,7 @@ func handleResetPasswordToken(w http.ResponseWriter, r *http.Request) {
 
 func handleVerifyResetPasswordToken(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		writeResetPasswordJSON(w, "fail", "仅支持 POST", resetPasswordCodeMethodNotAllowed, http.StatusMethodNotAllowed)
+		writeResetPasswordJSON(w, "fail", "Method Not Allowed", resetPasswordCodeMethodNotAllowed, http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -170,7 +177,7 @@ func handleVerifyResetPasswordToken(w http.ResponseWriter, r *http.Request) {
 	verifyToken, err := randomHex(16)
 	if err != nil {
 		util.Log("warn", "reset password create verify token: %v", err)
-		writeResetPasswordJSON(w, "fail", "验证失败，请重试", resetPasswordCodeTokenCreateFailed, http.StatusInternalServerError)
+		writeResetPasswordJSON(w, "fail", "Verification failed", resetPasswordCodeTokenCreateFailed, http.StatusInternalServerError)
 		return
 	}
 
@@ -242,4 +249,106 @@ func writeResetPasswordJSON(w http.ResponseWriter, result string, message string
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(statusCode)
 	_ = json.NewEncoder(w).Encode(resetPasswordJSONResponse{Result: result, Message: message, Code: code})
+}
+
+func handleResetPassword(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeResetPasswordJSON(w, "fail", "Method Not Allowed", resetPasswordCodeMethodNotAllowed, http.StatusMethodNotAllowed)
+		return
+	}
+
+	r.Body = http.MaxBytesReader(w, r.Body, resetPasswordMaxBytes)
+	defer r.Body.Close()
+
+	var req resetPasswordRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeResetPasswordJSON(w, "fail", err.Error(), resetPasswordCodeBadRequest, http.StatusBadRequest)
+		return
+	}
+
+	req.VerifyToken = strings.TrimSpace(req.VerifyToken)
+	req.Account = strings.TrimSpace(req.Account)
+	if req.VerifyToken == "" {
+		writeResetPasswordJSON(w, "fail", resetPasswordExpiredError, resetPasswordCodeVerifyToken, http.StatusOK)
+		return
+	}
+	if req.Account == "" {
+		writeResetPasswordJSON(w, "fail", "Account is empty", resetPasswordCodeAccountEmpty, http.StatusOK)
+		return
+	}
+	if req.Password == "" || req.Password2 == "" {
+		writeResetPasswordJSON(w, "fail", "Password is empty", resetPasswordCodePasswordEmpty, http.StatusOK)
+		return
+	}
+	if len(req.Password) < 6 {
+		writeResetPasswordJSON(w, "fail", "Password is too short", resetPasswordCodePasswordTooShort, http.StatusOK)
+		return
+	}
+	if req.Password != req.Password2 {
+		writeResetPasswordJSON(w, "fail", "Password mismatch", resetPasswordCodePasswordMismatch, http.StatusOK)
+		return
+	}
+
+	state := findResetPasswordStateByVerifyToken(req.VerifyToken, time.Now())
+	if state == nil {
+		writeResetPasswordJSON(w, "fail", resetPasswordExpiredError, resetPasswordCodeVerifyToken, http.StatusOK)
+		return
+	}
+
+	if util.MysqlDB == nil {
+		writeResetPasswordJSON(w, "fail", "Database not initialized", resetPasswordCodeDBNotInitialized, http.StatusInternalServerError)
+		return
+	}
+
+	tableName := util.Config.Mysql.TablePrefix + "user"
+	var user resetPasswordUser
+	err := util.MysqlDB.Table(tableName).
+		Select("id, account, admin").
+		Where("account = ? AND deleted = ?", req.Account, "0").
+		First(&user).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		writeResetPasswordJSON(w, "fail", "Information verification failed", resetPasswordCodeUserNotFound, http.StatusOK)
+		return
+	}
+	if err != nil {
+		util.Log("warn", "reset password query user: %v", err)
+		writeResetPasswordJSON(w, "fail", "Information verification failed", resetPasswordCodeUserQueryFailed, http.StatusInternalServerError)
+		return
+	}
+
+	password := util.MD5(util.MD5(req.Password) + req.Account)
+	err = util.MysqlDB.Table(tableName).
+		Where("id = ?", user.ID).
+		Updates(map[string]any{"password": password, "fails": 0, "locked": nil}).Error
+	if err != nil {
+		util.Log("warn", "reset password update user: %v", err)
+		writeResetPasswordJSON(w, "fail", "Update failed", resetPasswordCodeUpdateFailed, http.StatusInternalServerError)
+		return
+	}
+
+	resetPasswordTokensM.Lock()
+	if current, ok := resetPasswordTokens[state.Token]; ok {
+		current.ResetDone = true
+	}
+	resetPasswordTokensM.Unlock()
+
+	util.InvalidateUserCache(user.ID)
+	writeResetPasswordJSON(w, "success", "Reset password success", 0, http.StatusOK)
+}
+
+func findResetPasswordStateByVerifyToken(verifyToken string, now time.Time) *resetPasswordTokenState {
+	resetPasswordTokensM.Lock()
+	defer resetPasswordTokensM.Unlock()
+	cleanupResetPasswordTokensLocked(now)
+
+	for _, state := range resetPasswordTokens {
+		if state.VerifyToken != verifyToken || !state.Verified || state.ResetDone {
+			continue
+		}
+		if now.Sub(state.VerifiedAt) > resetPasswordVerifyLifetime {
+			return nil
+		}
+		return state
+	}
+	return nil
 }
