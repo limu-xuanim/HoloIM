@@ -304,7 +304,7 @@ func handleResetPassword(w http.ResponseWriter, r *http.Request) {
 	var user resetPasswordUser
 	err := util.MysqlDB.Table(tableName).
 		Select("id, account, admin").
-		Where("account = ? AND deleted = ?", req.Account, "0").
+		Where("account = ? AND deleted = ? AND admin = ?", req.Account, "0", "super").
 		First(&user).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		writeResetPasswordJSON(w, "fail", "Information verification failed", resetPasswordCodeUserNotFound, http.StatusOK)
