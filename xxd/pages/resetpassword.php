@@ -151,6 +151,11 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     .notes { margin: 8px 0 0; padding-left: 18px; line-height: 24px; color: #374151; }
     .actions { margin-top: 24px; display: flex; justify-content: center; align-items: center; gap: 16px; }
     .verify-panel .btn { width: 174px; }
+    #passwordForm .actions .btn {width: 118px;}
+    #passwordForm { width: 376px; margin: 0 auto; }
+    #passwordForm .form-group { margin-bottom: 20px; }
+    .form-group label { display: inline-block; height: 20px; line-height: 20px; font-size: 14px; color: #374151; margin-bottom: 4px; }
+    #passwordForm .form-control { border-radius: 8px; border-color: #E2E8F0; background: #F8FAFC; }
     .btn-primary { background: #2B80FF; border-color: #2B80FF; color: #fff; }
     .btn-primary:hover { background: #1756c2; color: #fff; }
     .btn-ghost { height: 32px; line-height: 32px; text-decoration: none; color: #313C52; }
@@ -204,6 +209,24 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
 
         <!-- 重置密码 -->
         <section class="step-panel" id="step-2">
+          <form id="passwordForm">
+            <div class="form-group">
+              <label for="account"><?php echo htmlspecialchars($clientLang->account); ?></label>
+              <input type="text" class="form-control" id="account" placeholder="<?php echo htmlspecialchars($clientLang->accountHolder); ?>" autocomplete="username">
+            </div>
+            <div class="form-group">
+              <label for="password"><?php echo htmlspecialchars($clientLang->password); ?></label>
+              <input type="password" class="form-control" id="password" placeholder="<?php echo htmlspecialchars($clientLang->passwordHolder); ?>" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+              <label for="password2"><?php echo htmlspecialchars($clientLang->password2); ?></label>
+              <input type="password" class="form-control" id="password2" placeholder="<?php echo htmlspecialchars($clientLang->password2Holder); ?>" autocomplete="new-password">
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit" form="passwordForm" id="resetButton"><?php echo htmlspecialchars($clientLang->submit); ?></button>
+              <button class="btn btn-ghost" type="button" id="backStep1"><?php echo htmlspecialchars($clientLang->backPrev); ?></button>
+            </div>
+          </form>
         </section>
 
         <!-- 重置完成 -->
@@ -219,6 +242,11 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
       'copied' => $clientLang->copied,
       'verifyButton' => $clientLang->verifyButton,
       'continueButton' => $clientLang->continueButton,
+      'emptyAccount' => $clientLang->emptyAccount,
+      'emptyPassword' => $clientLang->emptyPassword,
+      'passwordRule' => $clientLang->passwordRule,
+      'passwordSame' => $clientLang->passwordSame,
+      'confirmBack' => $clientLang->confirmBack,
       'reqErr' => $clientLang->reqErr,
       'fileErr' => $clientLang->fileErr,
       'expiredErr' => $clientLang->expiredErr,
@@ -231,8 +259,10 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     let tokenVerified = false;
 
     const verifyButton = document.getElementById('verifyButton');
+    const resetButton = document.getElementById('resetButton');
     const copyButton = document.getElementById('copyButton');
     const copyCommand = document.getElementById('copyCommand');
+    const passwordForm = document.getElementById('passwordForm');
 
     function showError(message) {
       window.zui.Modal.alert({
@@ -307,6 +337,50 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
         showError(codeConfig[e.code] || lang.reqErr);
       } finally {
         verifyButton.disabled = false;
+      }
+    });
+
+    document.getElementById('backStep1').addEventListener('click', function() {
+      const hasValue = document.getElementById('account').value || document.getElementById('password').value || document.getElementById('password2').value;
+      if (!hasValue) {
+        switchStep(1);
+        return;
+      }
+
+      window.zui.Modal.confirm({message: lang.confirmBack, icon: 'icon-exclamation-sign', iconClass: 'warning-pale rounded-full icon-2x'}).then((data) => {
+        if (!data) return;
+
+        passwordForm.reset();
+        verifyButton.textContent = lang.continueButton;
+        switchStep(1);
+      });
+    });
+
+    passwordForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const account = document.getElementById('account').value.trim();
+      const password = document.getElementById('password').value;
+      const password2 = document.getElementById('password2').value;
+      if (!account) return showError(lang.emptyAccount);
+      if (!password || !password2) return showError(lang.emptyPassword);
+      if (password.length < 6) return showError(lang.passwordRule);
+      if (password !== password2) return showError(lang.passwordSame);
+
+      resetButton.disabled = true;
+      try {
+        const res = await fetch('/api/resetPassword', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({verifyToken, account, password, password2})
+        });
+        const data = await res.json();
+        if (data.result !== 'success') return showError(codeConfig[data.code] || lang.reqErr);
+        passwordForm.reset();
+        switchStep(3);
+      } catch (e) {
+        showError(codeConfig[e.code] || lang.reqErr);
+      } finally {
+        resetButton.disabled = false;
       }
     });
   </script>
