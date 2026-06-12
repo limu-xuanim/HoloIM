@@ -156,6 +156,9 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     #passwordForm .form-group { margin-bottom: 20px; }
     .form-group label { display: inline-block; height: 20px; line-height: 20px; font-size: 14px; color: #374151; margin-bottom: 4px; }
     #passwordForm .form-control { border-radius: 8px; border-color: #E2E8F0; background: #F8FAFC; }
+    .success-wrap { text-align: center; padding: 26px 0 10px; }
+    .success-icon { display: flex; justify-content: center; }
+    .success-message { color: #344054; font-size: 18px; margin: 20px 0 56px; }
     .btn-primary { background: #2B80FF; border-color: #2B80FF; color: #fff; }
     .btn-primary:hover { background: #1756c2; color: #fff; }
     .btn-ghost { height: 32px; line-height: 32px; text-decoration: none; color: #313C52; }
@@ -231,6 +234,23 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
 
         <!-- 重置完成 -->
         <section class="step-panel" id="step-3">
+          <div class="success-wrap">
+            <div class="success-icon">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_675_7107)">
+                  <path d="M24 48C37.2548 48 48 37.2548 48 24C48 10.7452 37.2548 0 24 0C10.7452 0 0 10.7452 0 24C0 37.2548 10.7452 48 24 48Z" fill="#12B76A"/>
+                  <path d="M13.7139 24.6865L20.2282 31.2008L34.6282 16.8008" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_675_7107">
+                    <rect width="48" height="48" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <p class="success-message"><?php echo htmlspecialchars($clientLang->doneMessage); ?></p>
+            <a class="btn btn-primary" style="width: 104px;" href="<?php echo $xxbUrl; ?>"><?php echo htmlspecialchars($clientLang->backLogin); ?></a>
+          </div>
         </section>
       </div>
     </div>
