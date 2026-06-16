@@ -165,6 +165,7 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
     .btn-primary { background: #2B80FF; border-color: #2B80FF; color: #fff; }
     .btn-primary:hover { background: #1756c2; color: #fff; }
     .btn-ghost { height: 32px; line-height: 32px; text-decoration: none; color: #313C52; }
+    .modal-dialog .modal-footer { justify-content: center; }
   </style>
 </head>
 <body>
