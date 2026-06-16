@@ -69,6 +69,7 @@ $lang->user->update          = "編輯成員";
 $lang->user->delete          = "刪除成員";
 $lang->user->browse          = "瀏覽成員";
 $lang->user->deny            = "訪問受限";
+$lang->user->recoverPassword = "忘記密碼";
 $lang->user->confirmDelete   = "您確認刪除該成員嗎？";
 $lang->user->confirmActivate = "您確認激活該成員嗎？";
 $lang->user->relogin         = "重新登錄";

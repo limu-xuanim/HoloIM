@@ -70,6 +70,7 @@ $lang->user->update               = "Edit";
 $lang->user->delete               = "Delete";
 $lang->user->browse               = "Borwse";
 $lang->user->deny                 = "Access is denied.";
+$lang->user->recoverPassword      = "Forgot password";
 $lang->user->confirmDelete        = "Do you want to delete this user?";
 $lang->user->confirmActivate      = "Do you want to activate this user?";
 $lang->user->relogin              = "Login again";
