@@ -332,10 +332,6 @@ func handleResetPassword(w http.ResponseWriter, r *http.Request) {
 	}
 	resetPasswordTokensM.Unlock()
 
-	if err := addResetPasswordActionLog(r, user); err != nil {
-		util.Log("warn", "reset password create action log: %v", err)
-	}
-
 	util.InvalidateUserCache(user.ID)
 	writeResetPasswordJSON(w, "success", "Reset password success", 0, http.StatusOK)
 }
@@ -355,19 +351,4 @@ func findResetPasswordStateByVerifyToken(verifyToken string, now time.Time) *res
 		return state
 	}
 	return nil
-}
-
-func addResetPasswordActionLog(r *http.Request, user resetPasswordUser) error {
-	actionTableName := util.Config.Mysql.TablePrefix + "action"
-	return util.MysqlDB.Table(actionTableName).Create(map[string]any{
-		"objectType": "user",
-		"objectID":   user.ID,
-		"ip":         util.GetClientIP(r),
-		"actor":      user.Account,
-		"action":     "resetpassword",
-		"result":     "success",
-		"date":       time.Now(),
-		"comment":    "",
-		"extra":      "",
-	}).Error
 }
