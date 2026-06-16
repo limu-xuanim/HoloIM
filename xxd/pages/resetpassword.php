@@ -42,6 +42,7 @@ $lang->cn->passwordRule    = '密码应该符合规则，长度至少为六位';
 $lang->cn->passwordSame    = '两次输入必须一致';
 $lang->cn->reqErr          = '请求失败，请重试。';
 $lang->cn->doneMessage     = '密码重置成功，请使用新密码登录。';
+$lang->cn->resetErr        = '信息验证失败';
 
 $lang->en->pageTitle       = 'Reset Password';
 $lang->en->serverName      = 'Xuanxuan';
@@ -75,6 +76,7 @@ $lang->en->passwordRule    = 'Password should be at least 6 characters';
 $lang->en->passwordSame    = 'Passwords must be the same';
 $lang->en->reqErr          = 'Request failed, please try again.';
 $lang->en->doneMessage     = 'Password reset successfully. Please log in with the new password.';
+$lang->en->resetErr        = 'Verification failed';
 
 $lang->tw->pageTitle       = '重置密碼';
 $lang->tw->serverName      = '喧喧';
@@ -108,6 +110,7 @@ $lang->tw->passwordRule    = '密碼應該符合規則，長度至少為六位';
 $lang->tw->passwordSame    = '兩次輸入必須一致';
 $lang->tw->reqErr          = '請求失敗，請重試。';
 $lang->tw->doneMessage     = '密碼重置成功，請使用新密碼登入。';
+$lang->tw->resetErr        = '信息驗證失敗';
 
 $acceptLang = isset($_GET['clientLang']) ? $_GET['clientLang'] : 'en';
 if (!isset($lang->$acceptLang)) $acceptLang = 'en';
@@ -270,9 +273,10 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
       'reqErr' => $clientLang->reqErr,
       'fileErr' => $clientLang->fileErr,
       'expiredErr' => $clientLang->expiredErr,
+      'resetErr' => $clientLang->resetErr,
     )); ?>;
 
-    const codeConfig = {4003: lang.expiredErr, 4004: lang.expiredErr, 4005: lang.fileErr};
+    const codeConfig = {4003: lang.expiredErr, 4004: lang.expiredErr, 4005: lang.fileErr, 4011: lang.resetErr, 4012: lang.resetErr};
 
     let resetToken = '';
     let verifyToken = '';
