@@ -111,7 +111,7 @@ func InitConfigCache(db *gorm.DB) error {
 	SetItemToCacheWithNotFound(fmt.Sprintf("owner=%s&module=%s&section=%s&key=%s", "system", "push", "common", "enable"))
 	SetItemToCacheWithNotFound(fmt.Sprintf("owner=%s&module=%s&section=%s&key=%s", "system", "push", "common", "privacyLevel"))
 	SetItemToCacheWithNotFound(fmt.Sprintf("owner=%s&module=%s&section=%s&key=%s", "system", "push", "ios", "xuan_im"))
-	SetItemToCacheWithNotFound(fmt.Sprintf("owner=%s&module=%s&section=%s&key=%s", "system", "push", "android", "xinge"))
+	SetItemToCacheWithNotFound(fmt.Sprintf("owner=%s&module=%s&section=%s&key=%s", "system", "push", "android", "aliyun"))
 
 	// 从数据库加载所有 system 配置，覆盖默认值
 	var configs []XxbConfig
@@ -169,8 +169,27 @@ func DeleteItemFromCache(paramString string) {
 	configCache.Delete(paramString)
 }
 
+func shouldBypassConfigCache(paramString string) bool {
+	params := parseItemParam(paramString)
+	return params["owner"] == "system" && params["module"] == "push"
+}
+
 // 从数据库中获取指定参数的设置值
 func GetItem(db *gorm.DB, paramString string, paramType string) string {
+	if shouldBypassConfigCache(paramString) {
+		params := parseItemParam(paramString)
+		var xxbConfig XxbConfig
+		err := db.Table(xxbConfig.TableName()).
+			Where("`owner` = ? AND  `module` = ? AND `section` = ? AND `key` = ?", params["owner"], params["module"], params["section"], params["key"]).
+			First(&xxbConfig).
+			Error
+		if err != nil {
+			return ""
+		}
+
+		return xxbConfig.Value
+	}
+
 	if val, isNotFound, err := GetItemFromCache(paramString); err == nil {
 		// 如果是负缓存（配置不存在），直接返回空
 		if isNotFound {

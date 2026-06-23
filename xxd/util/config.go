@@ -74,6 +74,10 @@ type ConfigServer struct {
 	BackendType       string `confName:"backendType"`
 
 	AdminerPasswdFile string `confName:"adminerPasswdFile"`
+
+	PushAppKey            string `confName:"appKey"`
+	PushAppSecret         string `confName:"appSecret"`
+	OppoPrivateTemplateID string `confName:"oppoPrivateTemplateId"`
 }
 
 type MysqlConfig struct {
@@ -332,32 +336,35 @@ func InitConfig() {
 
 	// 设置默认值
 	confServerSection := ConfigServer{
-		Installed:         0,
-		Ip:                "0.0.0.0",
-		ChatPort:          "11444",
-		CommonPort:        "11443",
-		StunPort:          "3478",
-		AdvertisePort:     "",
-		ApiPort:           "80",
-		AdminPort:         "9080",
-		IsHttps:           "0",
-		UploadPath:        "tmpfile",
-		Debug:             0,
-		PollingInterval:   15,
-		EnableAES:         1,
-		EnableClientAES:   1,
-		EnableCompression: 1,
-		Thumbnail:         1,
-		MaxOnlineUser:     0,
-		LogPath:           dir + "/log/",
-		CrtPath:           dir + "/certificate/",
-		SessionSavePath:   dir + "/session/",
-		Lang:              "zh-cn",
-		ServerHost:        "http://127.0.0.1",
-		RequestType:       "GET",
-		BackendUrl:        "",
-		BackendType:       "xxb",
-		AdminerPasswdFile: dir + "/users",
+		Installed:             0,
+		Ip:                    "0.0.0.0",
+		ChatPort:              "11444",
+		CommonPort:            "11443",
+		StunPort:              "3478",
+		AdvertisePort:         "",
+		ApiPort:               "80",
+		AdminPort:             "9080",
+		IsHttps:               "0",
+		UploadPath:            "tmpfile",
+		Debug:                 0,
+		PollingInterval:       15,
+		EnableAES:             1,
+		EnableClientAES:       1,
+		EnableCompression:     1,
+		Thumbnail:             1,
+		MaxOnlineUser:         0,
+		LogPath:               dir + "/log/",
+		CrtPath:               dir + "/certificate/",
+		SessionSavePath:       dir + "/session/",
+		Lang:                  "zh-cn",
+		ServerHost:            "http://127.0.0.1",
+		RequestType:           "GET",
+		BackendUrl:            "",
+		BackendType:           "xxb",
+		PushAppKey:            "335565216",
+		PushAppSecret:         "9c166f688bb948bca71c75ee2d3bf941",
+		OppoPrivateTemplateID: "6a336f604fae5501486cdfcb",
+		AdminerPasswdFile:     dir + "/users",
 	}
 
 	confMysqlSection := MysqlConfig{
@@ -517,6 +524,24 @@ func fixConfigFile(config *goconfig.ConfigFile) error {
 			Exit(Sprintf(GetLang("[Config]", " ", "The config directory has no write permissions", ", %s"), err))
 		}
 		config.SetValue("server", "thumbnail", "1")
+		goconfig.SaveConfigFile(config, dir+"/"+configPath)
+	}
+
+	appKeyConfig, _ := config.GetValue("server", "appKey")
+	if strings.TrimSpace(removeComment(appKeyConfig)) == "" {
+		config.SetValue("server", "appKey", Config.PushAppKey)
+		goconfig.SaveConfigFile(config, dir+"/"+configPath)
+	}
+
+	appSecretConfig, _ := config.GetValue("server", "appSecret")
+	if strings.TrimSpace(removeComment(appSecretConfig)) == "" {
+		config.SetValue("server", "appSecret", Config.PushAppSecret)
+		goconfig.SaveConfigFile(config, dir+"/"+configPath)
+	}
+
+	oppoPrivateTemplateIDConfig, _ := config.GetValue("server", "oppoPrivateTemplateId")
+	if strings.TrimSpace(removeComment(oppoPrivateTemplateIDConfig)) == "" {
+		config.SetValue("server", "oppoPrivateTemplateId", Config.OppoPrivateTemplateID)
 		goconfig.SaveConfigFile(config, dir+"/"+configPath)
 	}
 

@@ -75,9 +75,12 @@ var En = Language{
 	"service.xuan.welcome.link":                       "https://www.xuanim.com/book/xuanxuankehuduan/279.html",
 
 	// Service layer - Push notification
-	"service.push.youHaveNewMessage":   "You have a new message.",
-	"service.push.sentYouNewMessage":   "%s sent you a new message.",
-	"service.push.sentGroupNewMessage": "%s sent a new message in %s.",
+	"service.push.youHaveNewMessage":    "You have 1 new message.",
+	"service.push.youHaveNewMessages":   "You have %d new messages.",
+	"service.push.sentYouNewMessage":    "%s sent you 1 new message.",
+	"service.push.sentYouNewMessages":   "%s sent you %d new messages.",
+	"service.push.sentGroupNewMessage":  "%[1]s sent 1 new message in %[2]s.",
+	"service.push.sentGroupNewMessages": "%[1]s sent %[2]d new messages in %[3]s.",
 
 	// Model layer - Chat errors
 	"model.chat.permissionDenied": "Insufficient permissions",

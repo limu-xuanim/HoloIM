@@ -1021,6 +1021,8 @@ func saveConfigInternal(updateXuanxuanConfig bool) error {
 	config.SetValue("server", "serverHost", Config.ServerHost)
 	config.SetValue("server", "requestType", Config.RequestType)
 	config.SetValue("server", "backendType", Config.BackendType)
+	config.SetValue("server", "appKey", Config.PushAppKey)
+	config.SetValue("server", "appSecret", Config.PushAppSecret)
 
 	// 更新mysql section
 	config.SetValue("mysql", "enable", "1")

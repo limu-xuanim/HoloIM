@@ -125,6 +125,39 @@ func Int64SliceToString(slice []int64) string {
 	return strings.Join(strSlice, ",")
 }
 
+func MaskSensitive(value string) string {
+	if value == "" {
+		return ""
+	}
+
+	runes := []rune(value)
+	length := len(runes)
+	if length <= 4 {
+		return strings.Repeat("*", length)
+	}
+	if length <= 8 {
+		return string(runes[:2]) + strings.Repeat("*", length-4) + string(runes[length-2:])
+	}
+
+	return string(runes[:4]) + strings.Repeat("*", length-8) + string(runes[length-4:])
+}
+
+func MaskSensitiveSlice(values []string) []string {
+	masked := make([]string, len(values))
+	for i, value := range values {
+		masked[i] = MaskSensitive(value)
+	}
+	return masked
+}
+
+func MaskSensitiveStringMapKeys(values map[string]string) map[string]string {
+	masked := make(map[string]string, len(values))
+	for key, value := range values {
+		masked[MaskSensitive(key)] = value
+	}
+	return masked
+}
+
 // 将字符串按指定 "," 分割为切片，并过滤空元素
 func StringToStringSlice(str string) []string {
 	if str == "" {

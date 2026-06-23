@@ -33,7 +33,14 @@ func (u *UserService) SetDeviceToken(paramSlice []any, xxbResponse api.XxbRespon
 	}
 
 	var userModel model.User
-	userModel.SetDeviceToken(u.db, userId, params.DeviceToken, params.DeviceType)
+	maskedDeviceToken := util.MaskSensitive(params.DeviceToken)
+	util.Log("info", "[push] userSetDeviceToken request: userID=%d deviceType=%s deviceToken=%s", userId, params.DeviceType, maskedDeviceToken)
+	result, setErr := userModel.SetDeviceToken(u.db, userId, params.DeviceToken, params.DeviceType)
+	if setErr != nil {
+		util.Log("error", "[push] userSetDeviceToken failed: userID=%d deviceType=%s deviceToken=%s err=%v", userId, params.DeviceType, maskedDeviceToken, setErr)
+		return api.FailResponse(xxbResponse, setErr)
+	}
+	util.Log("info", "[push] userSetDeviceToken saved: userID=%d deviceType=%s result=%s", userId, params.DeviceType, result)
 
 	response := map[string]any{
 		"result": api.ResultSuccess,

@@ -75,9 +75,12 @@ var ZhCN = Language{
 	"service.xuan.welcome.link":                       "https://www.xuanim.com/book/xuanxuankehuduan/279.html",
 
 	// Service层 - Push推送
-	"service.push.youHaveNewMessage":   "您有一条新消息。",
-	"service.push.sentYouNewMessage":   "%s给您发了一条新消息。",
-	"service.push.sentGroupNewMessage": "%s在%s发了一条新消息。",
+	"service.push.youHaveNewMessage":    "您有 1 条新消息。",
+	"service.push.youHaveNewMessages":   "您有 %d 条新消息。",
+	"service.push.sentYouNewMessage":    "%s给您发了 1 条新消息。",
+	"service.push.sentYouNewMessages":   "%s给您发了 %d 条新消息。",
+	"service.push.sentGroupNewMessage":  "%s在%s发了 1 条新消息。",
+	"service.push.sentGroupNewMessages": "%[1]s在%[3]s发了 %[2]d 条新消息。",
 
 	// Model层 - Chat错误
 	"model.chat.permissionDenied": "权限不足",

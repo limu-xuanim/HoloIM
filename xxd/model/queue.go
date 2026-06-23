@@ -26,20 +26,55 @@ func (ImQueue) TableName() string {
 
 // PushMessageContent 推送消息内容结构
 type PushMessageContent struct {
-	Sender    string `json:"sender"`
-	Receivers string `json:"receivers"`
-	Cgid      string `json:"cgid"`
+	Sender       string `json:"sender"`
+	Receivers    string `json:"receivers"`
+	Cgid         string `json:"cgid"`
+	MessageCount int    `json:"messageCount"`
+}
+
+func CreatePushQueue(db *gorm.DB, content PushMessageContent) (int64, error) {
+	return CreatePushQueueWithAddDate(db, content, time.Now())
+}
+
+func CreatePushQueueWithAddDate(db *gorm.DB, content PushMessageContent, addDate time.Time) (int64, error) {
+	if content.MessageCount < 1 {
+		content.MessageCount = 1
+	}
+	if addDate.IsZero() {
+		addDate = time.Now()
+	}
+
+	contentJSON, err := json.Marshal(content)
+	if err != nil {
+		return 0, err
+	}
+
+	queueData := ImQueue{
+		Type:    "push",
+		Content: string(contentJSON),
+		AddDate: addDate,
+		Result:  "",
+		Status:  "wait",
+	}
+
+	if err := db.Create(&queueData).Error; err != nil {
+		return 0, err
+	}
+
+	return queueData.ID, nil
 }
 
 // SavePushMessageToQueue 保存推送消息到队列
-func SavePushMessageToQueue(db *gorm.DB, message XxbImMessage, offlineUsers []int64, chat *XxbImChat) error {
+func SavePushMessageToQueue(db *gorm.DB, message XxbImMessage, offlineUsers []int64, chat *XxbImChat, messageCount int) error {
 	if len(offlineUsers) == 0 {
+		util.Log("info", "[push] push queue skipped: messageID=%d cgid=%s reason=no offline users", message.ID, message.CgId)
 		return nil
 	}
 
 	// 获取离线用户的设备信息
 	userDeviceInfoList, err := GetDeviceInfo(db, offlineUsers)
 	if err != nil {
+		util.Log("error", "[push] push queue get device info failed: messageID=%d cgid=%s offlineUsers=%v err=%v", message.ID, message.CgId, offlineUsers, err)
 		return err
 	}
 
@@ -47,38 +82,36 @@ func SavePushMessageToQueue(db *gorm.DB, message XxbImMessage, offlineUsers []in
 	var validReceivers []int64
 	for _, userID := range offlineUsers {
 		if deviceInfo, ok := userDeviceInfoList[userID]; ok {
+			util.Log("info", "[push] push candidate device: userID=%d clientStatus=%s deviceType=%s deviceToken=%s", userID, deviceInfo.ClientStatus, deviceInfo.DeviceType, util.MaskSensitive(deviceInfo.DeviceToken))
 			if deviceInfo.DeviceType != "" && deviceInfo.DeviceToken != "" {
 				validReceivers = append(validReceivers, userID)
 			}
+		} else {
+			util.Log("warning", "[push] push candidate device missing: userID=%d", userID)
 		}
 	}
 
 	if len(validReceivers) == 0 {
+		util.Log("warning", "[push] push queue skipped: messageID=%d cgid=%s offlineUsers=%v reason=no valid device receivers", message.ID, message.CgId, offlineUsers)
 		return nil
 	}
 
 	// 构造消息内容
 	content := PushMessageContent{
-		Sender:    message.User,
-		Receivers: util.Int64SliceToString(validReceivers),
-		Cgid:      message.CgId,
+		Sender:       message.User,
+		Receivers:    util.Int64SliceToString(validReceivers),
+		Cgid:         message.CgId,
+		MessageCount: messageCount,
 	}
 
-	contentJSON, err := json.Marshal(content)
+	queueID, err := CreatePushQueue(db, content)
 	if err != nil {
+		util.Log("error", "[push] push queue create failed: messageID=%d cgid=%s sender=%s receivers=%v messageCount=%d err=%v", message.ID, message.CgId, message.User, validReceivers, messageCount, err)
 		return err
 	}
 
-	// 创建队列数据
-	queueData := ImQueue{
-		Type:    "push",
-		Content: string(contentJSON),
-		AddDate: time.Now(),
-		Result:  "",
-		Status:  "wait",
-	}
-
-	return db.Create(&queueData).Error
+	util.Log("info", "[push] push queue created: queueID=%d messageID=%d cgid=%s sender=%s receivers=%v messageCount=%d", queueID, message.ID, message.CgId, message.User, validReceivers, messageCount)
+	return nil
 }
 
 // GetDeviceInfo 获取用户的设备信息
@@ -111,6 +144,7 @@ func GetPushList(db *gorm.DB) ([]ImQueue, error) {
 	}
 
 	if len(pushList) == 0 {
+		util.Log("info", "[push] push queue poll: no waiting items")
 		return pushList, nil
 	}
 
@@ -125,6 +159,7 @@ func GetPushList(db *gorm.DB) ([]ImQueue, error) {
 		return nil, err
 	}
 
+	util.Log("info", "[push] push queue poll: picked %d items ids=%v", len(pushList), ids)
 	return pushList, nil
 }
 
@@ -143,4 +178,11 @@ func ChangeQueueStatus(db *gorm.DB, queueIDs []int64, status string) error {
 	return db.Model(&ImQueue{}).
 		Where("id IN ?", queueIDs).
 		Updates(updateData).Error
+}
+
+// UpdateQueueResult 更新队列处理结果
+func UpdateQueueResult(db *gorm.DB, queueIDs []int64, result string) error {
+	return db.Model(&ImQueue{}).
+		Where("id IN ?", queueIDs).
+		Update("result", result).Error
 }

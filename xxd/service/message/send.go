@@ -139,7 +139,7 @@ func (c *MessageService) Send(paramSlice []any, xxbResponse api.XxbResponse, use
 	pushEnabled := model.GetItem(c.db, "owner=system&module=push&section=common&key=enable", "config")
 	if pushEnabled == "open" && len(formatMessage) > 0 && len(offlineUsers) > 0 {
 		// 保存推送消息到队列
-		err = model.SavePushMessageToQueue(c.db, formatMessage[0], offlineUsers, chatInfo)
+		err = model.SavePushMessageToQueue(c.db, formatMessage[0], offlineUsers, chatInfo, len(formatMessage))
 		if err != nil {
 			// 推送失败不影响消息发送，只记录错误
 			util.Log("error", "Save push message to queue failed: %v", err)

@@ -92,17 +92,14 @@ func (a *Action) GetListSinceLastPoll(db *gorm.DB, actionType string) ([]Action,
 	}
 	lastPollTime := lastpoll.Add(-time.Duration(2*pollingInterval) * time.Second)
 
-	var user User
 	var history History
 
 	switch actionType {
 	case "changepassword":
-		// 密码更改操作需要联表查询 action、history、user 表
+		// 不按 clientStatus 过滤，避免发起改密的一端先登出后漏踢其他在线端。
 		err := db.Table(a.TableName()+" t1").
 			Select("t1.id, t1.objectID, t1.date").
 			Joins("LEFT JOIN "+history.TableName()+" t2 ON t1.id = t2.action").
-			Joins("LEFT JOIN "+user.TableName()+" t3 ON t1.objectID = t3.id").
-			Where("t3.clientStatus != ?", "offline").
 			Where("t1.objectType = ?", "user").
 			Where("t2.field = ?", "password").
 			Where("t1.action = ?", "edited").

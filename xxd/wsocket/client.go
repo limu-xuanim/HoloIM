@@ -70,11 +70,12 @@ type ClientRegister struct {
 
 // send message struct
 type SendMsg struct {
-	serverName string // send ranzhi server name
-	subType    string // subscribe type, multicast to all subscribers instead of users if set.
-	fromUser   int64  // needed if subType is set.
-	usersID    []int64
-	message    []byte
+	serverName       string // send ranzhi server name
+	subType          string // subscribe type, multicast to all subscribers instead of users if set.
+	fromUser         int64  // needed if subType is set.
+	usersID          []int64
+	message          []byte
+	excludeSessionID string // do not send to the specified session.
 }
 
 // DataProcessResult is the result of data processing.
@@ -243,6 +244,35 @@ func userSubscribe(parseData api.XxbResponse, client *Client) error {
 		break
 	}
 	return nil
+}
+
+func isPasswordChangeUpdateRequest(parseData api.XxbResponse) bool {
+	if strings.ToLower(string(parseData.Method)) != "userupdate" {
+		return false
+	}
+
+	parsedMap, _, err := api.ParseParams(parseData)
+	if err != nil {
+		return false
+	}
+
+	params, err := util.AnyToAnySlice(parsedMap["params"])
+	if err != nil || len(params) == 0 {
+		return false
+	}
+
+	userMap, ok := params[0].(map[string]any)
+	if !ok {
+		return false
+	}
+
+	password, exists := userMap["password"]
+	if !exists || password == nil {
+		return false
+	}
+
+	passwordStr, err := util.AnyToString(password)
+	return err == nil && passwordStr != ""
 }
 
 // 用户登录
@@ -441,6 +471,19 @@ func transitData(parseData api.XxbResponse, client *Client) error {
 
 	if len(retMessages) > 2 {
 		util.LogDetail(util.GetLang("[transitData]", " ", "plural json data"))
+	}
+
+	passwordChanged := isPasswordChangeUpdateRequest(parseData)
+	isSuccess := false
+	for _, response := range retMessages {
+		if string(response.Result) == string(api.ResultSuccess) {
+			isSuccess = true
+			break
+		}
+	}
+
+	if passwordChanged && isSuccess {
+		X2cSendToOtherSessions(client.serverName, client.userID, api.PasswordChanged(), client, true)
 	}
 
 	for _, response := range retMessages {

@@ -16,6 +16,7 @@ $lang->cn->stepVerify      = '验证服务器权限';
 $lang->cn->stepPassword    = '设置新密码';
 $lang->cn->stepDone        = '重置完成';
 $lang->cn->verifyIntro     = '请管理员登录喧喧服务器，执行以下命令：';
+$lang->cn->verifyIntroWin  = '请管理员登录喧喧服务器，在以下路径手动新建空文件：';
 $lang->cn->noteTitle       = '注意：';
 $lang->cn->note1           = '文件内容必须为空。';
 $lang->cn->note2           = '如果之前文件已存在，请删除后重新创建。';
@@ -50,6 +51,7 @@ $lang->en->stepVerify      = 'Verify Server Permission';
 $lang->en->stepPassword    = 'Set New Password';
 $lang->en->stepDone        = 'Reset Complete';
 $lang->en->verifyIntro     = 'Please log in to the Xuanxuan server and execute the following command:';
+$lang->en->verifyIntroWin  = 'Please log in to the Xuanxuan server and create an empty file at the path below:';
 $lang->en->noteTitle       = 'Note:';
 $lang->en->note1           = 'The file content must be empty.';
 $lang->en->note2           = 'If the file already exists, delete it and create it again.';
@@ -84,6 +86,7 @@ $lang->tw->stepVerify      = '驗證伺服器權限';
 $lang->tw->stepPassword    = '設定新密碼';
 $lang->tw->stepDone        = '重置完成';
 $lang->tw->verifyIntro     = '請管理員登入喧喧伺服器，執行以下指令：';
+$lang->tw->verifyIntroWin  = '請管理員登入喧喧伺服器，在以下路徑手動建立空檔案：';
 $lang->tw->noteTitle       = '注意：';
 $lang->tw->note1           = '檔案內容必須為空。';
 $lang->tw->note2           = '如果之前檔案已存在，請刪除後重新建立。';
@@ -121,6 +124,10 @@ $runDir = dirname(__DIR__);
 $tmpDir = $runDir . DIRECTORY_SEPARATOR . 'tmp';
 if (!is_dir($tmpDir)) @mkdir($tmpDir, 0777, true);
 $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
+$isWindowsServer = (defined('PHP_OS_FAMILY') && PHP_OS_FAMILY === 'Windows')
+    || (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+$guardUiManual = $isWindowsServer;
+$verifyIntroText = $guardUiManual ? $clientLang->verifyIntroWin  : $clientLang->verifyIntro;
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $acceptLang === 'cn' ? 'zh-CN' : 'en'; ?>">
@@ -195,10 +202,12 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
               <path d="M13.9998 8.19922C15.491 8.19922 16.6998 9.40805 16.6998 10.8992C16.6998 11.8388 16.2195 12.6661 15.491 13.1498V15.9992H12.5086V13.1498C11.7801 12.6661 11.2998 11.8388 11.2998 10.8992C11.2998 9.40805 12.5086 8.19922 13.9998 8.19922Z" fill="white"/>
             </svg>
             <div>
-              <div class="verify-intro"><?php echo htmlspecialchars($clientLang->verifyIntro); ?></div>
+              <div class="verify-intro"><?php echo htmlspecialchars($verifyIntroText); ?></div>
               <div class="command-row">
                 <div class="command-text" id="copyCommand">...</div>
-                <button class="btn" type="button" id="copyButton"><?php echo htmlspecialchars($clientLang->copyCommand); ?></button>
+                <?php if (!$guardUiManual): ?>
+                  <button class="btn" type="button" id="copyButton"><?php echo htmlspecialchars($clientLang->copyCommand); ?></button>
+                <?php endif; ?>
               </div>
             </div>
           </div>
@@ -261,153 +270,163 @@ $tokenDir = $tmpDir . DIRECTORY_SEPARATOR;
   </main>
   <script src="zui/zui.js"></script>
   <script>
-    const tokenDir = '<?php echo $tokenDir; ?>';
-    const lang = <?php echo json_encode(array(
-      'copied' => $clientLang->copied,
-      'verifyButton' => $clientLang->verifyButton,
-      'continueButton' => $clientLang->continueButton,
-      'emptyAccount' => $clientLang->emptyAccount,
-      'emptyPassword' => $clientLang->emptyPassword,
-      'passwordRule' => $clientLang->passwordRule,
-      'passwordSame' => $clientLang->passwordSame,
-      'confirmBack' => $clientLang->confirmBack,
-      'reqErr' => $clientLang->reqErr,
-      'fileErr' => $clientLang->fileErr,
-      'expiredErr' => $clientLang->expiredErr,
-      'resetErr' => $clientLang->resetErr,
-    )); ?>;
+    (function() {
+      var tokenDir = <?php echo json_encode($tokenDir, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+      var guardUiManual = <?php echo $guardUiManual ? 'true' : 'false'; ?>;
+      var lang = <?php echo json_encode(array(
+        'copy' => $clientLang->copyCommand,
+        'copied' => $clientLang->copied,
+        'verifyButton' => $clientLang->verifyButton,
+        'continueButton' => $clientLang->continueButton,
+        'emptyAccount' => $clientLang->emptyAccount,
+        'emptyPassword' => $clientLang->emptyPassword,
+        'passwordRule' => $clientLang->passwordRule,
+        'passwordSame' => $clientLang->passwordSame,
+        'confirmBack' => $clientLang->confirmBack,
+        'reqErr' => $clientLang->reqErr,
+        'fileErr' => $clientLang->fileErr,
+        'expiredErr' => $clientLang->expiredErr,
+        'resetErr' => $clientLang->resetErr,
+      )); ?>;
 
-    const codeConfig = {4003: lang.expiredErr, 4004: lang.expiredErr, 4005: lang.fileErr, 4011: lang.resetErr, 4012: lang.resetErr};
+      var codeConfig = {4003: lang.expiredErr, 4004: lang.expiredErr, 4005: lang.fileErr, 4011: lang.resetErr, 4012: lang.resetErr};
 
-    let resetToken = '';
-    let verifyToken = '';
-    let tokenVerified = false;
+      var resetToken = '';
+      var verifyToken = '';
+      var tokenVerified = false;
 
-    const verifyButton = document.getElementById('verifyButton');
-    const resetButton = document.getElementById('resetButton');
-    const copyButton = document.getElementById('copyButton');
-    const copyCommand = document.getElementById('copyCommand');
-    const passwordForm = document.getElementById('passwordForm');
+      var verifyButton = document.getElementById('verifyButton');
+      var resetButton = document.getElementById('resetButton');
+      var copyButton = document.getElementById('copyButton');
+      var copyCommand = document.getElementById('copyCommand');
+      var passwordForm = document.getElementById('passwordForm');
 
-    function showError(message) {
-      window.zui.Modal.alert({
-        message,
-        icon: 'icon-exclamation-sign',
-        iconClass: 'warning-pale rounded-full icon-2x'
-      });
-    }
-
-    let currentStep = 1;
-    function switchStep(step) {
-      currentStep = step;
-      document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
-      document.getElementById('step-' + step).classList.add('active');
-      document.querySelectorAll('.step').forEach(item => {
-        const itemStep = Number(item.dataset.step);
-        item.classList.toggle('active', itemStep === step);
-        item.classList.toggle('done', itemStep < step);
-      });
-    }
-
-    async function initToken() {
-      try {
-        const res = await fetch('/api/resetPasswordToken', {headers: {'Cache-Control': 'no-store'}});
-        const data = await res.json();
-        if (data.result !== 'success') return showError(codeConfig[data.code] || lang.reqErr);
-        resetToken = data.token;
-        let path = tokenDir + data.relativePath;
-        path = path.replace("'", "'\\''",);
-        const touchCommand = "touch '" + path + "'";
-        copyCommand.textContent = touchCommand;
-      } catch (e) {
-        showError(codeConfig[e.code] || lang.reqErr);
-      }
-    }
-
-    copyButton.addEventListener('click', async function() {
-      const text = copyCommand.textContent;
-      try {
-        await navigator.clipboard.writeText(text);
-      } catch (e) {
-        const input = document.createElement('textarea');
-        input.value = text;
-        document.body.appendChild(input);
-        input.select();
-        document.execCommand('copy');
-        document.body.removeChild(input);
-      }
-      copyButton.textContent = lang.copied;
-      setTimeout(() => { copyButton.textContent = '<?php echo htmlspecialchars($clientLang->copyCommand); ?>'; }, 1600);
-    });
-
-    initToken();
-
-    verifyButton.addEventListener('click', async function() {
-      if (tokenVerified) return switchStep(2);
-      if (!resetToken) return showError(codeConfig[1001]);
-      verifyButton.disabled = true;
-      try {
-        const res = await fetch('/api/verifyResetPasswordToken', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({token: resetToken})
+      function showError(message) {
+        window.zui.Modal.alert({
+          message,
+          icon: 'icon-exclamation-sign',
+          iconClass: 'warning-pale rounded-full icon-2x'
         });
-        const data = await res.json();
-        if (data.result !== 'success') return showError(codeConfig[data.code] || lang.reqErr);
-        verifyToken = data.verifyToken;
-        tokenVerified = true;
-        verifyButton.textContent = lang.continueButton;
-        switchStep(2);
-      } catch (e) {
-        showError(codeConfig[e.code] || lang.reqErr);
-      } finally {
-        verifyButton.disabled = false;
-      }
-    });
-
-    document.getElementById('backStep1').addEventListener('click', function() {
-      const hasValue = document.getElementById('account').value || document.getElementById('password').value || document.getElementById('password2').value;
-      if (!hasValue) {
-        switchStep(1);
-        return;
       }
 
-      window.zui.Modal.confirm({message: lang.confirmBack, icon: 'icon-exclamation-sign', iconClass: 'warning-pale rounded-full icon-2x'}).then((data) => {
-        if (!data) return;
-
-        passwordForm.reset();
-        verifyButton.textContent = lang.continueButton;
-        switchStep(1);
-      });
-    });
-
-    passwordForm.addEventListener('submit', async function(event) {
-      event.preventDefault();
-      const account = document.getElementById('account').value.trim();
-      const password = document.getElementById('password').value;
-      const password2 = document.getElementById('password2').value;
-      if (!account) return showError(lang.emptyAccount);
-      if (!password || !password2) return showError(lang.emptyPassword);
-      if (password.length < 6) return showError(lang.passwordRule);
-      if (password !== password2) return showError(lang.passwordSame);
-
-      resetButton.disabled = true;
-      try {
-        const res = await fetch('/api/resetPassword', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({verifyToken, account, password, password2})
+      var currentStep = 1;
+      function switchStep(step) {
+        currentStep = step;
+        document.querySelectorAll('.step-panel').forEach(function(panel) { panel.classList.remove('active'); });
+        document.getElementById('step-' + step).classList.add('active');
+        document.querySelectorAll('.step').forEach(function(item) {
+          var itemStep = Number(item.dataset.step);
+          item.classList.toggle('active', itemStep === step);
+          item.classList.toggle('done', itemStep < step);
         });
-        const data = await res.json();
-        if (data.result !== 'success') return showError(codeConfig[data.code] || lang.reqErr);
-        passwordForm.reset();
-        switchStep(3);
-      } catch (e) {
-        showError(codeConfig[e.code] || lang.reqErr);
-      } finally {
-        resetButton.disabled = false;
       }
-    });
+
+      function initToken() {
+        fetch('/api/resetPasswordToken', {headers: {'Cache-Control': 'no-store'}})
+          .then(function(res) { return res.json(); })
+          .then(function(data) { 
+              if (data.result !== 'success') return showError(codeConfig[data.code] || lang.reqErr);
+              resetToken = data.token;
+              var path = tokenDir + data.relativePath;
+              copyCommand.textContent = guardUiManual ? path : "touch '" + path.replace(/'/g, "'\\''") + "'";
+          })
+          .catch(function(e) { showError(codeConfig[e.code] || lang.reqErr); });
+      }
+
+      if (copyButton) {
+        copyButton.addEventListener('click', function() {
+          var filePathText = copyCommand.textContent;
+          function markCopied() {
+            copyButton.textContent = lang.copied;
+            setTimeout(function() { copyButton.textContent = lang.copy; }, 1600);
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(filePathText).then(markCopied).catch(function() {});
+            return;
+          }
+
+          var input = document.createElement('textarea');
+          input.value = filePathText;
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand('copy');
+          document.body.removeChild(input);
+          markCopied();
+        });
+      }
+
+      initToken();
+
+      verifyButton.addEventListener('click', function() {
+        if (tokenVerified) return switchStep(2);
+        if (!resetToken) return showError(codeConfig[1001]);
+        verifyButton.disabled = true;
+        fetch('/api/verifyResetPasswordToken', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({token: resetToken})
+          })
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+              verifyButton.disabled = false;
+              if (data.result !== 'success') return showError(codeConfig[data.code] || lang.reqErr);
+              verifyToken = data.verifyToken;
+              tokenVerified = true;
+              verifyButton.textContent = lang.continueButton;
+              switchStep(2);
+          })
+          .catch(function(e) {
+            verifyButton.disabled = false;
+            showError(codeConfig[e.code] || lang.reqErr);
+          });
+      });
+
+      document.getElementById('backStep1').addEventListener('click', function() {
+        var hasValue = document.getElementById('account').value || document.getElementById('password').value || document.getElementById('password2').value;
+        if (!hasValue) {
+          switchStep(1);
+          return;
+        }
+
+        window.zui.Modal.confirm({message: lang.confirmBack, icon: 'icon-exclamation-sign', iconClass: 'warning-pale rounded-full icon-2x'}).then(function(data) {
+          if (!data) return;
+
+          passwordForm.reset();
+          verifyButton.textContent = lang.continueButton;
+          switchStep(1);
+        });
+      });
+
+      passwordForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        var account = document.getElementById('account').value.trim();
+        var password = document.getElementById('password').value;
+        var password2 = document.getElementById('password2').value;
+        if (!account) return showError(lang.emptyAccount);
+        if (!password || !password2) return showError(lang.emptyPassword);
+        if (password.length < 6) return showError(lang.passwordRule);
+        if (password !== password2) return showError(lang.passwordSame);
+
+        resetButton.disabled = true;
+        fetch('/api/resetPassword', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({verifyToken, account, password, password2})
+          })
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            resetButton.disabled = false;
+            if (data.result !== 'success') return showError(codeConfig[data.code] || lang.reqErr);
+            passwordForm.reset();
+            switchStep(3);
+          })
+          .catch(function(e) {
+            resetButton.disabled = false;
+            showError(codeConfig[e.code] || lang.reqErr);
+          });
+      });
+    })();
   </script>
 </body>
 </html>

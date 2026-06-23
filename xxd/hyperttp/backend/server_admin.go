@@ -5,6 +5,9 @@ import "net/http"
 func InitAdmin() error {
 	mux := http.NewServeMux()
 
+	// 注册管理员密码重置路由
+	RegisterResetPasswordRoutes(mux)
+
 	// 注册落地页路由
 	RegisterIndexRoutes(mux)
 

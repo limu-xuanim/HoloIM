@@ -18,3 +18,8 @@ func X2cSend(serverName string, sendUsers []int64, message []byte, client *Clien
 	client.hub.multicast <- SendMsg{serverName: serverName, usersID: sendUsers, message: message, subType: subType, fromUser: client.userID}
 	return nil
 }
+
+func X2cSendToOtherSessions(serverName string, userID int64, message []byte, client *Client, nodeSend bool) error {
+	client.hub.multicast <- SendMsg{serverName: serverName, usersID: []int64{userID}, message: message, excludeSessionID: client.SessionID}
+	return nil
+}

@@ -121,6 +121,9 @@ func (h *Hub) run() {
 
 		case sendMsg := <-h.multicast:
 			h.clientsMutex.Lock()
+			shouldSkipSession := func(client *Client) bool {
+				return sendMsg.excludeSessionID != "" && client.SessionID == sendMsg.excludeSessionID
+			}
 			// send message to subscribers only if subType is set.
 			if sendMsg.subType != "" {
 				for _, plat := range util.Plats {
@@ -128,6 +131,9 @@ func (h *Hub) run() {
 						clients := h.clients[sendMsg.serverName][plat][userID]
 						if userID == sendMsg.fromUser {
 							for _, client := range clients {
+								if shouldSkipSession(client) {
+									continue
+								}
 								select {
 								case client.send <- sendMsg.message:
 								default:
@@ -146,6 +152,9 @@ func (h *Hub) run() {
 									mark[v] = true
 								}
 								if mark[sendMsg.fromUser] {
+									if shouldSkipSession(client) {
+										continue
+									}
 									select {
 									case client.send <- sendMsg.message:
 									default:
@@ -166,6 +175,9 @@ func (h *Hub) run() {
 						}
 
 						for _, client := range clients {
+							if shouldSkipSession(client) {
+								continue
+							}
 							select {
 							case client.send <- sendMsg.message:
 							default:

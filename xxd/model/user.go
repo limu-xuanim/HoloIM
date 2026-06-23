@@ -867,13 +867,38 @@ func (u *User) AddAction(db *gorm.DB, user any, actionType string, result string
 }
 
 func (u *User) SetDeviceToken(db *gorm.DB, userID int64, deviceToken string, deviceType string) (string, error) {
-	result := db.Model(&User{}).
-		Where("id = ?", userID).
-		Update("deviceToken", deviceToken).
-		Update("deviceType", deviceType)
+	if deviceToken == "" {
+		deviceType = ""
+	}
 
-	if result.Error != nil {
-		return "fail", result.Error
+	updates := map[string]any{
+		"deviceToken": deviceToken,
+		"deviceType":  deviceType,
+	}
+
+	err := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Model(&User{}).
+			Where("id = ?", userID).
+			Updates(updates).Error; err != nil {
+			return err
+		}
+
+		if deviceToken != "" {
+			// Keep the device token unique across users so one physical device
+			// only receives pushes for the currently active account.
+			if err := tx.Model(&User{}).
+				Where("id <> ? AND deviceToken = ?", userID, deviceToken).
+				Updates(map[string]any{
+					"deviceToken": "",
+					"deviceType":  "",
+				}).Error; err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		return "fail", err
 	}
 
 	return "success", nil
